@@ -1,5 +1,6 @@
 import { Object3D } from 'three'
 import ControllerInterface, { Controller } from './ControllerInterface'
+import AbstractController from './AbstractController'
 
 export default class Component {
     public object3d: Object3D
@@ -26,9 +27,9 @@ export default class Component {
 
     update(time: number) {
         this.controllers.forEach(controller => {
-            if (controller instanceof ControllerInterface) {
+            if (typeof controller == 'object') {
                 controller.update(this.object3d, time)
-            } else {
+            } else if (typeof controller == 'function') {
                 controller(this.object3d, time)
             }
         })

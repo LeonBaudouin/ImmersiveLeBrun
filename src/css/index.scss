@@ -6,6 +6,24 @@ body {
     margin: 0;
 }
 
-canvas {
+canvas,
+.css3d-canvas {
     display: block;
+    position: absolute;
+    top: 0;
+}
+
+canvas {
+    z-index: -1;
+}
+
+.css3d-container {
+    display: flex;
+    align-content: center;
+    justify-items: center;
+
+    p {
+        max-width: 300px;
+        text-align: center;
+    }
 }

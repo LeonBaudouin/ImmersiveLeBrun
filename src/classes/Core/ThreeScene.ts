@@ -1,50 +1,33 @@
-import OrbitControls from 'orbit-controls-es6'
-import {
-    Camera,
-    Scene,
-    WebGLRenderer,
-    Renderer,
-    PerspectiveCamera,
-    Color,
-} from 'three'
+import { Camera, Scene, PerspectiveCamera } from 'three'
 import Component from './Component'
+import RendererInterface from './RendererInterface'
 
 export default class ThreeScene {
     public cameraComponent: Component
     public objects: Component[]
     public scene: Scene
-    public renderer: Renderer
+    public renderer: RendererInterface
     public controls: any
     public time: number
 
-    constructor(cameraComponent: Component, objects: Component[] = []) {
+    constructor(
+        cameraComponent: Component,
+        renderer: RendererInterface,
+        objects: Component[] = [],
+    ) {
         this.cameraComponent = cameraComponent
         this.objects = objects
         this.time = 0
+        this.renderer = renderer
 
         this.bind()
         this.setupScene()
-        this.setupControls()
     }
 
     setupScene() {
-        this.renderer = new WebGLRenderer({ antialias: true })
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
-        document.body.appendChild(this.renderer.domElement)
-
         this.scene = new Scene()
 
         this.objects.forEach(obj => this.scene.add(obj.object3d))
-    }
-
-    setupControls() {
-        this.controls = new OrbitControls(
-            <Camera>this.cameraComponent.object3d,
-            this.renderer.domElement,
-        )
-        this.controls.enabled = true
-        this.controls.maxDistance = 1500
-        this.controls.minDistance = 0
     }
 
     bind() {
