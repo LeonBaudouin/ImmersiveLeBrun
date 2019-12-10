@@ -1,5 +1,7 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     entry: './src/index.js',
@@ -39,11 +41,13 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [
-                    'style-loader', // creates style nodes from JS strings
-                    'css-loader', // translates CSS into CommonJS
-                    'sass-loader', // compiles Sass to CSS, using Node Sass by default
-                ],
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader', // translates CSS into CommonJS
+                        'sass-loader', // compiles Sass to CSS, using Node Sass by default
+                    ],
+                }),
             },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
@@ -71,5 +75,7 @@ module.exports = {
             template: './src/index.html',
             inject: true,
         }),
+        new CopyPlugin([{ from: 'src/assets', to: 'assets/' }]),
+        new ExtractTextPlugin({ filename: 'bundle.css' }),
     ],
 }

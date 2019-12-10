@@ -11,7 +11,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "copy-webpack-plugin": "^5.1.0",
         "css-loader": "^2.1.1",
+        "extract-text-webpack-plugin": "v4.0.0-alpha.0",
         "glslify-loader": "^2.0.0",
         "image-webpack-loader": "^4.6.0",
         "node-sass": "^4.12.0",
