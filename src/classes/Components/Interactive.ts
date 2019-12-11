@@ -1,10 +1,10 @@
 import Component from '../Core/Component'
 import * as THREE from 'three'
-import vertSource from '../../shaders/interactable.vert'
-import fragSource from '../../shaders/interactable.frag'
+import vertSource from '../../shaders/interactive.vert'
+import fragSource from '../../shaders/interactive.frag'
 import Raycaster from '../Events/Raycaster'
 
-export default class Interactable extends Component {
+export default class Interactive extends Component {
     constructor(
         texture1: THREE.Texture,
         texture2: THREE.Texture,
