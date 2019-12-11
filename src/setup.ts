@@ -10,6 +10,8 @@ import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
 import Interactive from './classes/Components/Interactive'
 import Room from './classes/Components/Room'
+import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
+import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -53,10 +55,12 @@ export default function Setup() {
     const mouse = new THREE.Vector2()
     const textureLoader = new THREE.TextureLoader()
 
-    document.addEventListener('mousemove', ({ clientX, clientY }) => {
+    document.addEventListener('mousemove', e => {
+        const { clientX, clientY } = e
         mouse.x = (clientX / window.innerWidth) * 2 - 1
         mouse.y = -(clientY / window.innerHeight) * 2 + 1
         Raycaster.getInstance().Cast(camera, mouse)
+        MouseMoveListener.getInstance().UpdateValue(e)
     })
 
     const components = [
@@ -64,14 +68,17 @@ export default function Setup() {
             () => {
                 const object = new THREE.Object3D()
                 object.position.set(0, 1.7, -2)
+                object.scale.set(0.5, 0.5, 0.5)
                 return object
             },
             [],
             {},
             [
                 new Interactive(
-                    textureLoader.load('./assets/rubens_esquisse.png'),
-                    textureLoader.load('./assets/rubens.png'),
+                    textureLoader.load(
+                        './assets/interactive/rubens_esquisse.png',
+                    ),
+                    textureLoader.load('./assets/interactive/rubens.png'),
                     new THREE.Vector2(0.706, 1),
                 ),
             ],
@@ -94,7 +101,7 @@ export default function Setup() {
     ]
 
     const webGlScene = new ThreeScene(
-        new Component(() => camera),
+        new Component(() => camera, [new CameraMouseFollow()]),
         webGLrenderer,
         components,
     )

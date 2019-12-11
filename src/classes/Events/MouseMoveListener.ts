@@ -1,10 +1,11 @@
 import { ListenEvent, NativeEventListener } from './SimpleEventListener'
+import * as THREE from 'three'
 
 export class MouseMoveListener extends NativeEventListener {
     protected static instance: MouseMoveListener
-    protected static value: THREE.Vector2
+    protected static value: THREE.Vector2 = new THREE.Vector2()
 
-    public static getInstance(): ListenEvent {
+    public static getInstance(): MouseMoveListener {
         if (MouseMoveListener.instance == null)
             MouseMoveListener.instance = new MouseMoveListener()
 
