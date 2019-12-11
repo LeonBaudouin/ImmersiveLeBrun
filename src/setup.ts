@@ -9,6 +9,7 @@ import {
 import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
 import Interactive from './classes/Components/Interactive'
+import Room from './classes/Components/Room'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -26,10 +27,10 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.domElement.classList.add('css3d-canvas')
 
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.enabled = true
-    controls.maxDistance = 1500
-    controls.minDistance = 0
+    // const controls = new OrbitControls(camera, renderer.domElement)
+    // controls.enabled = true
+    // controls.maxDistance = 1500
+    // controls.minDistance = 0
     return renderer
 }
 
@@ -40,7 +41,8 @@ export default function Setup() {
         0.1,
         1000,
     )
-    camera.position.set(0, 0, 5)
+    camera.position.set(0.2, 1.6, 0.4)
+    // camera.rotateX(-0.1)
 
     const webGLrenderer = initWebglRenderer(camera)
     const CSS3DRenderer = initCSS3DRenderer(camera)
@@ -58,35 +60,37 @@ export default function Setup() {
     })
 
     const components = [
-        new Component(
-            () => {
-                const object = new THREE.Object3D()
-                object.position.set(1, 0, -2)
-                return object
-            },
-            [],
-            {},
-            [
-                new Interactive(
-                    textureLoader.load('./assets/rubens_esquisse.png'),
-                    textureLoader.load('./assets/rubens.png'),
-                    new THREE.Vector2(0.706, 1),
-                ),
-            ],
-        ),
-        new Component(() => {
-            const mesh = new THREE.Mesh(
-                new THREE.PlaneGeometry(5, 5, 3, 3),
-                new THREE.MeshPhongMaterial({
-                    color: 0x883344,
-                    side: THREE.DoubleSide,
-                }),
-            )
-            mesh.rotateX(-Math.PI / 2)
-            mesh.position.y = -2
-            return mesh
-        }),
+        // new Component(
+        //     () => {
+        //         const object = new THREE.Object3D()
+        //         object.position.set(1, 0, -2)
+        //         return object
+        //     },
+        //     [],
+        //     {},
+        //     [
+        //         new Interactive(
+        //             textureLoader.load('./assets/rubens_esquisse.png'),
+        //             textureLoader.load('./assets/rubens.png'),
+        //             new THREE.Vector2(0.706, 1),
+        //         ),
+        //     ],
+        // ),
+        new Room(),
+        // new Component(() => {
+        //     const mesh = new THREE.Mesh(
+        //         new THREE.PlaneGeometry(5, 5, 3, 3),
+        //         new THREE.MeshPhongMaterial({
+        //             color: 0x883344,
+        //             side: THREE.DoubleSide,
+        //         }),
+        //     )
+        //     mesh.rotateX(-Math.PI / 2)
+        //     mesh.position.y = -2
+        //     return mesh
+        // }),
         new Component(() => new THREE.AmbientLight(0xffffff)),
+        new Component(() => new THREE.PointLight(0x987656)),
     ]
 
     const webGlScene = new ThreeScene(
