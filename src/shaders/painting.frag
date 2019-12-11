@@ -1,6 +1,7 @@
 uniform sampler2D texture1;
 uniform sampler2D texture2;
 uniform vec2 mouse;
+uniform vec2 ratio;
 varying vec2 vUv;
 
 vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
@@ -33,7 +34,6 @@ float noise(vec2 v){
 }
 
 void main() {
-    vec2 ratio = vec2(0.706, 1);
     vec2 st = vUv * ratio;
     vec2 m = mouse *  ratio;
     
