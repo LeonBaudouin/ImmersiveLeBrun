@@ -12,6 +12,7 @@ import Interactive from './classes/Components/Interactive'
 import Room from './classes/Components/Room'
 import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
+import InteractiveShader from './classes/Controller/InteractiveShader'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -83,19 +84,15 @@ export default function Setup() {
                 ),
             ],
         ),
+        new Component(() => {
+            const mesh = new THREE.Mesh(
+                new THREE.PlaneGeometry(1000, 1000),
+                new THREE.MeshBasicMaterial(),
+            )
+            mesh.position.set(0, 0, -50)
+            return mesh
+        }, [new InteractiveShader()]),
         new Room(),
-        // new Component(() => {
-        //     const mesh = new THREE.Mesh(
-        //         new THREE.PlaneGeometry(5, 5, 3, 3),
-        //         new THREE.MeshPhongMaterial({
-        //             color: 0x883344,
-        //             side: THREE.DoubleSide,
-        //         }),
-        //     )
-        //     mesh.rotateX(-Math.PI / 2)
-        //     mesh.position.y = -2
-        //     return mesh
-        // }),
         new Component(() => new THREE.AmbientLight(0xeeeeee, 0.8)),
         new Component(() => new THREE.PointLight(0x987656, 0.5)),
     ]

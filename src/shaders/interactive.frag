@@ -37,7 +37,7 @@ void main() {
     vec2 st = vUv * ratio;
     vec2 m = mouse *  ratio;
     
-    float dist = distance(m, st) * 4.;
+    float dist = pow(distance(m, st) * 4., 1.2);
     float noise = noise(st * 10.);
     float ring = smoothstep(0.3, 0.8, dist) - smoothstep(0.5, 1., dist * 0.2);
     float a = 1. - clamp(noise * ring * 0.1 + dist, 0., 1.);

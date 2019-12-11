@@ -2,7 +2,7 @@ import Component from '../Core/Component'
 import * as THREE from 'three'
 import vertSource from '../../shaders/interactive.vert'
 import fragSource from '../../shaders/interactive.frag'
-import Raycaster from '../Events/Raycaster'
+import InteractiveShader from '../Controller/InteractiveShader'
 
 export default class Interactive extends Component {
     constructor(
@@ -12,6 +12,7 @@ export default class Interactive extends Component {
     ) {
         texture1.minFilter = THREE.LinearFilter
         texture2.minFilter = THREE.LinearFilter
+
         const gen = () => {
             const uniforms = {
                 texture1: {
@@ -41,13 +42,9 @@ export default class Interactive extends Component {
                 }),
             )
 
-            Raycaster.getInstance().Subscribe(
-                mesh,
-                e => (uniforms.mouse.value = e.uv),
-            )
             return mesh
         }
 
-        super(gen)
+        super(gen, [new InteractiveShader()])
     }
 }

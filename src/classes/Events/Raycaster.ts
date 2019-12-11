@@ -9,7 +9,7 @@ import {
 
 export default class Raycaster extends AbstractEventEmitter<
     Object3D,
-    Intersection
+    OrdereredIntersection
 > {
     private raycaster: ThreeRaycaster
     private static instance: Raycaster = null
@@ -31,6 +31,11 @@ export default class Raycaster extends AbstractEventEmitter<
 
         this.raycaster
             .intersectObjects([...this.callbackAssoc.keys()])
-            .forEach(e => this.Emit(e.object, e))
+            .forEach((e, i) => {
+                ;(<OrdereredIntersection>e).order = i
+                this.Emit(e.object, <OrdereredIntersection>e)
+            })
     }
 }
+
+type OrdereredIntersection = Intersection & { order: number }
