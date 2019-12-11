@@ -36,12 +36,13 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 
 export default function Setup() {
     const camera = new THREE.PerspectiveCamera(
-        75,
+        65,
         window.innerWidth / window.innerHeight,
         0.1,
         1000,
     )
-    camera.position.set(0.2, 1.6, 0.4)
+    camera.position.set(0.2, 1.6, 1.4)
+    camera.rotateX(-0.05)
 
     const webGLrenderer = initWebglRenderer(camera)
     const CSS3DRenderer = initCSS3DRenderer(camera)
@@ -59,22 +60,22 @@ export default function Setup() {
     })
 
     const components = [
-        // new Component(
-        //     () => {
-        //         const object = new THREE.Object3D()
-        //         object.position.set(1, 0, -2)
-        //         return object
-        //     },
-        //     [],
-        //     {},
-        //     [
-        //         new Interactive(
-        //             textureLoader.load('./assets/rubens_esquisse.png'),
-        //             textureLoader.load('./assets/rubens.png'),
-        //             new THREE.Vector2(0.706, 1),
-        //         ),
-        //     ],
-        // ),
+        new Component(
+            () => {
+                const object = new THREE.Object3D()
+                object.position.set(0, 1.7, -2)
+                return object
+            },
+            [],
+            {},
+            [
+                new Interactive(
+                    textureLoader.load('./assets/rubens_esquisse.png'),
+                    textureLoader.load('./assets/rubens.png'),
+                    new THREE.Vector2(0.706, 1),
+                ),
+            ],
+        ),
         new Room(),
         // new Component(() => {
         //     const mesh = new THREE.Mesh(

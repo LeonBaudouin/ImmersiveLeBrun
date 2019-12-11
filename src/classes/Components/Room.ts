@@ -35,7 +35,7 @@ export default class Room extends Component {
                         Math.ceil(size.z),
                     )
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0x423873,
+                        color: 0xC3A395,
                     })
                     const mesh = new THREE.Mesh(geometry, material)
                     mesh.position.set(0, -size.y / 2, 0)
@@ -51,7 +51,7 @@ export default class Room extends Component {
                         Math.ceil(size.z),
                     )
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0x423873,
+                        color: 0xc2c8c3,
                     })
                     const mesh = new THREE.Mesh(geometry, material)
                     mesh.position.set(0, size.y / 2, 0)
@@ -67,7 +67,7 @@ export default class Room extends Component {
                         Math.ceil(size.y),
                     )
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0x423873,
+                        color: 0xc2c8c3,
                     })
                     const mesh = new THREE.Mesh(geometry, material)
                     mesh.position.set(-size.x / 2, 0, 0)
@@ -83,7 +83,7 @@ export default class Room extends Component {
                         Math.ceil(size.y),
                     )
                     const material = new THREE.MeshPhongMaterial({
-                        color: 0x423873,
+                        color: 0xc2c8c3,
                     })
                     const mesh = new THREE.Mesh(geometry, material)
                     mesh.position.set(size.x / 2, 0, 0)
