@@ -7,11 +7,12 @@ export default class Wall extends Component {
         rotation = new THREE.Euler(),
         position = new THREE.Vector3(),
         texture = null,
+        color = null
     }: WallParameters) {
         super(() => {
             const geometry = new THREE.PlaneGeometry(size.x, size.y, 1, 1)
-            const material = new THREE.MeshPhongMaterial({
-                color: 0x423873,
+            const material = new THREE.MeshLambertMaterial({
+                color: color,
                 map: texture,
             })
             const mesh = new THREE.Mesh(geometry, material)
@@ -27,4 +28,5 @@ export interface WallParameters {
     rotation: THREE.Euler
     position: THREE.Vector3
     texture: THREE.Texture
+    color: THREE.Color 
 }

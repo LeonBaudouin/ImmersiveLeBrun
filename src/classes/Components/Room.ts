@@ -23,72 +23,46 @@ export default class Room extends Component {
                     position: new THREE.Vector3(0, 0, -size.z / 2),
                     rotation: new THREE.Euler(0, 0, 0),
                     texture: loader.load(
-                        '../../assets/room/6a_Face-_background.png',
+                        '../../assets/room/mur_porte_01.jpg',
                     ),
+                    color: null,
                 }),
                 // Floor
-                new Component(() => {
-                    const geometry = new THREE.PlaneGeometry(
-                        size.x,
-                        size.z,
-                        Math.ceil(size.x),
-                        Math.ceil(size.z),
-                    )
-                    const material = new THREE.MeshPhongMaterial({
-                        color: 0xC3A395,
-                    })
-                    const mesh = new THREE.Mesh(geometry, material)
-                    mesh.position.set(0, -size.y / 2, 0)
-                    mesh.rotateX(-Math.PI / 2)
-                    return mesh
+                new Wall({
+                    size: new THREE.Vector2(size.x, size.z),
+                    position: new THREE.Vector3(0, -size.y / 2, 0),
+                    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                    texture: null,
+                    color: new THREE.Color(0xC3A395),
                 }),
+                
                 // Ceil
-                new Component(() => {
-                    const geometry = new THREE.PlaneGeometry(
-                        size.x,
-                        size.z,
-                        Math.ceil(size.x),
-                        Math.ceil(size.z),
-                    )
-                    const material = new THREE.MeshPhongMaterial({
-                        color: 0xc2c8c3,
-                    })
-                    const mesh = new THREE.Mesh(geometry, material)
-                    mesh.position.set(0, size.y / 2, 0)
-                    mesh.rotateX(Math.PI / 2)
-                    return mesh
+                new Wall({
+                    size: new THREE.Vector2(size.x, size.z),
+                    position: new THREE.Vector3(0, size.y / 2, 0),
+                    rotation: new THREE.Euler(Math.PI / 2, 0, 0),
+                    texture: null,
+                    color: null,
                 }),
                 // Left Wall
-                new Component(() => {
-                    const geometry = new THREE.PlaneGeometry(
-                        size.z,
-                        size.y,
-                        Math.ceil(size.z),
-                        Math.ceil(size.y),
-                    )
-                    const material = new THREE.MeshPhongMaterial({
-                        color: 0xc2c8c3,
-                    })
-                    const mesh = new THREE.Mesh(geometry, material)
-                    mesh.position.set(-size.x / 2, 0, 0)
-                    mesh.rotateY(Math.PI / 2)
-                    return mesh
+                new Wall({
+                    size: new THREE.Vector2(size.x, size.y),
+                    position: new THREE.Vector3(-size.x / 2, 0, 0),
+                    rotation: new THREE.Euler(0, Math.PI / 2, 0),
+                    texture: loader.load(
+                        '../../assets/room/mur_02.jpg',
+                    ),
+                    color: null,
                 }),
                 // Right Wall
-                new Component(() => {
-                    const geometry = new THREE.PlaneGeometry(
-                        size.z,
-                        size.y,
-                        Math.ceil(size.z),
-                        Math.ceil(size.y),
-                    )
-                    const material = new THREE.MeshPhongMaterial({
-                        color: 0xc2c8c3,
-                    })
-                    const mesh = new THREE.Mesh(geometry, material)
-                    mesh.position.set(size.x / 2, 0, 0)
-                    mesh.rotateY(-Math.PI / 2)
-                    return mesh
+                new Wall({
+                    size: new THREE.Vector2(size.x, size.y),
+                    position: new THREE.Vector3(size.x / 2, 0, 0),
+                    rotation: new THREE.Euler(0, -Math.PI / 2, 0),
+                    texture: loader.load(
+                        '../../assets/room/mur_02.jpg',
+                    ),
+                    color: null,
                 }),
             ],
         )

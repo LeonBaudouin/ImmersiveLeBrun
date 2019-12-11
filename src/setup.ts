@@ -89,8 +89,8 @@ export default function Setup() {
         //     mesh.position.y = -2
         //     return mesh
         // }),
-        new Component(() => new THREE.AmbientLight(0xffffff)),
-        new Component(() => new THREE.PointLight(0x987656)),
+        new Component(() => new THREE.AmbientLight(0xeeeeee, 0.8)),
+        new Component(() => new THREE.PointLight(0x987656, 0.5)),
     ]
 
     const webGlScene = new ThreeScene(
