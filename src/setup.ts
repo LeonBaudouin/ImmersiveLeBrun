@@ -8,7 +8,7 @@ import {
 } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
-import Interactable from './classes/Components/Interactable'
+import Interactive from './classes/Components/Interactive'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -49,6 +49,7 @@ export default function Setup() {
     document.body.appendChild(CSS3DRenderer.domElement)
 
     const mouse = new THREE.Vector2()
+    const textureLoader = new THREE.TextureLoader()
 
     document.addEventListener('mousemove', ({ clientX, clientY }) => {
         mouse.x = (clientX / window.innerWidth) * 2 - 1
@@ -57,10 +58,21 @@ export default function Setup() {
     })
 
     const components = [
-        new Interactable(
-            THREE.ImageUtils.loadTexture('./assets/rubens_esquisse.png'),
-            THREE.ImageUtils.loadTexture('./assets/rubens.png'),
-            new THREE.Vector2(0.706, 1),
+        new Component(
+            () => {
+                const object = new THREE.Object3D()
+                object.position.set(1, 0, -2)
+                return object
+            },
+            [],
+            {},
+            [
+                new Interactive(
+                    textureLoader.load('./assets/rubens_esquisse.png'),
+                    textureLoader.load('./assets/rubens.png'),
+                    new THREE.Vector2(0.706, 1),
+                ),
+            ],
         ),
         new Component(() => {
             const mesh = new THREE.Mesh(

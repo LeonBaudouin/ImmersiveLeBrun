@@ -42,7 +42,9 @@ void main() {
     float ring = smoothstep(0.3, 0.8, dist) - smoothstep(0.5, 1., dist * 0.2);
     float a = 1. - clamp(noise * ring * 0.1 + dist, 0., 1.);
 
+    vec4 color = mix(texture2D(texture1, vUv), texture2D(texture2, vUv), a);
     
-    gl_FragColor = mix(texture2D(texture1, vUv), texture2D(texture2, vUv), a);
+    if (color.a != 1.0) discard;
+    gl_FragColor = color;
 
 }

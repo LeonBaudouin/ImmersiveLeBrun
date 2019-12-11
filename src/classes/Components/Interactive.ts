@@ -1,7 +1,7 @@
 import Component from '../Core/Component'
 import * as THREE from 'three'
-import vertSource from '../../shaders/painting.vert'
-import fragSource from '../../shaders/painting.frag'
+import vertSource from '../../shaders/interactable.vert'
+import fragSource from '../../shaders/interactable.frag'
 import Raycaster from '../Events/Raycaster'
 
 export default class Interactable extends Component {
@@ -10,6 +10,8 @@ export default class Interactable extends Component {
         texture2: THREE.Texture,
         ratio: THREE.Vector2,
     ) {
+        texture1.minFilter = THREE.LinearFilter
+        texture2.minFilter = THREE.LinearFilter
         const gen = () => {
             const uniforms = {
                 texture1: {
@@ -43,8 +45,6 @@ export default class Interactable extends Component {
                 mesh,
                 e => (uniforms.mouse.value = e.uv),
             )
-
-            mesh.position.set(0, 0, -1)
             return mesh
         }
 
