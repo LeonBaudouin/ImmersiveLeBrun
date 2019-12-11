@@ -42,7 +42,6 @@ export default function Setup() {
         1000,
     )
     camera.position.set(0.2, 1.6, 0.4)
-    // camera.rotateX(-0.1)
 
     const webGLrenderer = initWebglRenderer(camera)
     const CSS3DRenderer = initCSS3DRenderer(camera)
