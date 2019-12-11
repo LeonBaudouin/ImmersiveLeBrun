@@ -1,4 +1,4 @@
-import { Camera, Scene, PerspectiveCamera } from 'three'
+import { Camera, Scene, PerspectiveCamera, Color } from 'three'
 import Component from './Component'
 import RendererInterface from './RendererInterface'
 
@@ -26,6 +26,7 @@ export default class ThreeScene {
 
     setupScene() {
         this.scene = new Scene()
+        this.scene.background = new Color(0xeeeeee)
 
         this.objects.forEach(obj => this.scene.add(obj.object3d))
     }

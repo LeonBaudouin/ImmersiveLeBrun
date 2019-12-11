@@ -6,10 +6,12 @@ export default class Component {
     public object3d: Object3D
     public controllers: Controller[]
     public children: Component[]
+    public data: object
 
     constructor(
         object3dCallback: () => Object3D,
         controllers: Controller[] = [],
+        data: object = {},
         children: Component[] = [],
     ) {
         this.object3d = object3dCallback()
@@ -28,9 +30,9 @@ export default class Component {
     update(time: number) {
         this.controllers.forEach(controller => {
             if (typeof controller == 'object') {
-                controller.update(this.object3d, time)
+                controller.update(this.object3d, time, this.data)
             } else if (typeof controller == 'function') {
-                controller(this.object3d, time)
+                controller(this.object3d, time, this.data)
             }
         })
         this.children.forEach(child => {
