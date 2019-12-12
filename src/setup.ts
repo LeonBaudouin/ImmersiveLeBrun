@@ -8,7 +8,6 @@ import {
 } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
-import Interactive from './classes/Components/Interactive'
 import Room from './classes/Components/Room'
 import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
@@ -54,7 +53,6 @@ export default function Setup() {
     document.body.appendChild(CSS3DRenderer.domElement)
 
     const mouse = new THREE.Vector2()
-    const textureLoader = new THREE.TextureLoader()
 
     document.addEventListener('mousemove', e => {
         const { clientX, clientY } = e
@@ -65,25 +63,6 @@ export default function Setup() {
     })
 
     const components = [
-        new Component(
-            () => {
-                const object = new THREE.Object3D()
-                object.position.set(0, 1.7, 0)
-                object.scale.set(0.5, 0.5, 0.5)
-                return object
-            },
-            [],
-            {},
-            [
-                new Interactive(
-                    textureLoader.load(
-                        './assets/interactive/rubens_esquisse.png',
-                    ),
-                    textureLoader.load('./assets/interactive/rubens.png'),
-                    new THREE.Vector2(0.706, 1),
-                ),
-            ],
-        ),
         new Component(() => {
             const mesh = new THREE.Mesh(
                 new THREE.PlaneGeometry(1000, 1000),
