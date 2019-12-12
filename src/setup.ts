@@ -94,21 +94,6 @@ export default function Setup() {
         }, [new InteractiveShader()]),
         new Room(),
         new Component(() => new THREE.AmbientLight(0x777777, 0.1)),
-        new Component(() => new THREE.PointLight(0x987656, 0.3)),
-        new Component(() => {
-            const ligth =  new THREE.SpotLight( 0xd9ebed, 0.4, 50, Math.PI, 2, 2 );
-            ligth.position.x = -1.9;
-            ligth.position.y = 2;
-            ligth.position.z = 1.5
-            return ligth;
-        }),
-        new Component(() => {
-            const ligth =  new THREE.SpotLight( 0xedecd9, 0.3, 50, Math.PI, 1, 1.5 );
-            ligth.position.x = -0.5;
-            ligth.position.y = 1.8;
-            ligth.position.z = 2
-            return ligth;
-        })
     ]
 
     const webGlScene = new ThreeScene(
