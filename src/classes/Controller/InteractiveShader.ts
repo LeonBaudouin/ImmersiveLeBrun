@@ -8,6 +8,12 @@ export default class InteractiveShader extends AbstractController {
     private static hoveredObject: THREE.Object3D
     private dMultTween: any
     private lastIsHovered: boolean
+    private getShader: () => THREE.Shader
+
+    constructor(getShader: () => THREE.Shader = () => null) {
+        super()
+        this.getShader = getShader
+    }
 
     public onMount(component: THREE.Object3D) {
         Raycaster.getInstance().Subscribe(component, e => {
@@ -19,29 +25,23 @@ export default class InteractiveShader extends AbstractController {
     }
 
     public update(component: THREE.Object3D, time: number) {
-        const uniforms = <
-            {
-                mouse: THREE.IUniform
-                time: THREE.IUniform
-                prog: THREE.IUniform
-            }
-        >(<THREE.ShaderMaterial>(<THREE.Mesh>component).material).uniforms
-
-        if (uniforms) {
-            const oobPoint = new THREE.Vector2(-5, -5)
-            uniforms.time.value = time
-            uniforms.mouse.value = this.mouse
+        if (this.getShader()) {
+            const {
+                uniforms: { time: utime, mouse, prog },
+            } = this.getShader()
+            utime.value = time
+            mouse.value = this.mouse
             const isHovered = component === InteractiveShader.hoveredObject
             if (this.lastIsHovered !== isHovered) {
                 if (isHovered) {
                     this.RemoveTween()
-                    this.dMultTween = TweenLite.to(uniforms.prog, 0.5, {
+                    this.dMultTween = TweenLite.to(prog, 0.5, {
                         value: 1,
                         ease: Power4.easeOut,
                     })
                 } else {
                     this.RemoveTween()
-                    this.dMultTween = TweenLite.to(uniforms.prog, 0.5, {
+                    this.dMultTween = TweenLite.to(prog, 0.5, {
                         value: 0,
                         ease: Power4.easeOut,
                     })

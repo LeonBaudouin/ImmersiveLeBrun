@@ -68,7 +68,7 @@ export default function Setup() {
         new Component(
             () => {
                 const object = new THREE.Object3D()
-                object.position.set(0, 1.7, -2)
+                object.position.set(0, 1.7, 0)
                 object.scale.set(0.5, 0.5, 0.5)
                 return object
             },

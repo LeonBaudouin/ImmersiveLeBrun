@@ -11,7 +11,7 @@ export default class CameraMouseFollow extends AbstractController {
     constructor(
         firstMousePosition: THREE.Vector2 = new THREE.Vector2(0, 0),
         speed: THREE.Vector2 = new THREE.Vector2(0.07, 0.07),
-        maxRotation: THREE.Vector2 = new THREE.Vector2(0.02, 0.02),
+        maxRotation: THREE.Vector2 = new THREE.Vector2(0.05, 0.02),
     ) {
         super()
         this.lastMouse = firstMousePosition
