@@ -2,6 +2,8 @@ uniform sampler2D texture1;
 uniform sampler2D texture2;
 uniform vec2 mouse;
 uniform vec2 ratio;
+uniform float prog;
+uniform float time;
 varying vec2 vUv;
 
 vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
@@ -36,11 +38,11 @@ float noise(vec2 v){
 void main() {
     vec2 st = vUv * ratio;
     vec2 m = mouse *  ratio;
-    
-    float dist = pow(distance(m, st) * 4., 1.2);
+
+    float dist = pow(distance(m, st) * 4. + distance(m, st) * (1. - prog) * 3., 1.2);
     float noise = noise(st * 10.);
     float ring = smoothstep(0.3, 0.8, dist) - smoothstep(0.5, 1., dist * 0.2);
-    float a = 1. - clamp(noise * ring * 0.1 + dist, 0., 1.);
+    float a = prog - prog * clamp(noise * ring * 0.1 + dist, 0., 1.);
 
     vec4 color = mix(texture2D(texture1, vUv), texture2D(texture2, vUv), a);
     

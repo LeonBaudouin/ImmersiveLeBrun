@@ -31,6 +31,14 @@ export default class Interactive extends Component {
                     type: 'vec2',
                     value: new THREE.Vector2(),
                 },
+                prog: {
+                    type: 'f',
+                    value: 1.0,
+                },
+                time: {
+                    type: 'f',
+                    value: 0.0,
+                },
             }
 
             const mesh = new THREE.Mesh(
