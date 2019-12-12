@@ -33,7 +33,7 @@ export default class Interactive extends Component {
                 },
                 prog: {
                     type: 'f',
-                    value: 1.0,
+                    value: 0.0,
                 },
                 time: {
                     type: 'f',

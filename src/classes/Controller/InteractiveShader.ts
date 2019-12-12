@@ -35,13 +35,13 @@ export default class InteractiveShader extends AbstractController {
             if (this.lastIsHovered !== isHovered) {
                 if (isHovered) {
                     this.RemoveTween()
-                    this.dMultTween = TweenLite.to(uniforms.prog, 0.3, {
+                    this.dMultTween = TweenLite.to(uniforms.prog, 0.5, {
                         value: 1,
                         ease: Power4.easeOut,
                     })
                 } else {
                     this.RemoveTween()
-                    this.dMultTween = TweenLite.to(uniforms.prog, 0.3, {
+                    this.dMultTween = TweenLite.to(uniforms.prog, 0.5, {
                         value: 0,
                         ease: Power4.easeOut,
                     })
