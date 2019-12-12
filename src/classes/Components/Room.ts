@@ -40,14 +40,14 @@ export default class Room extends Component {
                 }),
                 // Left Wall
                 new Wall({
-                    size: new THREE.Vector2(size.x, size.y),
+                    size: new THREE.Vector2(size.z, size.y),
                     position: new THREE.Vector3(-size.x / 2, 0, 0),
                     rotation: new THREE.Euler(0, Math.PI / 2, 0),
                     texture: loader.load('../../assets/room/mur_02.jpg'),
                 }),
                 // Right Wall
                 new Wall({
-                    size: new THREE.Vector2(size.x, size.y),
+                    size: new THREE.Vector2(size.z, size.y),
                     position: new THREE.Vector3(size.x / 2, 0, 0),
                     rotation: new THREE.Euler(0, -Math.PI / 2, 0),
                     texture: loader.load('../../assets/room/mur_02.jpg'),
