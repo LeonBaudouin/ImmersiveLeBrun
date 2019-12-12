@@ -12,6 +12,7 @@ import Room from './classes/Components/Room'
 import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
+import TextureLoader from './classes/Core/TextureLoader'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -36,7 +37,27 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     return renderer
 }
 
-export default function Setup() {
+export default function Load() {
+    TextureLoader.load(
+        [
+            'room/mur_du_fond_v01.png',
+            'room/Sol_sombre_v01.png',
+            'room/mur_02.jpg',
+            'room/mur_du_fond_cadre_v01.png',
+            'room/scene_01_premier_plan_v01.png',
+            'room/2_siege_fauteuil.png',
+            'room/3_tableau.png',
+            'room/4_gueridon.png',
+            'room/5_tableaux.png',
+            'interactive/rubens_esquisse.png',
+            'interactive/rubens.png',
+        ],
+        './assets/',
+    ).then(Setup)
+}
+
+function Setup(textures: THREE.Texture[]) {
+    textures.map(t => (t.minFilter = THREE.LinearFilter))
     const camera = new THREE.PerspectiveCamera(
         50,
         window.innerWidth / window.innerHeight,
@@ -71,7 +92,7 @@ export default function Setup() {
             mesh.position.set(0, 0, -50)
             return mesh
         }, [new InteractiveShader()]),
-        new Room(),
+        new Room(textures),
         new Component(() => new THREE.AmbientLight(0x777777, 0.1)),
     ]
 
