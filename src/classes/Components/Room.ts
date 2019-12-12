@@ -2,6 +2,7 @@ import Component from '../Core/Component'
 import * as THREE from 'three'
 import Wall from './Wall'
 import SceneObject from './SceneObject'
+import { Object3D } from 'three'
 
 export default class Room extends Component {
     constructor() {
@@ -27,10 +28,10 @@ export default class Room extends Component {
                 }),
                 // Floor
                 new Wall({
-                    size: new THREE.Vector2(size.x, size.z),
-                    position: new THREE.Vector3(0, -size.y / 2, 0),
+                    size: new THREE.Vector2(size.x, size.z-1),
+                    position: new THREE.Vector3(0, -size.y / 2, -0.5),
                     rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
-                    color: new THREE.Color(0xc3a395),
+                    texture: loader.load('../../assets/room/Sol_sombre_v01.png'),
                 }),
 
                 // Ceil
@@ -68,10 +69,17 @@ export default class Room extends Component {
                     ligth.position.z = 4
                     return ligth;
                 }), 
+                new Component(() => {
+                    const ligth =  new THREE.PointLight( 0x222222, 0.5);
+                    ligth.position.x = 1.3;
+                    ligth.position.y = -0.4;
+                    ligth.position.z = 3.5;
+                    return ligth;
+                }), 
                 new SceneObject({
                     size: new THREE.Vector2(1, 0.8),
-                    position: new THREE.Vector3(1, -0.42, 1.8),
-                    texture: loader.load('../../assets/room/1_buste.png'),
+                    position: new THREE.Vector3(1.1, -0.425, 1.8),
+                    texture: loader.load('../../assets/room/scene_01_premier_plan_v01.png'),
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(2.5, 1.3),
