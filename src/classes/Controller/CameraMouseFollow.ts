@@ -35,7 +35,8 @@ export default class CameraMouseFollow extends AbstractController {
                 this.maxRotation.x
             object3d.rotation.x =
                 (1 - (2 * this.lastMouse.y) / window.innerHeight) *
-                this.maxRotation.y
+                    this.maxRotation.y -
+                0.05
         }
     }
 }

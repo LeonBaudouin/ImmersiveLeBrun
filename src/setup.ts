@@ -39,12 +39,12 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 
 export default function Setup() {
     const camera = new THREE.PerspectiveCamera(
-        65,
+        50,
         window.innerWidth / window.innerHeight,
         0.1,
         1000,
     )
-    camera.position.set(0.2, 1.6, 1.4)
+    camera.position.set(0.2, 1.6, 3)
     camera.rotateX(-0.05)
 
     const webGLrenderer = initWebglRenderer(camera)
