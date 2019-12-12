@@ -108,15 +108,7 @@ export default function Setup() {
             ligth.position.y = 1.8;
             ligth.position.z = 2
             return ligth;
-        }),
-        new Component(() => {
-            const mesh = new THREE.Mesh(
-                new THREE.BoxGeometry(0.1, 0.1, 0.1),
-                new THREE.MeshBasicMaterial(),
-            )
-            mesh.position.set(-1.9, 2, 1)
-            return mesh
-        }),
+        })
     ]
 
     const webGlScene = new ThreeScene(
