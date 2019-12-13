@@ -84,7 +84,7 @@ export default class Room extends Component {
                 }),
                 // chaise
                 new SceneObject({
-                    size: new THREE.Vector2(1, 1.5),
+                    size: new THREE.Vector2(0.8, 1.3),
                     position: new THREE.Vector3(0.7, -1.15, 0.4),
                     texture: textures.chair,
                 }),
@@ -100,22 +100,32 @@ export default class Room extends Component {
                     position: new THREE.Vector3(0, -0.5, -0.5),
                     texture: textures.painting,
                 }),
-                // gueridon
                 new SceneObject({
-                    size: new THREE.Vector2(0.45, 1.3),
-                    position: new THREE.Vector3(-1.2, -0.9, -0.25),
+                    size: new THREE.Vector2(2, 2.4),
+                    position: new THREE.Vector3(0, -0.5, -0.48),
+                    texture: textures.painting_front,
+                }),
+                // table
+                new SceneObject({
+                    size: new THREE.Vector2(0.5, 0.6),
+                    position: new THREE.Vector3(-1.2, -1.2, -0.25),
                     texture: textures.table,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.3, 0.6),
+                    position: new THREE.Vector3(-1.18, -0.7, -0.24),
+                    texture: textures.brushs,
                 }),
                 // tableaux
                 new SceneObject({
-                    size: new THREE.Vector2(1.4, 1.8),
-                    position: new THREE.Vector3(2, -0.85, -2),
+                    size: new THREE.Vector2(1.45, 1.25),
+                    position: new THREE.Vector3(1.8, -1.21, -2.1),
                     texture: textures.back_paintings,
                 }),
                 new Component(
                     () => {
                         const object = new THREE.Object3D()
-                        object.position.set(0, 0, 0)
+                        object.position.set(0, -0.25, -0.49)
                         object.scale.set(0.5, 0.5, 0.5)
                         return object
                     },
