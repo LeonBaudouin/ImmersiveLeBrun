@@ -31,7 +31,7 @@ export default class InteractiveShader extends AbstractController {
             }
         })
 
-        document.addEventListener('click', () => {
+        document.querySelector('.css3d-canvas').addEventListener('click', () => {
             if (InteractiveShader.hoveredObject === component) {
                 if (!this.isClicked) {
                     this.isClicked = true
