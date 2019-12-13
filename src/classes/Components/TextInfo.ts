@@ -6,22 +6,32 @@ import {
 } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
-export default class SceneObject extends Component {
+export default class TextInfo extends Component {
     constructor({
-        size = new THREE.Vector2(1, 1),
-        rotation = new THREE.Euler(),
         position = new THREE.Vector3(),
-        texture = null,
-        color = null,
-        transparent = true,
+        elementId = '',
+        text = '',
+        elementClass = '',
     }) {
         super(() => {
-            const obj = new CSS3DObject(document.querySelector('#content'))
-            obj.position.set(0, 0, 0)
+            const newDiv = document.createElement("div");
+            newDiv.setAttribute("id", elementId);
+            newDiv.setAttribute("class", `css3d-container ${elementClass}`);
+            newDiv.style.display = 'none';
+            const newContent = document.createTextNode(text);
+            newDiv.appendChild(newContent);
+
+            const obj = new CSS3DObject(newDiv)
+            obj.position.set(position.x, position.y, position.z)
             obj.scale.set(0.005, 0.005, 0.005)
 
-            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, (name) => {
-                console.log(name, obj)
+            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, (e) => {
+                console.log(e.name,elementId, newDiv)
+                if (e.name === elementId) {
+                    newDiv.style.display = '';
+                } else {
+                    newDiv.style.display = 'none';
+                }
             })
             
             return obj

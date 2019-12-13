@@ -11,6 +11,7 @@ import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
+import TextInfo from './classes/Components/TextInfo'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -93,21 +94,12 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
     const webGlScene = new ThreeScene(new Component(() => camera, [new CameraMouseFollow()]), webGLrenderer, components)
 
     const cssComponents = [
-        new Component(() => {
-            const obj = new CSS3DObject(document.querySelector('#content'))
-            obj.position.set(0, 0, 0)
-            obj.scale.set(0.005, 0.005, 0.005)
-
-            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, name => {
-                console.log(name, obj)
-            })
-
-            return obj
-        }, [
-            (object3d: THREE.Object3D, time: number) => {
-                object3d.position.y = 2 + Math.sin(time * 0.005) * 0.05
-            },
-        ]),
+        new TextInfo({
+            position: new THREE.Vector3(-1.2, -0.9, 0.25),
+            elementId: 'Rubens',
+            text:
+                'Lorem c moche dolor sit amet consectetur c moche elit. Facilis iure neque corrupti quis voluptate, c moche, fugiat obcaecati c moche c moche ab vero, doloremque beatae, c moche natus? Cum, c moche. At, cum molestiae! Vero?',
+        }),
     ]
 
     const CSS3DScene = new ThreeScene(new Component(() => camera), CSS3DRenderer, cssComponents)
