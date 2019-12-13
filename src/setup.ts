@@ -41,7 +41,7 @@ export default function Load() {
     TextureLoader.load(
         [
             'room/mur_du_fond_v01.png',
-            'room/Sol_sombre_v01.png',
+            'room/Sol_sombre_v03.png',
             'room/mur_02.jpg',
             'room/mur_du_fond_cadre_v01.png',
             'room/scene_01_premier_plan_v01.png',
@@ -122,6 +122,9 @@ function Setup(textures: THREE.Texture[]) {
     )
 
     raf([CSS3DScene, webGlScene])
+
+    document.body.classList.remove('loading')
+    document.body.classList.add('loaded')
 }
 
 function raf(scenes: ThreeScene[]) {

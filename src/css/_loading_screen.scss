@@ -1,0 +1,21 @@
+.loaded {
+    .loading-screen {
+        display: none;
+    }
+}
+
+.loading {
+    .css3d-container {
+        display: none;
+    }
+}
+
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    z-index: 1;
+    background-color: rgb(161, 137, 105);
+}
