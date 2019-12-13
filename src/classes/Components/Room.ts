@@ -121,7 +121,14 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [new Interactive(textures.rubens_sketch, textures.rubens_painting, new THREE.Vector2(0.706, 1))],
+                    [
+                        new Interactive(
+                            'Rubens',
+                            textures.rubens_sketch,
+                            textures.rubens_painting,
+                            new THREE.Vector2(0.706, 1),
+                        ),
+                    ],
                 ),
             ],
         )

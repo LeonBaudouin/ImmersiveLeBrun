@@ -6,21 +6,17 @@ import UniformChunk from '../../shaders/interactive/chunk_uniforms.frag'
 import InteractiveShader from '../Controller/InteractiveShader'
 
 export default class Interactive extends Component {
-    constructor(
-        texture1: THREE.Texture,
-        texture2: THREE.Texture,
-        ratio: THREE.Vector2,
-    ) {
-        texture1.minFilter = THREE.LinearFilter
-        texture2.minFilter = THREE.LinearFilter
+    constructor(name: string, sketch: THREE.Texture, painting: THREE.Texture, ratio: THREE.Vector2) {
+        sketch.minFilter = THREE.LinearFilter
+        painting.minFilter = THREE.LinearFilter
         let materialShader: THREE.Shader
 
         const gen = () => {
-            const material = new THREE.MeshLambertMaterial({ map: texture1 })
+            const material = new THREE.MeshLambertMaterial({ map: sketch })
 
             material.onBeforeCompile = function(shader: THREE.Shader) {
-                shader.uniforms.texture1 = { value: texture1 }
-                shader.uniforms.texture2 = { value: texture2 }
+                shader.uniforms.sketch = { value: sketch }
+                shader.uniforms.painting = { value: painting }
                 shader.uniforms.ratio = { value: ratio }
                 shader.uniforms.mouse = { value: new THREE.Vector2() }
                 shader.uniforms.prog = { value: 0.0 }
@@ -37,24 +33,15 @@ export default class Interactive extends Component {
                     '#include <uv_pars_fragment>',
                     'varying vec2 vUv;',
                 )
-                shader.fragmentShader = shader.fragmentShader.replace(
-                    '#include <common>',
-                    StartChunk,
-                )
-                shader.fragmentShader = shader.fragmentShader.replace(
-                    '#include <map_fragment>',
-                    MainChunk,
-                )
+                shader.fragmentShader = shader.fragmentShader.replace('#include <common>', StartChunk)
+                shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', MainChunk)
 
                 materialShader = shader
             }
 
-            const mesh = new THREE.Mesh(
-                new THREE.PlaneGeometry(ratio.x * 3, ratio.y * 3, 1, 1),
-                material,
-            )
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(ratio.x * 3, ratio.y * 3, 1, 1), material)
 
-            mesh.userData.name = 'TEST'
+            mesh.userData.name = name
 
             return mesh
         }

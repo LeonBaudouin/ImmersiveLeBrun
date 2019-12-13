@@ -7,7 +7,7 @@ float ring = smoothstep(.3, .8, dist) - smoothstep(.5, 1., dist * .2);
 float a = pow(prog, .5) - pow(prog, .5) * clamp(newNoise * ring * prog * .1 + dist * .9, 0., 1.);
 
 
-vec4 texelColor = mix(texture2D(texture1, vUv), texture2D(texture2, vUv), a);
+vec4 texelColor = mix(texture2D(sketch, vUv), texture2D(painting, vUv), a);
 texelColor = mapTexelToLinear( texelColor );
 diffuseColor *= texelColor;
 
