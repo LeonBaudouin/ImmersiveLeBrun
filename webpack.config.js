@@ -20,6 +20,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                        },
                     },
                 ],
             },
@@ -48,19 +51,6 @@ module.exports = {
                         'sass-loader', // compiles Sass to CSS, using Node Sass by default
                     ],
                 }),
-            },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            bypassOnDebug: true, // webpack@1.x
-                            disable: true, // webpack@2.x and newer
-                        },
-                    },
-                ],
             },
             {
                 test: /\.(glsl|vs|fs|vert|frag)$/,
