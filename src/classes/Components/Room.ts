@@ -6,7 +6,7 @@ import Interactive from './Interactive'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class Room extends Component {
-    constructor(textures: THREE.Texture[] = []) {
+    constructor(textures: { [name: string]: THREE.Texture } = {}) {
         const height = 3.5
         const width = height * 1.7134637
         const size = new THREE.Vector3(width, height, 4.5)
@@ -25,14 +25,14 @@ export default class Room extends Component {
                     size: new THREE.Vector2(size.x, size.y),
                     position: new THREE.Vector3(0, 0, -size.z / 2),
                     rotation: new THREE.Euler(0, 0, 0),
-                    texture: textures[0],
+                    texture: textures.front_wall,
                 }),
                 // Floor
                 new Wall({
                     size: new THREE.Vector2(size.x, size.z - 1),
                     position: new THREE.Vector3(0, -size.y / 2, -0.5),
                     rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
-                    texture: textures[1],
+                    texture: textures.floor,
                 }),
                 // Ceil
                 new Wall({
@@ -45,14 +45,14 @@ export default class Room extends Component {
                     size: new THREE.Vector2(size.z, size.y),
                     position: new THREE.Vector3(-size.x / 2, 0, 0),
                     rotation: new THREE.Euler(0, Math.PI / 2, 0),
-                    texture: textures[2],
+                    texture: textures.left_wall,
                 }),
                 // Right Wall
                 new Wall({
                     size: new THREE.Vector2(size.z, size.y),
                     position: new THREE.Vector3(size.x / 2, 0, 0),
                     rotation: new THREE.Euler(0, -Math.PI / 2, 0),
-                    texture: textures[3],
+                    texture: textures.right_wall,
                 }),
                 new Component(() => new THREE.PointLight(0x987656, 0.3)),
                 new Component(() => {
@@ -80,37 +80,37 @@ export default class Room extends Component {
                 new SceneObject({
                     size: new THREE.Vector2(1, 0.8),
                     position: new THREE.Vector3(1.1, -0.425, 1.85),
-                    texture: textures[4],
+                    texture: textures.chest_sculpture,
                 }),
                 // chaise
                 new SceneObject({
                     size: new THREE.Vector2(1, 1.5),
                     position: new THREE.Vector3(0.7, -1.15, 0.4),
-                    texture: textures[5],
+                    texture: textures.chair,
                 }),
                 // tabouret
                 new SceneObject({
                     size: new THREE.Vector2(0.8, 1),
                     position: new THREE.Vector3(-1, -1.55, 0.3),
-                    texture: textures[6],
+                    texture: textures.stool,
                 }),
                 // tableau
                 new SceneObject({
                     size: new THREE.Vector2(2, 2.4),
                     position: new THREE.Vector3(0, -0.5, -0.5),
-                    texture: textures[7],
+                    texture: textures.painting,
                 }),
                 // gueridon
                 new SceneObject({
                     size: new THREE.Vector2(0.45, 1.3),
                     position: new THREE.Vector3(-1.2, -0.9, -0.25),
-                    texture: textures[8],
+                    texture: textures.table,
                 }),
                 // tableaux
                 new SceneObject({
                     size: new THREE.Vector2(1.4, 1.8),
                     position: new THREE.Vector3(2, -0.85, -2),
-                    texture: textures[9],
+                    texture: textures.back_paintings,
                 }),
                 new Component(
                     () => {
@@ -121,7 +121,7 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [new Interactive(textures[10], textures[11], new THREE.Vector2(0.706, 1))],
+                    [new Interactive(textures.rubens_sketch, textures.rubens_painting, new THREE.Vector2(0.706, 1))],
                 ),
             ],
         )

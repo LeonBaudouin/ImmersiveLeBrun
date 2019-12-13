@@ -4,11 +4,11 @@ export default class EventEmitter<ID, INFO> extends AbstractEventEmitter<
     ID,
     INFO
 > {
-    private static instance: EventEmitter<string, any> = null
+    private static instance: EventEmitter<EVENT, any> = null
 
-    public static getInstance(): EventEmitter<string, any> {
+    public static getInstance(): EventEmitter<EVENT, any> {
         if (EventEmitter.instance === null) {
-            EventEmitter.instance = new EventEmitter<string, any>()
+            EventEmitter.instance = new EventEmitter<EVENT, any>()
         }
         return EventEmitter.instance
     }

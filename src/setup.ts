@@ -2,10 +2,7 @@ import ThreeScene from './classes/Core/ThreeScene'
 import * as THREE from 'three'
 import Component from './classes/Core/Component'
 import OrbitControls from 'orbit-controls-es6'
-import {
-    CSS3DRenderer,
-    CSS3DObject,
-} from 'three/examples/jsm/renderers/CSS3DRenderer'
+import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
 import Room from './classes/Components/Room'
@@ -40,32 +37,30 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 
 export default function Load() {
     TextureLoader.load(
-        [
-            'room/mur_du_fond_v01.png',
-            'room/Sol_sombre_v03.jpg',
-            'room/mur_02.jpg',
-            'room/mur_du_fond_cadre_v01.png',
-            'room/scene_01_premier_plan_v01.png',
-            'room/scene_01_chaise_v01.png',
-            'room/scene_01_tabouret_v01.png',
-            'room/3_tableau.png',
-            'room/4_gueridon.png',
-            'room/5_tableaux.png',
-            'interactive/rubens_esquisse.png',
-            'interactive/rubens.png',
-        ],
+        {
+            front_wall: 'room/mur_du_fond_v01.png',
+            floor: 'room/Sol_sombre_v03.png',
+            left_wall: 'room/mur_02.jpg',
+            right_wall: 'room/mur_du_fond_cadre_v01.png',
+            chest_sculpture: 'room/scene_01_premier_plan_v01.png',
+            chair: 'room/scene_01_chaise_v01.png',
+            stool: 'room/scene_01_tabouret_v01.png',
+            painting: 'room/3_tableau.png',
+            table: 'room/4_gueridon.png',
+            back_paintings: 'room/5_tableaux.png',
+            rubens_sketch: 'interactive/rubens_esquisse.png',
+            rubens_painting: 'interactive/rubens.png',
+        },
         './assets/',
     ).then(Setup)
 }
 
-function Setup(textures: THREE.Texture[]) {
-    textures.map(t => (t.minFilter = THREE.LinearFilter))
-    const camera = new THREE.PerspectiveCamera(
-        50,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000,
-    )
+function Setup(textures: { [name: string]: THREE.Texture }) {
+    Object.keys(textures)
+        .map(key => textures[key])
+        .map(t => (t.minFilter = THREE.LinearFilter))
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0.2, 1.6, 3)
     camera.rotateX(-0.05)
 
@@ -87,10 +82,7 @@ function Setup(textures: THREE.Texture[]) {
 
     const components = [
         new Component(() => {
-            const mesh = new THREE.Mesh(
-                new THREE.PlaneGeometry(1000, 1000),
-                new THREE.MeshBasicMaterial(),
-            )
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
             return mesh
         }, [new InteractiveShader()]),
@@ -98,11 +90,7 @@ function Setup(textures: THREE.Texture[]) {
         new Component(() => new THREE.AmbientLight(0x777777, 0.5)),
     ]
 
-    const webGlScene = new ThreeScene(
-        new Component(() => camera, [new CameraMouseFollow()]),
-        webGLrenderer,
-        components,
-    )
+    const webGlScene = new ThreeScene(new Component(() => camera, [new CameraMouseFollow()]), webGLrenderer, components)
 
     const cssComponents = [
         new Component(() => {
@@ -110,10 +98,10 @@ function Setup(textures: THREE.Texture[]) {
             obj.position.set(0, 0, 0)
             obj.scale.set(0.005, 0.005, 0.005)
 
-            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, (name) => {
+            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, name => {
                 console.log(name, obj)
             })
-            
+
             return obj
         }, [
             (object3d: THREE.Object3D, time: number) => {
@@ -122,11 +110,7 @@ function Setup(textures: THREE.Texture[]) {
         ]),
     ]
 
-    const CSS3DScene = new ThreeScene(
-        new Component(() => camera),
-        CSS3DRenderer,
-        cssComponents,
-    )
+    const CSS3DScene = new ThreeScene(new Component(() => camera), CSS3DRenderer, cssComponents)
 
     raf([CSS3DScene, webGlScene])
 
