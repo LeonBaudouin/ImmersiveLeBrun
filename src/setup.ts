@@ -112,10 +112,10 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
 
     raf([CSS3DScene, webGlScene])
 
+    document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
     document.querySelector('#enterButton').addEventListener('click', () => {
         document.body.classList.add('start')
     })
- 
     document.body.classList.add('loaded')
 }
 
