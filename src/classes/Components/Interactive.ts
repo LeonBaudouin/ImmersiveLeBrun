@@ -19,7 +19,8 @@ export default class Interactive extends Component {
                 shader.uniforms.painting = { value: painting }
                 shader.uniforms.ratio = { value: ratio }
                 shader.uniforms.mouse = { value: new THREE.Vector2() }
-                shader.uniforms.prog = { value: 0.0 }
+                shader.uniforms.enterProg = { value: 0.0 }
+                shader.uniforms.clickProg = { value: 0.0 }
                 shader.uniforms.time = { value: 0.0 }
 
                 shader.vertexShader = shader.vertexShader.replace(

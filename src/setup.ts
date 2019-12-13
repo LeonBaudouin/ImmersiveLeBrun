@@ -91,7 +91,7 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
         new Component(() => new THREE.AmbientLight(0x777777, 0.5)),
     ]
 
-    const webGlScene = new ThreeScene(new Component(() => camera, [new CameraMouseFollow()]), webGLrenderer, components)
+    const webGlScene = new ThreeScene(new Component(() => camera), webGLrenderer, components)
 
     const cssComponents = [
         new TextInfo({
@@ -102,7 +102,11 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
         }),
     ]
 
-    const CSS3DScene = new ThreeScene(new Component(() => camera), CSS3DRenderer, cssComponents)
+    const CSS3DScene = new ThreeScene(
+        new Component(() => camera, [new CameraMouseFollow()]),
+        CSS3DRenderer,
+        cssComponents,
+    )
 
     raf([CSS3DScene, webGlScene])
 
