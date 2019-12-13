@@ -13,6 +13,7 @@ import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
+import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -66,6 +67,8 @@ function Setup(textures: THREE.Texture[]) {
     )
     camera.position.set(0.2, 1.6, 3)
     camera.rotateX(-0.05)
+
+    EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, console.log)
 
     const webGLrenderer = initWebglRenderer(camera)
     const CSS3DRenderer = initCSS3DRenderer(camera)

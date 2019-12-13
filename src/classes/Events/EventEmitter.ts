@@ -1,19 +1,19 @@
 import AbstractEventEmitter from './AbstractEventEmitter'
-import { EventEmitterInterface } from './EventEmitterInterface'
 
 export default class EventEmitter<ID, INFO> extends AbstractEventEmitter<
     ID,
     INFO
 > {
-    private static instances: Map<string, EventEmitterInterface> = new Map()
+    private static instance: EventEmitter<string, any> = null
 
-    public static getInstance<D, N>(instanceIdentifier: string) {
-        if (!EventEmitter.instances.has(instanceIdentifier)) {
-            EventEmitter.instances.set(
-                instanceIdentifier,
-                new EventEmitter<D, N>(),
-            )
+    public static getInstance(): EventEmitter<string, any> {
+        if (EventEmitter.instance === null) {
+            EventEmitter.instance = new EventEmitter<string, any>()
         }
-        return EventEmitter.instances
+        return EventEmitter.instance
     }
+}
+
+export enum EVENT {
+    INTERACTIVE_CLICK = 'INTERACTIVE_CLICK',
 }

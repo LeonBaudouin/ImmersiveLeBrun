@@ -23,7 +23,7 @@ export default class Interactive extends Component {
                 shader.uniforms.texture2 = { value: texture2 }
                 shader.uniforms.ratio = { value: ratio }
                 shader.uniforms.mouse = { value: new THREE.Vector2() }
-                shader.uniforms.prog = { value: 1.0 }
+                shader.uniforms.prog = { value: 0.0 }
                 shader.uniforms.time = { value: 0.0 }
 
                 shader.vertexShader = shader.vertexShader.replace(
@@ -53,6 +53,8 @@ export default class Interactive extends Component {
                 new THREE.PlaneGeometry(ratio.x * 3, ratio.y * 3, 1, 1),
                 material,
             )
+
+            mesh.userData.name = 'TEST'
 
             return mesh
         }
