@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import Wall from './Wall'
 import SceneObject from './SceneObject'
 import Interactive from './Interactive'
+import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class Room extends Component {
     constructor(textures: THREE.Texture[] = []) {
@@ -55,28 +56,14 @@ export default class Room extends Component {
                 }),
                 new Component(() => new THREE.PointLight(0x987656, 0.3)),
                 new Component(() => {
-                    const ligth = new THREE.SpotLight(
-                        0xd9ebed,
-                        0.4,
-                        50,
-                        Math.PI,
-                        2,
-                        2,
-                    )
+                    const ligth = new THREE.SpotLight(0xd9ebed, 0.4, 50, Math.PI, 2, 2)
                     ligth.position.x = -1.9
                     ligth.position.y = 2
                     ligth.position.z = 1.5
                     return ligth
                 }),
                 new Component(() => {
-                    const ligth = new THREE.SpotLight(
-                        0xedecd9,
-                        0.3,
-                        50,
-                        Math.PI,
-                        1.5,
-                        1.5,
-                    )
+                    const ligth = new THREE.SpotLight(0xedecd9, 0.2, 50, Math.PI, 1.5, 1.5)
                     ligth.position.x = -0.5
                     ligth.position.y = 1.8
                     ligth.position.z = 4
@@ -89,30 +76,41 @@ export default class Room extends Component {
                     ligth.position.z = 3.5
                     return ligth
                 }),
+                // premier_plan
                 new SceneObject({
                     size: new THREE.Vector2(1, 0.8),
-                    position: new THREE.Vector3(1.1, -0.425, 1.8),
+                    position: new THREE.Vector3(1.1, -0.425, 1.85),
                     texture: textures[4],
                 }),
+                // chaise
                 new SceneObject({
-                    size: new THREE.Vector2(2.5, 1.3),
-                    position: new THREE.Vector3(0, -1.15, 0.5),
+                    size: new THREE.Vector2(1, 1.5),
+                    position: new THREE.Vector3(0.7, -1.15, 0.4),
                     texture: textures[5],
                 }),
+                // tabouret
+                new SceneObject({
+                    size: new THREE.Vector2(0.8, 1),
+                    position: new THREE.Vector3(-1, -1.55, 0.3),
+                    texture: textures[6],
+                }),
+                // tableau
                 new SceneObject({
                     size: new THREE.Vector2(2, 2.4),
                     position: new THREE.Vector3(0, -0.5, -0.5),
-                    texture: textures[6],
+                    texture: textures[7],
                 }),
+                // gueridon
                 new SceneObject({
                     size: new THREE.Vector2(0.45, 1.3),
                     position: new THREE.Vector3(-1.2, -0.9, -0.25),
-                    texture: textures[7],
+                    texture: textures[8],
                 }),
+                // tableaux
                 new SceneObject({
                     size: new THREE.Vector2(1.4, 1.8),
                     position: new THREE.Vector3(2, -0.85, -2),
-                    texture: textures[8],
+                    texture: textures[9],
                 }),
                 new Component(
                     () => {
@@ -123,13 +121,7 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [
-                        new Interactive(
-                            textures[9],
-                            textures[10],
-                            new THREE.Vector2(0.706, 1),
-                        ),
-                    ],
+                    [new Interactive(textures[10], textures[11], new THREE.Vector2(0.706, 1))],
                 ),
             ],
         )

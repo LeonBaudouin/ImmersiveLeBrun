@@ -42,11 +42,12 @@ export default function Load() {
     TextureLoader.load(
         [
             'room/mur_du_fond_v01.png',
-            'room/Sol_sombre_v03.png',
+            'room/Sol_sombre_v03.jpg',
             'room/mur_02.jpg',
             'room/mur_du_fond_cadre_v01.png',
             'room/scene_01_premier_plan_v01.png',
-            'room/2_siege_fauteuil.png',
+            'room/scene_01_chaise_v01.png',
+            'room/scene_01_tabouret_v01.png',
             'room/3_tableau.png',
             'room/4_gueridon.png',
             'room/5_tableaux.png',
@@ -67,8 +68,6 @@ function Setup(textures: THREE.Texture[]) {
     )
     camera.position.set(0.2, 1.6, 3)
     camera.rotateX(-0.05)
-
-    EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, console.log)
 
     const webGLrenderer = initWebglRenderer(camera)
     const CSS3DRenderer = initCSS3DRenderer(camera)
@@ -96,7 +95,7 @@ function Setup(textures: THREE.Texture[]) {
             return mesh
         }, [new InteractiveShader()]),
         new Room(textures),
-        new Component(() => new THREE.AmbientLight(0x777777, 0.1)),
+        new Component(() => new THREE.AmbientLight(0x777777, 0.5)),
     ]
 
     const webGlScene = new ThreeScene(
@@ -108,12 +107,17 @@ function Setup(textures: THREE.Texture[]) {
     const cssComponents = [
         new Component(() => {
             const obj = new CSS3DObject(document.querySelector('#content'))
-            obj.position.set(3, 0, 1)
-            obj.scale.set(0.01, 0.01, 0.01)
+            obj.position.set(0, 0, 0)
+            obj.scale.set(0.005, 0.005, 0.005)
+
+            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, (name) => {
+                console.log(name, obj)
+            })
+            
             return obj
         }, [
             (object3d: THREE.Object3D, time: number) => {
-                object3d.position.y = Math.sin(time * 0.005) * 0.5
+                object3d.position.y = 2 + Math.sin(time * 0.005) * 0.05
             },
         ]),
     ]
