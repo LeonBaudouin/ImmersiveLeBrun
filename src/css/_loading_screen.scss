@@ -1,21 +1,106 @@
-.loaded {
+body.loaded {
+    .loading {
+        display: none;
+    }
+
+    #enterButton {
+        opacity: 1;
+        cursor: pointer;
+    }
+}
+
+.start {
+    .css3d-container {
+        display: flex;
+    }
+
     .loading-screen {
         display: none;
     }
 }
 
-.loading {
-    .css3d-container {
-        display: none;
-    }
+.css3d-container {
+    display: none;
 }
 
 .loading-screen {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     position: relative;
     height: 100%;
     z-index: 1;
+    background-image: url('../assets/loading/Porte_v01.jpg');
     background-color: rgb(161, 137, 105);
+    background-size: cover;
+    padding: 1rem;
+
+    #enterButton {
+        position: absolute;
+        top: 40%;
+        left: 38%;
+        display: block;
+        opacity: 0;
+        background: url(../assets/loading/Clef_v01.png) no-repeat center;
+        background-size: contain;
+        height: 250px;
+        width: 150px;
+        transition: all .2s ease-in-out;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    .loading {
+
+        p {
+            margin: 5px 0;
+            font-size: 20px;
+            color: #f8e1af;
+        }
+    }
+
+    
 }
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 0 28px;
+
+    div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        margin: 4px;
+        border: 3px solid #e6ddca;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #e6ddca transparent transparent transparent;
+
+        &:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        &:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+        &:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+    }
+  } 
+
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
