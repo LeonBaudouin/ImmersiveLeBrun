@@ -42,12 +42,6 @@ export default class Room extends Component {
                     texture: textures.ceil,
                 }),
                 // Left Wall
-                // new Wall({
-                //     size: new THREE.Vector2(size.z, size.y),
-                //     position: new THREE.Vector3(-size.x / 2, 0, 0),
-                //     rotation: new THREE.Euler(0, Math.PI / 2, 0),
-                //     texture: textures.left_wall,
-                // }),
                 new Wall({
                     size: new THREE.Vector2(1.5, size.y),
                     position: new THREE.Vector3(-size.x / 2, 0, -1.5),
@@ -66,6 +60,24 @@ export default class Room extends Component {
                     rotation: new THREE.Euler(0, Math.PI / 2, 0),
                     texture: textures.left_wall_window,
                 }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-size.x / 2 + 0.01, 0.32, -1.65)
+                        object.rotation.set(0, Math.PI / 2, 0)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive(
+                            'Rubens',
+                            textures.rubens_sketch,
+                            textures.rubens_painting,
+                            new THREE.Vector2(0.65, 1.27),
+                        ),
+                    ],
+                ),
                 // Right Wall
                 new Wall({
                     size: new THREE.Vector2(size.z, size.y),
@@ -101,11 +113,24 @@ export default class Room extends Component {
                     position: new THREE.Vector3(1, -0.74, 1.85),
                     texture: textures.chest_sculpture_table,
                 }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.6, 0.8),
-                    position: new THREE.Vector3(1.2, -0.68, 1.86),
-                    texture: textures.chest_sculpture,
-                }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(1.2, -0.68, 1.86)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive(
+                            'chest',
+                            textures.chest_sculpture_sketch,
+                            textures.chest_sculpture,
+                            new THREE.Vector2(0.6, 0.8),
+                        ),
+                    ],
+                ),
+                
                 // chaise
                 new SceneObject({
                     size: new THREE.Vector2(0.8, 1.3),
@@ -119,11 +144,24 @@ export default class Room extends Component {
                     texture: textures.stool,
                 }),
                 //palette
-                new SceneObject({
-                    size: new THREE.Vector2(0.45, 0.3),
-                    position: new THREE.Vector3(-1, -1.2, 0.31),
-                    texture: textures.palette,
-                }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-1, -1.2, 0.31)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive(
+                            'chest',
+                            textures.palette_sketch,
+                            textures.palette,
+                            new THREE.Vector2(0.45, 0.3),
+                        ),
+                    ],
+                ),
+
                 // tableau
                 new SceneObject({
                     size: new THREE.Vector2(2, 2.4),
@@ -141,11 +179,23 @@ export default class Room extends Component {
                     position: new THREE.Vector3(-1.2, -1.2, -0.25),
                     texture: textures.table,
                 }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.3, 0.6),
-                    position: new THREE.Vector3(-1.18, -0.7, -0.24),
-                    texture: textures.brushs,
-                }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-1.18, -0.7, -0.24)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive(
+                            'chest',
+                            textures.brushs_sketch,
+                            textures.brushs,
+                            new THREE.Vector2(0.3, 0.6),
+                        ),
+                    ],
+                ),
                 // tableaux
                 new SceneObject({
                     size: new THREE.Vector2(1.45, 1.25),
@@ -162,7 +212,6 @@ export default class Room extends Component {
                     () => {
                         const object = new THREE.Object3D()
                         object.position.set(0, -0.4, -0.49)
-                        object.scale.set(0.5, 0.5, 0.5)
                         return object
                     },
                     [],
@@ -172,7 +221,7 @@ export default class Room extends Component {
                             'Rubens',
                             textures.peace_sketch,
                             textures.peace_painting,
-                            new THREE.Vector2(1.2, 0.8),
+                            new THREE.Vector2(1.7, 1.2),
                         ),
                     ],
                 ),

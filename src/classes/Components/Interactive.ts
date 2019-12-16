@@ -12,7 +12,7 @@ export default class Interactive extends Component {
         let materialShader: THREE.Shader
 
         const gen = () => {
-            const material = new THREE.MeshLambertMaterial({ map: sketch })
+            const material = new THREE.MeshLambertMaterial({ map: sketch, transparent: true })
 
             material.onBeforeCompile = function(shader: THREE.Shader) {
                 shader.uniforms.sketch = { value: sketch }
@@ -40,7 +40,7 @@ export default class Interactive extends Component {
                 materialShader = shader
             }
 
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(ratio.x * 3, ratio.y * 3, 1, 1), material)
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(ratio.x, ratio.y, 1, 1), material)
 
             mesh.userData.name = name
 
