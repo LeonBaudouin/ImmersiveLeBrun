@@ -39,20 +39,28 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 export default function Load() {
     TextureLoader.load(
         {
-            front_wall: 'room/mur_du_fond_v01.png',
+            front_wall: 'room/mur_porte_01.jpg',
             floor: 'room/Sol_sombre_v03.png',
-            left_wall: 'room/mur_02.jpg',
-            right_wall: 'room/mur_du_fond_cadre_v01.png',
-            chest_sculpture: 'room/scene_01_premier_plan_v01.png',
+            ceil: 'room/plafond_v02.jpg',
+            left_wall_window: 'room/Porte_v01.jpg',
+            left_wall_painting: 'room/mur_de_gauche_avec_rubens_v01.jpg', 
+            left_wall_corner: 'room/mur_de_gauche_recoin_v01.jpg',
+            right_wall: 'room/mur_du_droite_v01.jpg',
+            chest_sculpture: 'room/scene_01_sculture_v01.png',
+            chest_sculpture_table: 'room/scene_01_premier_plan_v02.png',
             chair: 'room/scene_01_chaise_v01.png',
-            stool: 'room/scene_01_tabouret_v01.png',
+            stool: 'room/scene_01_Tabouret_seul_v01.png',
+            palette: 'room/scene_01_palette_v01.png',
             painting: 'room/scene_01_chevalet_v01.png',
             painting_front: 'room/scene_01_chevalet_barre_milieu_v01.png',
             table: 'room/scene_01_petit_meuble_v01.png',
             brushs: 'room/scene_01_pinceaux_v01.png',
             back_paintings: 'room/scene_01_toile_fond_v01.png',
+            status: 'room/scene_01_statue_fond_v02.png',
             rubens_sketch: 'interactive/rubens_esquisse.png',
             rubens_painting: 'interactive/rubens.png',
+            peace_painting: 'room/elisabeth_peinture_v01.jpg',
+            peace_sketch: 'room/elisabeth_v01.jpg',
         },
         './assets/',
     ).then(Setup)
@@ -90,7 +98,7 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
             return mesh
         }, [new InteractiveShader()]),
         new Room(textures),
-        new Component(() => new THREE.AmbientLight(0x777777, 0.5)),
+        new Component(() => new THREE.AmbientLight(0x777777, 0.6)),
     ]
 
     const webGlScene = new ThreeScene(new Component(() => camera), webGLrenderer, components)
