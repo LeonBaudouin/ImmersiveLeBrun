@@ -1,3 +1,7 @@
+import InteractiveShader from '../Controller/InteractiveShader'
+import * as THREE from 'three'
+
 export default interface InteractiveClickInfo {
-    name: string
+    controller: InteractiveShader
+    component: THREE.Object3D
 }
