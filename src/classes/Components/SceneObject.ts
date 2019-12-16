@@ -9,13 +9,15 @@ export default class SceneObject extends Component {
         texture = null,
         color = null,
         transparent = true,
+        depthWrite = true,
     }) {
         super(() => {
             const geometry = new THREE.PlaneGeometry(size.x, size.y)
             const material = new THREE.MeshLambertMaterial({
                 color: color,
                 map: texture,
-                transparent: transparent ? true : false
+                transparent: transparent ? true : false,
+                depthWrite: depthWrite ? true : false,
             })
             const mesh = new THREE.Mesh(geometry, material)
             mesh.position.set(position.x, position.y, position.z)

@@ -223,6 +223,7 @@ export default class Room extends Component {
                     size: new THREE.Vector2(0.75, 2.1),
                     position: new THREE.Vector3(-2.4, -0.845, -1.8),
                     texture: textures.status,
+                    depthWrite: false,
                 }),
                 new Component(
                     () => {
@@ -241,6 +242,12 @@ export default class Room extends Component {
                         ),
                     ],
                 ),
+                new SceneObject({
+                    size: new THREE.Vector2(1, 1.5),
+                    position: new THREE.Vector3(-2.5, -size.y / 2+0.001, -1.45),
+                    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                    texture: textures.floor_shadow,
+                }),
             ],
         )
     }

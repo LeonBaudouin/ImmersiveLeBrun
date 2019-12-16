@@ -41,7 +41,8 @@ export default function Load() {
     return TextureLoader.load(
         {
             front_wall: 'room/mur_porte_01.jpg',
-            floor: 'room/Sol_sombre_v03.png',
+            floor: 'room/sol_v05.jpg',
+            floor_shadow: 'room/ombre.png',
             ceil: 'room/plafond_v02.jpg',
             left_wall_window: 'room/Porte_v01.jpg',
             left_wall_painting: 'room/mur_de_gauche_avec_rubens_v01.jpg',
