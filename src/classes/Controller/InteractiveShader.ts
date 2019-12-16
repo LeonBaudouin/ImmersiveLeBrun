@@ -4,15 +4,14 @@ import Raycaster from '../Events/Raycaster'
 import { TweenLite, Power4, Power2 } from 'gsap/all'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 import InteractiveClickInfo from '../Events/InteractiveClickInfo'
+import SmoothedPoint from '../Utils/SmoothPoint'
 
 export default class InteractiveShader extends AbstractController {
     private eventEmitter: EventEmitter<string, InteractiveClickInfo>
 
-    private mouse: THREE.Vector2 = new THREE.Vector2()
-    private targetMouse: THREE.Vector2 = new THREE.Vector2()
     private dMultTween: any
     private isClicked: boolean = false
-    private speed: THREE.Vector2
+    private smoother: SmoothedPoint
 
     private getShader: () => THREE.Shader
 
@@ -21,7 +20,7 @@ export default class InteractiveShader extends AbstractController {
 
     constructor(getShader: () => THREE.Shader = () => null, speed: THREE.Vector2 = new THREE.Vector2(0.1, 0.1)) {
         super()
-        this.speed = speed
+        this.smoother = new SmoothedPoint(speed, new THREE.Vector2(0, 0))
         this.getShader = getShader
         this.eventEmitter = EventEmitter.getInstance()
     }
@@ -30,7 +29,7 @@ export default class InteractiveShader extends AbstractController {
         Raycaster.getInstance().Subscribe(component, ({ order, uv }) => {
             if (order == 0) {
                 InteractiveShader.hoveredObject = component
-                this.targetMouse = uv
+                this.smoother.setTarget(uv)
             }
         })
 
@@ -49,18 +48,17 @@ export default class InteractiveShader extends AbstractController {
 
     public update(component: THREE.Object3D, time: number) {
         if (this.getShader()) {
-            this.mouse.set(
-                this.mouse.x + (this.targetMouse.x - this.mouse.x) * this.speed.x,
-                this.mouse.y + (this.targetMouse.y - this.mouse.y) * this.speed.y,
-            )
+            this.smoother.Smooth()
+            const newMouse = this.smoother.getPoint()
+
             const {
                 uniforms: { time: utime, mouse },
             } = this.getShader()
 
             utime.value = time
             if (!this.isClicked) {
-                mouse.value.x = this.mouse.x
-                mouse.value.y = this.mouse.y
+                mouse.value.x = newMouse.x
+                mouse.value.y = newMouse.y
             }
 
             const isHovered = component === InteractiveShader.hoveredObject

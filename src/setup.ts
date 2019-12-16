@@ -10,8 +10,9 @@ import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
-import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TextInfo from './classes/Components/TextInfo'
+import SmoothedPoint from './classes/Utils/SmoothPoint'
+import NormalizePoint from './classes/Utils/NormalizePoint'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -110,17 +111,32 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
         cssComponents,
     )
 
-    raf([CSS3DScene, webGlScene])
-
-    document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
     document.querySelector('#enterButton').addEventListener('click', () => {
         document.body.classList.add('start')
     })
     document.body.classList.add('loaded')
+
+    const smoother = new SmoothedPoint(new THREE.Vector2(0.01, 0.01), new THREE.Vector2(0, 0))
+    const loadingScreen = document.querySelector('.loading-screen')
+    loadingScreen.addEventListener('mousemove', ({ clientX, clientY }: MouseEvent) => {
+        smoother.setTarget({ x: clientX, y: clientY })
+    })
+    const smoothCb = () => {
+        smoother.Smooth()
+        const point = smoother.getPoint()
+        NormalizePoint(point)
+        ;(<HTMLElement>loadingScreen).style.setProperty('--offset-x', point.x * 40 + 'px')
+        ;(<HTMLElement>loadingScreen).style.setProperty('--offset-y', point.y * 20 + 'px')
+    }
+
+    raf([CSS3DScene, webGlScene], [smoothCb])
+
+    document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
 }
 
-function raf(scenes: ThreeScene[]) {
-    requestAnimationFrame(() => raf(scenes))
+function raf(scenes: ThreeScene[], cb: Function[] = []) {
+    requestAnimationFrame(() => raf(scenes, cb))
+    cb.forEach(c => c())
     scenes.forEach(scene => {
         scene.update()
     })
