@@ -10,8 +10,9 @@ import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
-import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TextInfo from './classes/Components/TextInfo'
+import SmoothedPoint from './classes/Utils/SmoothPoint'
+import NormalizePoint from './classes/Utils/NormalizePoint'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -37,7 +38,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 }
 
 export default function Load() {
-    TextureLoader.load(
+    return TextureLoader.load(
         {
             front_wall: 'room/mur_porte_01.jpg',
             floor: 'room/Sol_sombre_v03.png',
@@ -66,7 +67,7 @@ export default function Load() {
     ).then(Setup)
 }
 
-function Setup(textures: { [name: string]: THREE.Texture }) {
+function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb: Function } {
     Object.keys(textures)
         .map(key => textures[key])
         .map(t => (t.minFilter = THREE.LinearFilter))
@@ -118,18 +119,21 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
         cssComponents,
     )
 
-    raf([CSS3DScene, webGlScene])
-
-    document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
     document.querySelector('#enterButton').addEventListener('click', () => {
         document.body.classList.add('start')
     })
     document.body.classList.add('loaded')
-}
 
-function raf(scenes: ThreeScene[]) {
-    requestAnimationFrame(() => raf(scenes))
-    scenes.forEach(scene => {
-        scene.update()
-    })
+    const scenes = [CSS3DScene, webGlScene]
+
+    return {
+        raf: () => {
+            scenes.forEach(scene => {
+                scene.update()
+            })
+        },
+        cb: () => {
+            document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
+        },
+    }
 }

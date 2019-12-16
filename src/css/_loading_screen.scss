@@ -24,17 +24,26 @@ body.loaded {
 }
 
 .loading-screen {
+    --offset-x: 0px;
+    --offset-y: 0px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    position: relative;
-    height: 100%;
-    z-index: 1;
+
+    position: absolute;
+    height: 110%;
+    width: 110%;
+
     background-image: url('../assets/loading/Porte_v01.jpg');
     background-color: rgb(161, 137, 105);
     background-size: cover;
-    padding: 1rem;
+
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate3d(calc(-50% + var(--offset-x)), calc(-50% + var(--offset-y)), 0);
 
     #enterButton {
         position: absolute;
@@ -46,7 +55,7 @@ body.loaded {
         background-size: contain;
         height: 250px;
         width: 150px;
-        transition: all .2s ease-in-out;
+        transition: all 0.2s ease-in-out;
 
         &:hover {
             transform: scale(1.2);
@@ -54,15 +63,12 @@ body.loaded {
     }
 
     .loading {
-
         p {
             margin: 5px 0;
             font-size: 20px;
             color: #f8e1af;
         }
     }
-
-    
 }
 
 .lds-ring {
@@ -94,13 +100,13 @@ body.loaded {
             animation-delay: -0.15s;
         }
     }
-  } 
+}
 
-  @keyframes lds-ring {
+@keyframes lds-ring {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}
