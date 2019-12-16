@@ -1,9 +1,6 @@
 import AbstractEventEmitter from './AbstractEventEmitter'
 
-export default class EventEmitter<ID, INFO> extends AbstractEventEmitter<
-    ID,
-    INFO
-> {
+export default class EventEmitter<ID, INFO> extends AbstractEventEmitter<ID, INFO> {
     private static instance: EventEmitter<EVENT, any> = null
 
     public static getInstance(): EventEmitter<EVENT, any> {
@@ -16,4 +13,6 @@ export default class EventEmitter<ID, INFO> extends AbstractEventEmitter<
 
 export enum EVENT {
     INTERACTIVE_CLICK = 'INTERACTIVE_CLICK',
+    INTERACTIVE_MOUSEENTER = 'INTERACTIVE_MOUSEENTER',
+    INTERACTIVE_MOUSELEAVE = 'INTERACTIVE_MOUSELEAVE',
 }

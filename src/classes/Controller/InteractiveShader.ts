@@ -64,6 +64,12 @@ export default class InteractiveShader extends AbstractController {
             const isHovered = component === InteractiveShader.hoveredObject
 
             if (this.lastIsHovered !== isHovered || this.isClicked) {
+                if (this.isClicked) {
+                    this.eventEmitter.Emit(
+                        isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE,
+                        component.userData.name,
+                    )
+                }
                 this.HoveredHasChanged(isHovered || this.isClicked)
             }
 

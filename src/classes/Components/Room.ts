@@ -8,7 +8,7 @@ import EventEmitter, { EVENT } from '../Events/EventEmitter'
 export default class Room extends Component {
     constructor(textures: { [name: string]: THREE.Texture } = {}) {
         const height = 3.5
-        const width = height * 1.7134637 
+        const width = height * 1.7134637
         const size = new THREE.Vector3(width, height, 4.5)
 
         super(

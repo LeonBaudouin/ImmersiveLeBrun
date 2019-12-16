@@ -44,7 +44,7 @@ export default function Load() {
             floor: 'room/Sol_sombre_v03.png',
             ceil: 'room/plafond_v02.jpg',
             left_wall_window: 'room/Porte_v01.jpg',
-            left_wall_painting: 'room/mur_de_gauche_avec_rubens_v01.jpg', 
+            left_wall_painting: 'room/mur_de_gauche_avec_rubens_v01.jpg',
             left_wall_corner: 'room/mur_de_gauche_recoin_v01.jpg',
             right_wall: 'room/mur_du_droite_v01.jpg',
             chest_sculpture: 'room/scene_01_sculture_v01.png',
@@ -122,11 +122,6 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         cssComponents,
     )
 
-    document.querySelector('#enterButton').addEventListener('click', () => {
-        document.body.classList.add('start')
-    })
-    document.body.classList.add('loaded')
-
     const scenes = [CSS3DScene, webGlScene]
 
     return {
@@ -136,7 +131,11 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             })
         },
         cb: () => {
-            document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
+            document.querySelector('#enterButton').addEventListener('click', () => {
+                document.body.classList.add('start')
+            })
+            document.body.classList.add('loaded')
+            document.querySelector('.css3d-canvas .preventClick').addEventListener('click', e => e.stopPropagation())
         },
     }
 }

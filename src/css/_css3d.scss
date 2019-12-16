@@ -1,9 +1,9 @@
-.css3d-container {
-    display: flex;
-    align-content: center;
-    justify-items: center;
-    background-color: rgb(204, 122, 108);
+.css3d-textinfo {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: white;
+    font-family: 'exo', sans-serif;
+    background-image: url('../assets/ui/fond_bleu.png');
     padding: 1rem;
     max-width: 300px;
-    text-align: center;
 }

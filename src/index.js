@@ -6,7 +6,7 @@ let threeRaf = () => {}
 
 Setup().then(({ cb, raf }) => {
     threeRaf = raf
-    cb()
+    setTimeout(cb, 0)
 })
 
 const smoothRaf = ui()
