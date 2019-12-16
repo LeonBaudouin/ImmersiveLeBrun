@@ -137,11 +137,21 @@ export default class Room extends Component {
                     position: new THREE.Vector3(0.7, -1.15, 0.4),
                     texture: textures.chair,
                 }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.9, 1.4),
+                    position: new THREE.Vector3(0.725, -1.15, 0.25),
+                    texture: textures.chair_leg,
+                }),
                 // tabouret
                 new SceneObject({
                     size: new THREE.Vector2(0.8, 0.7),
                     position: new THREE.Vector3(-1, -1.425, 0.3),
                     texture: textures.stool,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.9, 0.8),
+                    position: new THREE.Vector3(-1, -1.45, 0.2),
+                    texture: textures.stool_leg,
                 }),
                 //palette
                 new Component(
@@ -162,11 +172,17 @@ export default class Room extends Component {
                     ],
                 ),
 
-                // tableau
+                // chevalet
                 new SceneObject({
                     size: new THREE.Vector2(2, 2.4),
                     position: new THREE.Vector3(0, -0.5, -0.5),
                     texture: textures.painting,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(2, 1),
+                    position: new THREE.Vector3(0, -1.4, -0.7),
+                    rotation: new THREE.Euler(0.4, 0, 0),
+                    texture: textures.painting_leg,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(2, 2.4),

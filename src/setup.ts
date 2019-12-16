@@ -50,11 +50,14 @@ export default function Load() {
             chest_sculpture: 'room/scene_01_sculture_v01.png',
             chest_sculpture_sketch: 'room/scene_01_esquisse_sculture_v01.png',
             chest_sculpture_table: 'room/scene_01_premier_plan_v02.png',
-            chair: 'room/scene_01_chaise_v01.png',
-            stool: 'room/scene_01_Tabouret_seul_v01.png',
+            chair: 'room/01_chaise.png',
+            chair_leg: 'room/02_chaise.png',
+            stool: 'room/01_tabouret.png',
+            stool_leg: 'room/02_tabouret.png',
             palette: 'room/scene_01_palette_v01.png',
             palette_sketch: 'room/scene_01_esquisse_palette_v01.png',
-            painting: 'room/scene_01_chevalet_v01.png',
+            painting: 'room/01_chevalet.png',
+            painting_leg: 'room/02_chevalet.png',
             painting_front: 'room/scene_01_chevalet_barre_milieu_v01.png',
             table: 'room/scene_01_petit_meuble_v01.png',
             brushs: 'room/scene_01_pinceaux_v01.png',
@@ -102,7 +105,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             return mesh
         }, [new InteractiveShader()]),
         new Room(textures),
-        new Component(() => new THREE.AmbientLight(0x777777, 0.6)),
+        new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
     const webGlScene = new ThreeScene(new Component(() => camera), webGLrenderer, components)
