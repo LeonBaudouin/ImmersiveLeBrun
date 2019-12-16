@@ -38,7 +38,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 }
 
 export default function Load() {
-    TextureLoader.load(
+    return TextureLoader.load(
         {
             front_wall: 'room/mur_du_fond_v01.png',
             floor: 'room/Sol_sombre_v03.png',
@@ -59,7 +59,7 @@ export default function Load() {
     ).then(Setup)
 }
 
-function Setup(textures: { [name: string]: THREE.Texture }) {
+function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb: Function } {
     Object.keys(textures)
         .map(key => textures[key])
         .map(t => (t.minFilter = THREE.LinearFilter))
@@ -116,28 +116,16 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
     })
     document.body.classList.add('loaded')
 
-    const smoother = new SmoothedPoint(new THREE.Vector2(0.01, 0.01), new THREE.Vector2(0, 0))
-    const loadingScreen = document.querySelector('.loading-screen')
-    loadingScreen.addEventListener('mousemove', ({ clientX, clientY }: MouseEvent) => {
-        smoother.setTarget({ x: clientX, y: clientY })
-    })
-    const smoothCb = () => {
-        smoother.Smooth()
-        const point = smoother.getPoint()
-        NormalizePoint(point)
-        ;(<HTMLElement>loadingScreen).style.setProperty('--offset-x', point.x * 40 + 'px')
-        ;(<HTMLElement>loadingScreen).style.setProperty('--offset-y', point.y * 20 + 'px')
+    const scenes = [CSS3DScene, webGlScene]
+
+    return {
+        raf: () => {
+            scenes.forEach(scene => {
+                scene.update()
+            })
+        },
+        cb: () => {
+            document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
+        },
     }
-
-    raf([CSS3DScene, webGlScene], [smoothCb])
-
-    document.querySelector('.css3d-canvas .css3d-container').addEventListener('click', e => e.stopPropagation())
-}
-
-function raf(scenes: ThreeScene[], cb: Function[] = []) {
-    requestAnimationFrame(() => raf(scenes, cb))
-    cb.forEach(c => c())
-    scenes.forEach(scene => {
-        scene.update()
-    })
 }
