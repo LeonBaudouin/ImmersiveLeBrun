@@ -130,7 +130,7 @@ export default class Room extends Component {
                         ),
                     ],
                 ),
-                
+
                 // chaise
                 new SceneObject({
                     size: new THREE.Vector2(0.8, 1.3),
@@ -162,14 +162,7 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [
-                        new Interactive(
-                            'chest',
-                            textures.palette_sketch,
-                            textures.palette,
-                            new THREE.Vector2(0.45, 0.3),
-                        ),
-                    ],
+                    [new Interactive('chest', textures.palette_sketch, textures.palette, new THREE.Vector2(0.45, 0.3))],
                 ),
 
                 // chevalet
@@ -203,14 +196,7 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [
-                        new Interactive(
-                            'chest',
-                            textures.brushs_sketch,
-                            textures.brushs,
-                            new THREE.Vector2(0.3, 0.6),
-                        ),
-                    ],
+                    [new Interactive('chest', textures.brushs_sketch, textures.brushs, new THREE.Vector2(0.3, 0.6))],
                 ),
                 // tableaux
                 new SceneObject({
@@ -235,7 +221,7 @@ export default class Room extends Component {
                     {},
                     [
                         new Interactive(
-                            'Rubens',
+                            'LaPaix',
                             textures.peace_sketch,
                             textures.peace_painting,
                             new THREE.Vector2(1.7, 1.2),

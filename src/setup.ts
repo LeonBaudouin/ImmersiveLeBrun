@@ -13,6 +13,7 @@ import TextureLoader from './classes/Core/TextureLoader'
 import TextInfo from './classes/Components/TextInfo'
 import SmoothedPoint from './classes/Utils/SmoothPoint'
 import NormalizePoint from './classes/Utils/NormalizePoint'
+import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -113,10 +114,14 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
 
     const cssComponents = [
         new TextInfo({
-            position: new THREE.Vector3(-1.2, -0.9, 0.25),
-            elementId: 'Rubens',
-            text:
-                'Lorem c moche dolor sit amet consectetur c moche elit. Facilis iure neque corrupti quis voluptate, c moche, fugiat obcaecati c moche c moche ab vero, doloremque beatae, c moche natus? Cum, c moche. At, cum molestiae! Vero?',
+            position: new THREE.Vector3(2, 1.8, -0.7),
+            childPos: new THREE.Vector3(0, -1, 1),
+            elementId: 'JBLeBrun',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(1.2, 1.8, 0.1),
+            childPos: new THREE.Vector3(0, -1, 1),
+            elementId: 'LaPaix',
         }),
     ]
 
@@ -139,7 +144,18 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
                 document.body.classList.add('start')
             })
             document.body.classList.add('loaded')
-            document.querySelector('.css3d-canvas .preventClick').addEventListener('click', e => e.stopPropagation())
+            const preventClick = document.querySelectorAll('.preventClick')
+            preventClick.forEach(elem => {
+                elem.addEventListener('click', e => e.stopPropagation())
+            })
+            EventEmitter.getInstance().Subscribe(
+                EVENT.INTERACTIVE_MOUSEENTER,
+                () => (document.body.style.cursor = 'pointer'),
+            )
+            EventEmitter.getInstance().Subscribe(
+                EVENT.INTERACTIVE_MOUSELEAVE,
+                () => (document.body.style.cursor = 'default'),
+            )
         },
     }
 }

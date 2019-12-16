@@ -40,7 +40,8 @@ export default class InteractiveShader extends AbstractController {
                     this.Clicked()
                 }
                 this.eventEmitter.Emit(EVENT.INTERACTIVE_CLICK, {
-                    name: component.userData.name,
+                    component,
+                    controller: this,
                 })
             }
         })
@@ -65,10 +66,10 @@ export default class InteractiveShader extends AbstractController {
 
             if (this.lastIsHovered !== isHovered || this.isClicked) {
                 if (this.isClicked) {
-                    this.eventEmitter.Emit(
-                        isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE,
-                        component.userData.name,
-                    )
+                    this.eventEmitter.Emit(isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE, {
+                        component,
+                        controller: this,
+                    })
                 }
                 this.HoveredHasChanged(isHovered || this.isClicked)
             }

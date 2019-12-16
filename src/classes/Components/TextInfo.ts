@@ -4,33 +4,44 @@ import { CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class TextInfo extends Component {
-    constructor({ position = new THREE.Vector3(), elementId = '', text = '', elementClass = '' }) {
-        super(() => {
-            const elem = document.createElement('div')
-            elem.id = elementId
-            elem.className = 'css3d-textinfo'
-            elem.classList.add('preventClick')
-            if (elementClass !== '') elem.classList.add(elementClass)
-            elem.style.display = 'none'
-            elem.innerHTML = text
+    constructor({ elementId, position = new THREE.Vector3(), childPos = new THREE.Vector3() }) {
+        const elem = <HTMLElement>document.querySelector('#' + elementId)
+        const children = []
 
-            const obj = new CSS3DObject(elem)
-            obj.position.set(position.x, position.y, position.z)
-            obj.scale.set(0.005, 0.005, 0.005)
-
-            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, e => {
-                if (e.name === elementId) {
-                    elem.style.display = ''
-                } else {
-                    elem.style.display = 'none'
-                }
+        const quote = <HTMLElement>elem.querySelector('.css3d-quote')
+        if (quote) {
+            elem.querySelector('.css3d-quoteicon').addEventListener('click', e => {
+                e.stopPropagation()
+                quote.classList.toggle('show')
             })
+            children.push(
+                new Component(() => {
+                    const obj = new CSS3DObject(quote)
+                    obj.position.set(childPos.x / 0.005, childPos.y / 0.005, childPos.z / 0.005)
+                    return obj
+                }),
+            )
+        }
 
-            return obj
-        }, [
-            (object3d: THREE.Object3D, time: number) => {
-                object3d.position.y = 2 + Math.sin(time * 0.005) * 0.05
+        EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
+            if (component.userData.name === elementId) {
+                elem.classList.add('show')
+            } else {
+                elem.classList.remove('show')
+                if (quote) quote.classList.remove('show')
+            }
+        })
+
+        super(
+            () => {
+                const obj = new CSS3DObject(elem)
+                obj.position.set(position.x, position.y, position.z)
+                obj.scale.set(0.0025, 0.0025, 0.0025)
+                return obj
             },
-        ])
+            [],
+            {},
+            children,
+        )
     }
 }

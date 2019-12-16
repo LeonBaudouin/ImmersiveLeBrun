@@ -1,9 +1,61 @@
-.css3d-textinfo {
-    font-weight: 400;
-    font-size: 0.8rem;
-    color: white;
+.css3d-div {
     font-family: 'exo', sans-serif;
+    opacity: 0;
+    transition: all ease-in 0.7s 0.3s;
+    visibility: hidden;
+
+    p {
+        margin: 0;
+        &:first-of-type {
+            margin-bottom: 1rem;
+        }
+    }
+
+    em {
+        font-weight: 300;
+    }
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.css3d-textinfo {
+    color: #f1ede5;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.6;
+
+    padding: 2rem;
+    max-width: 540px;
+
     background-image: url('../assets/ui/fond_bleu.png');
-    padding: 1rem;
-    max-width: 300px;
+}
+
+.css3d-quote {
+    color: #33322e;
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.6;
+
+    padding: 1.4rem;
+    max-width: 440px;
+
+    background-image: url('../assets/ui/fond_citation.png');
+}
+
+.css3d-quoteicon {
+    display: block;
+    width: 6rem;
+    position: absolute;
+    bottom: 0.4rem;
+    right: -2rem;
+    cursor: pointer;
+    transform: rotate(0);
+    transition: all ease 0.2s;
+
+    &:hover {
+        transform: rotate(5deg);
+    }
 }
