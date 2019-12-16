@@ -63,8 +63,8 @@ function Setup(textures: { [name: string]: THREE.Texture }) {
         .map(key => textures[key])
         .map(t => (t.minFilter = THREE.LinearFilter))
 
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.set(0.2, 1.6, 3)
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.set(0.2, 1.25, 2.8)
     camera.rotateX(-0.05)
 
     const webGLrenderer = initWebglRenderer(camera)

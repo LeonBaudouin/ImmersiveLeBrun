@@ -9,7 +9,8 @@ export default class CameraMouseFollow extends AbstractController {
     private lastMouse: THREE.Vector2
     private speed: THREE.Vector2
     private maxRotation: THREE.Vector3
-    public maxMove: THREE.Vector2
+    private maxMove: THREE.Vector2
+    private gui: any
 
     constructor(
         firstMousePosition: THREE.Vector2 = new THREE.Vector2(0, 0),
@@ -18,12 +19,12 @@ export default class CameraMouseFollow extends AbstractController {
         maxMove: THREE.Vector2 = new THREE.Vector2(0.1, 0),
     ) {
         super()
-        const gui: any = new dat.GUI()
-        const rot = gui.addFolder('Rotation')
+        this.gui = new dat.GUI()
+        const rot = this.gui.addFolder('Rotation')
         rot.add(maxRotation, 'x', 0, 0.1)
         rot.add(maxRotation, 'y', 0, 0.1)
         rot.add(maxRotation, 'z', 0, 0.1)
-        const move = gui.addFolder('Position')
+        const move = this.gui.addFolder('Position')
         move.add(maxMove, 'x', -0.3, 0.3)
         move.add(maxMove, 'y', -0.3, 0.3)
         this.maxMove = maxMove
@@ -35,6 +36,10 @@ export default class CameraMouseFollow extends AbstractController {
 
     onMount(object3d: THREE.Object3D) {
         this.basePosition = object3d.position.clone()
+        const basePos = this.gui.addFolder('Base Position')
+        basePos.add(this.basePosition, 'x', -3, 3)
+        basePos.add(this.basePosition, 'y', -3, 3)
+        basePos.add(this.basePosition, 'z', -3, 3)
     }
 
     update(object3d: THREE.Object3D, time: number) {
@@ -44,7 +49,7 @@ export default class CameraMouseFollow extends AbstractController {
             this.lastMouse.set(smoothMouse.x, smoothMouse.y)
             const normalizedMouse = this.NormalizeMouse(smoothMouse)
             object3d.rotation.y = normalizedMouse.x * this.maxRotation.x
-            object3d.rotation.x = normalizedMouse.y * this.maxRotation.y - 0.05
+            object3d.rotation.x = normalizedMouse.y * this.maxRotation.y
             object3d.rotation.z = -normalizedMouse.x * this.maxRotation.z
             object3d.position.x = this.basePosition.x - normalizedMouse.x * this.maxMove.x
             object3d.position.y = this.basePosition.y - normalizedMouse.y * this.maxMove.y

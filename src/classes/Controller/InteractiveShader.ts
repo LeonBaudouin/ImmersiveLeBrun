@@ -19,7 +19,7 @@ export default class InteractiveShader extends AbstractController {
     private static hoveredObject: THREE.Object3D
     private lastIsHovered: boolean
 
-    constructor(getShader: () => THREE.Shader = () => null, speed: THREE.Vector2 = new THREE.Vector2(0.05, 0.05)) {
+    constructor(getShader: () => THREE.Shader = () => null, speed: THREE.Vector2 = new THREE.Vector2(0.1, 0.1)) {
         super()
         this.speed = speed
         this.getShader = getShader
