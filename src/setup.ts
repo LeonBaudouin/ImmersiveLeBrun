@@ -70,6 +70,7 @@ export default function Load() {
             rubens_painting: 'interactive/rubens.png',
             peace_painting: 'room/elisabeth_peinture_v01.jpg',
             peace_sketch: 'room/elisabeth_v01.jpg',
+            magnifying_glass: 'loupe.png',
         },
         './assets/',
     ).then(Setup)
@@ -119,9 +120,21 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             elementId: 'JBLeBrun',
         }),
         new TextInfo({
-            position: new THREE.Vector3(1.2, 1.8, 0.1),
-            childPos: new THREE.Vector3(0, -1, 1),
+            position: new THREE.Vector3(1.2, 1.6, 0.1),
             elementId: 'LaPaix',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(-0.2, 1, -0.1),
+            elementId: 'Pencils',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(-1, 1, 0.3),
+            elementId: 'Palette',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(-1.9, 2.2, -1.2),
+            childPos: new THREE.Vector3(0, -1, 1),
+            elementId: 'Rubens',
         }),
     ]
 

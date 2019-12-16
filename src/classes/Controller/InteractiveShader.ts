@@ -1,7 +1,7 @@
 import AbstractController from '../Core/AbstractController'
 import * as THREE from 'three'
 import Raycaster from '../Events/Raycaster'
-import { TweenLite, Power4, Power2 } from 'gsap/all'
+import { TweenLite, Power4 } from 'gsap/all'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 import InteractiveClickInfo from '../Events/InteractiveClickInfo'
 import SmoothedPoint from '../Utils/SmoothPoint'
@@ -63,14 +63,13 @@ export default class InteractiveShader extends AbstractController {
             }
 
             const isHovered = component === InteractiveShader.hoveredObject
+            const hoveredChange = this.lastIsHovered !== isHovered
 
-            if (this.lastIsHovered !== isHovered || this.isClicked) {
-                if (this.isClicked) {
-                    this.eventEmitter.Emit(isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE, {
-                        component,
-                        controller: this,
-                    })
-                }
+            if (hoveredChange) {
+                this.eventEmitter.Emit(isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE, {
+                    component,
+                    controller: this,
+                })
                 this.HoveredHasChanged(isHovered || this.isClicked)
             }
 

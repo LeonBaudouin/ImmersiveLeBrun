@@ -17,7 +17,7 @@ export default class CameraMouseFollow extends AbstractController {
         initialPos: THREE.Vector2 = new THREE.Vector2(0, 0),
         speed: THREE.Vector2 = new THREE.Vector2(0.03, 0.03),
         maxRotation: THREE.Vector3 = new THREE.Vector3(0.03, 0.02, 0.0),
-        maxMove: THREE.Vector2 = new THREE.Vector2(-0.15, 0),
+        maxMove: THREE.Vector2 = new THREE.Vector2(0.15, 0),
     ) {
         super()
         this.gui = new dat.GUI()

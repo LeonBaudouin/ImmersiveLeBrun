@@ -24,26 +24,19 @@ body.loaded {
 }
 
 .loading-screen {
-    --offset-x: 0px;
-    --offset-y: 0px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
 
-    position: absolute;
-    height: 110%;
-    width: 110%;
+    position: relative;
+    height: 100%;
 
     background-image: url('../assets/loading/Porte_v01.jpg');
     background-color: rgb(161, 137, 105);
     background-size: cover;
 
-    left: 50%;
-    top: 50%;
     z-index: 1;
-    transform: translate3d(calc(-50% + var(--offset-x)), calc(-50% + var(--offset-y)), 0);
 
     #enterButton {
         position: absolute;

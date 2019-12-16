@@ -4,9 +4,10 @@ import StartChunk from '../../shaders/interactive/chunk_start.frag'
 import MainChunk from '../../shaders/interactive/chunk_main.frag'
 import UniformChunk from '../../shaders/interactive/chunk_uniforms.frag'
 import InteractiveShader from '../Controller/InteractiveShader'
+import DetailHint from './DetailHint'
 
 export default class Interactive extends Component {
-    constructor(name: string, sketch: THREE.Texture, painting: THREE.Texture, ratio: THREE.Vector2) {
+    constructor({ name, sketch, painting, ratio = new THREE.Vector2(), glassTexture, glassPosition = undefined }) {
         sketch.minFilter = THREE.LinearFilter
         painting.minFilter = THREE.LinearFilter
         let materialShader: THREE.Shader
@@ -47,6 +48,8 @@ export default class Interactive extends Component {
             return mesh
         }
 
-        super(gen, [new InteractiveShader(() => materialShader)])
+        super(gen, [new InteractiveShader(() => materialShader)], {}, [
+            new DetailHint(name, glassTexture, glassPosition),
+        ])
     }
 }

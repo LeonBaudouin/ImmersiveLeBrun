@@ -1,7 +1,7 @@
 .css3d-div {
     font-family: 'exo', sans-serif;
     opacity: 0;
-    transition: all ease-in 0.7s 0.3s;
+    transition: opacity ease-in-out 1s, visibility 0s 1s;
     visibility: hidden;
 
     p {
@@ -16,8 +16,13 @@
     }
 
     &.show {
+        transition: opacity ease-in-out 1s;
         visibility: visible;
         opacity: 1;
+    }
+
+    &.secondary {
+        opacity: 0.5;
     }
 }
 

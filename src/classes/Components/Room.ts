@@ -70,12 +70,14 @@ export default class Room extends Component {
                     [],
                     {},
                     [
-                        new Interactive(
-                            'Rubens',
-                            textures.rubens_sketch,
-                            textures.rubens_painting,
-                            new THREE.Vector2(0.65, 1.27),
-                        ),
+                        new Interactive({
+                            name: 'Rubens',
+                            sketch: textures.rubens_sketch,
+                            painting: textures.rubens_painting,
+                            ratio: new THREE.Vector2(0.65, 1.27),
+                            glassTexture: textures.magnifying_glass,
+                            glassPosition: new THREE.Vector3(-0.2, 0, 0.2),
+                        }),
                     ],
                 ),
                 // Right Wall
@@ -122,12 +124,14 @@ export default class Room extends Component {
                     [],
                     {},
                     [
-                        new Interactive(
-                            'chest',
-                            textures.chest_sculpture_sketch,
-                            textures.chest_sculpture,
-                            new THREE.Vector2(0.6, 0.8),
-                        ),
+                        new Interactive({
+                            name: 'chest',
+                            sketch: textures.chest_sculpture_sketch,
+                            painting: textures.chest_sculpture,
+                            ratio: new THREE.Vector2(0.6, 0.8),
+                            glassTexture: textures.magnifying_glass,
+                            glassPosition: new THREE.Vector3(-0.2, 0, 0.05),
+                        }),
                     ],
                 ),
 
@@ -162,7 +166,15 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [new Interactive('chest', textures.palette_sketch, textures.palette, new THREE.Vector2(0.45, 0.3))],
+                    [
+                        new Interactive({
+                            name: 'Palette',
+                            sketch: textures.palette_sketch,
+                            painting: textures.palette,
+                            ratio: new THREE.Vector2(0.45, 0.3),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
                 ),
 
                 // chevalet
@@ -196,7 +208,15 @@ export default class Room extends Component {
                     },
                     [],
                     {},
-                    [new Interactive('chest', textures.brushs_sketch, textures.brushs, new THREE.Vector2(0.3, 0.6))],
+                    [
+                        new Interactive({
+                            name: 'Pencils',
+                            sketch: textures.brushs_sketch,
+                            painting: textures.brushs,
+                            ratio: new THREE.Vector2(0.3, 0.6),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
                 ),
                 // tableaux
                 new SceneObject({
@@ -220,17 +240,18 @@ export default class Room extends Component {
                     [],
                     {},
                     [
-                        new Interactive(
-                            'LaPaix',
-                            textures.peace_sketch,
-                            textures.peace_painting,
-                            new THREE.Vector2(1.7, 1.2),
-                        ),
+                        new Interactive({
+                            name: 'LaPaix',
+                            sketch: textures.peace_sketch,
+                            painting: textures.peace_painting,
+                            ratio: new THREE.Vector2(1.7, 1.2),
+                            glassTexture: textures.magnifying_glass,
+                        }),
                     ],
                 ),
                 new SceneObject({
                     size: new THREE.Vector2(1, 1.5),
-                    position: new THREE.Vector3(-2.5, -size.y / 2+0.001, -1.45),
+                    position: new THREE.Vector3(-2.5, -size.y / 2 + 0.001, -1.45),
                     rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
                     texture: textures.floor_shadow,
                 }),
