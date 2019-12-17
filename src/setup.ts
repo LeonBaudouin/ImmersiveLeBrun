@@ -6,6 +6,7 @@ import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRe
 import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
 import Room from './classes/Components/Room'
+import Room2 from './classes/Components/Room2'
 import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
@@ -69,8 +70,13 @@ export default function Load() {
             peace_painting: 'room/elisabeth_peinture_v01.jpg',
             peace_sketch: 'room/elisabeth_v01.jpg',
             magnifying_glass: 'loupe.png',
-            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg',
-            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg',
+            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg', 
+            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg', 
+
+            front_wall_2: 'room2/mur_face_3.jpg',
+            left_wall_2: 'room2/mur_gauche.jpg',
+            right_wall_2: 'room2/mur_droite.jpg',
+            floor_2: 'room2/sol.jpg',
         },
         './assets/',
     ).then(Setup)
