@@ -103,7 +103,7 @@ export default class Room extends Component {
                             painting: textures.jp_lebrun,
                             ratio: new THREE.Vector2(0.61, 1.28),
                             glassTexture: textures.magnifying_glass,
-                            glassPosition: new THREE.Vector3(-0.2, 0, 0.2),
+                            glassPosition: new THREE.Vector3(0.4, 0, 0.2),
                         }),
                     ],
                 ),

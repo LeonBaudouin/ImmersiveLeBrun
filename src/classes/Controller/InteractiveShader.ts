@@ -38,8 +38,6 @@ export default class InteractiveShader extends AbstractController {
         const collider = this.customCollider === null ? component : this.customCollider
         Raycaster.getInstance().Subscribe(collider, ({ order, uv }) => {
             if (order == 0) {
-                if (component.userData.name === 'Buste') console.log(uv)
-
                 InteractiveShader.hoveredObject = component
                 this.smoother.setTarget(this.uvCompensation(uv))
             }

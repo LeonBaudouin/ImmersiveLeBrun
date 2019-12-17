@@ -1,4 +1,13 @@
-import { Camera, Scene, PerspectiveCamera, Color } from 'three'
+import {
+    Camera,
+    Scene,
+    PerspectiveCamera,
+    Color,
+    WebGLRenderTarget,
+    LinearFilter,
+    RGBFormat,
+    WebGLRenderer,
+} from 'three'
 import Component from './Component'
 import RendererInterface from './RendererInterface'
 
@@ -7,18 +16,23 @@ export default class ThreeScene {
     public objects: Component[]
     public scene: Scene
     public renderer: RendererInterface
+    public fbo: WebGLRenderTarget = null
     public controls: any
     public time: number
 
-    constructor(
-        cameraComponent: Component,
-        renderer: RendererInterface,
-        objects: Component[] = [],
-    ) {
+    constructor(cameraComponent: Component, renderer: RendererInterface, objects: Component[] = []) {
         this.cameraComponent = cameraComponent
         this.objects = objects
         this.time = 0
         this.renderer = renderer
+        if (renderer instanceof WebGLRenderer) {
+            this.fbo = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
+                minFilter: LinearFilter,
+                magFilter: LinearFilter,
+                format: RGBFormat,
+                stencilBuffer: false,
+            })
+        }
 
         this.bind()
         this.setupScene()
@@ -36,19 +50,28 @@ export default class ThreeScene {
         window.addEventListener('resize', this.resizeCanvas)
     }
 
-    update() {
+    update(onFbo: boolean = false) {
         this.cameraComponent.update(this.time)
         this.objects.forEach(obj => obj.update(this.time))
+        if (onFbo && this.renderer instanceof WebGLRenderer) {
+            this.renderer.setRenderTarget(this.fbo)
+            this.renderer.clear()
+            this.renderer.render(this.scene, <Camera>this.cameraComponent.object3d)
+        } else {
+            if (this.renderer instanceof WebGLRenderer) this.renderer.setRenderTarget(null)
+            this.renderer.render(this.scene, <Camera>this.cameraComponent.object3d)
+        }
         this.renderer.render(this.scene, <Camera>this.cameraComponent.object3d)
         this.time++
     }
 
     resizeCanvas() {
         this.renderer.setSize(window.innerWidth, window.innerHeight)
-        ;(<PerspectiveCamera>this.cameraComponent.object3d).aspect =
-            window.innerWidth / window.innerHeight
-        ;(<PerspectiveCamera>(
-            this.cameraComponent.object3d
-        )).updateProjectionMatrix()
+        if (this.fbo !== null) {
+            this.fbo.width = window.innerWidth
+            this.fbo.height = window.innerHeight
+        }
+        ;(<PerspectiveCamera>this.cameraComponent.object3d).aspect = window.innerWidth / window.innerHeight
+        ;(<PerspectiveCamera>this.cameraComponent.object3d).updateProjectionMatrix()
     }
 }

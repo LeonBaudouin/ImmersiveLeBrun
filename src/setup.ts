@@ -13,6 +13,7 @@ import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
 import TextInfo from './classes/Components/TextInfo'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
+import TransitionScene from './classes/TransitionScene'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -30,10 +31,10 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.domElement.classList.add('css3d-canvas')
 
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.enabled = true
-    controls.maxDistance = 1500
-    controls.minDistance = 0
+    // const controls = new OrbitControls(camera, renderer.domElement)
+    // controls.enabled = true
+    // controls.maxDistance = 1500
+    // controls.minDistance = 0
     return renderer
 }
 
@@ -73,8 +74,8 @@ export default function Load() {
             peace_painting: 'room/elisabeth_peinture_v01.jpg',
             peace_sketch: 'room/elisabeth_v01.jpg',
             magnifying_glass: 'loupe.png',
-            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg', 
-            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg', 
+            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg',
+            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg',
 
             front_wall_2: 'room2/mur_face_4.jpg',
             left_wall_2: 'room2/mur_gauche.jpg',
@@ -106,17 +107,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
     CSS3DRenderer.domElement.appendChild(webGLrenderer.domElement)
     document.body.appendChild(CSS3DRenderer.domElement)
 
-    const mouse = new THREE.Vector2()
-
-    document.addEventListener('mousemove', e => {
-        const { clientX, clientY } = e
-        mouse.x = (clientX / window.innerWidth) * 2 - 1
-        mouse.y = -(clientY / window.innerHeight) * 2 + 1
-        Raycaster.getInstance().Cast(camera, mouse)
-        MouseMoveListener.getInstance().UpdateValue(e)
-    })
-
-    const components = [
+    const components1 = [
         new Component(() => {
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
@@ -126,7 +117,11 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
-    const webGlScene = new ThreeScene(new Component(() => camera), webGLrenderer, components)
+    const scene1 = new ThreeScene(new Component(() => camera), webGLrenderer, components1)
+
+    const components2 = [new Room2(textures), new Component(() => new THREE.AmbientLight(0x999999, 0.7))]
+
+    const scene2 = new ThreeScene(new Component(() => camera), webGLrenderer, components2)
 
     const cssComponents = [
         new TextInfo({
@@ -148,7 +143,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         }),
         new TextInfo({
             position: new THREE.Vector3(-1.9, 2, -1.2),
-            childPos: new THREE.Vector3(0, -0.7, 1),
+            childPos: new THREE.Vector3(-0.3, -1, 1),
             elementId: 'Rubens',
         }),
         new TextInfo({
@@ -163,15 +158,26 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         cssComponents,
     )
 
-    const scenes = [CSS3DScene, webGlScene]
+    const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
+
+    setTimeout(() => transitionScene.transition(scene2, 4), 4000)
 
     return {
         raf: () => {
-            scenes.forEach(scene => {
-                scene.update()
-            })
+            CSS3DScene.update()
+            transitionScene.update()
         },
         cb: () => {
+            const mouse = new THREE.Vector2()
+
+            document.addEventListener('mousemove', e => {
+                const { clientX, clientY } = e
+                mouse.x = (clientX / window.innerWidth) * 2 - 1
+                mouse.y = -(clientY / window.innerHeight) * 2 + 1
+                Raycaster.getInstance().Cast(camera, mouse)
+                MouseMoveListener.getInstance().UpdateValue(e)
+            })
+
             document.querySelector('#enterButton').addEventListener('click', () => {
                 document.body.classList.add('start')
             })
