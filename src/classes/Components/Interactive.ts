@@ -7,10 +7,31 @@ import InteractiveShader from '../Controller/InteractiveShader'
 import DetailHint from './DetailHint'
 
 export default class Interactive extends Component {
-    constructor({ name, sketch, painting, ratio = new THREE.Vector2(), glassTexture, glassPosition = undefined }) {
-        sketch.minFilter = THREE.LinearFilter
-        painting.minFilter = THREE.LinearFilter
+    constructor({
+        name,
+        sketch,
+        painting,
+        ratio = new THREE.Vector2(),
+        glassTexture,
+        glassPosition = undefined,
+        customChildCollider = undefined,
+        uvColliderCompensation = undefined,
+    }: Partial<{
+        name: string
+        sketch: THREE.Texture
+        painting: THREE.Texture
+        ratio: THREE.Vector2
+        glassTexture: THREE.Texture
+        glassPosition: THREE.Vector3 | undefined
+        customChildCollider: Component | undefined
+        uvColliderCompensation: (uv: THREE.Vector2) => THREE.Vector2
+    }>) {
         let materialShader: THREE.Shader
+
+        const children = [new DetailHint(name, glassTexture, glassPosition)]
+        if (customChildCollider !== undefined) {
+            children.push(customChildCollider)
+        }
 
         const gen = () => {
             const material = new THREE.MeshLambertMaterial({ map: sketch, transparent: true })
@@ -48,8 +69,11 @@ export default class Interactive extends Component {
             return mesh
         }
 
-        super(gen, [new InteractiveShader(() => materialShader)], {}, [
-            new DetailHint(name, glassTexture, glassPosition),
-        ])
+        super(
+            gen,
+            [new InteractiveShader(() => materialShader, uvColliderCompensation, customChildCollider?.object3d)],
+            {},
+            children,
+        )
     }
 }

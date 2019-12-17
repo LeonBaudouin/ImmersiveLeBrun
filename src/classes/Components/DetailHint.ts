@@ -15,7 +15,7 @@ export default class DetailHint extends Component {
                 if (e.component.userData.name === parentName && e.controller.isClicked) {
                     TweenLite.to(sprite.material, 0.5, {
                         opacity: 1,
-                        easing: Power2.easeInOut,
+                        ease: Power2.easeInOut,
                     })
                 }
             })
@@ -23,7 +23,7 @@ export default class DetailHint extends Component {
                 if (e.component.userData.name === parentName && e.controller.isClicked) {
                     TweenLite.to(sprite.material, 0.5, {
                         opacity: 0,
-                        easing: Power2.easeInOut,
+                        ease: Power2.easeInOut,
                     })
                 }
             })

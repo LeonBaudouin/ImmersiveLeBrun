@@ -145,12 +145,30 @@ export default class Room extends Component {
                     {},
                     [
                         new Interactive({
-                            name: 'chest',
+                            name: 'Buste',
                             sketch: textures.chest_sculpture_sketch,
                             painting: textures.chest_sculpture,
                             ratio: new THREE.Vector2(0.6, 0.8),
                             glassTexture: textures.magnifying_glass,
-                            glassPosition: new THREE.Vector3(-0.2, 0, 0.05),
+                            glassPosition: new THREE.Vector3(-0.1, -0.1, 0.05),
+                            customChildCollider: new Component(() => {
+                                const heartShape = new THREE.Shape()
+                                const size = new THREE.Vector2(0.6, 0.8)
+                                heartShape.moveTo(-size.x / 2, -size.y / 2)
+                                heartShape.lineTo(size.x / 2, -size.y / 2)
+                                heartShape.lineTo(size.x / 2, size.y / 2)
+                                heartShape.lineTo(-size.x / 2 + 0.12, size.y / 2)
+                                heartShape.lineTo(-size.x / 2 + 0.12, size.y / 2 - 0.4)
+                                heartShape.lineTo(-size.x / 2, size.y / 2 - 0.45)
+                                const mesh = new THREE.Mesh(
+                                    new THREE.ShapeGeometry(heartShape),
+                                    new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }),
+                                )
+                                mesh.position.set(0, 0, 0)
+                                return mesh
+                            }),
+                            uvColliderCompensation: (uv: THREE.Vector2) =>
+                                uv.set((uv.x + 0.3) / 0.6, (uv.y + 0.4) / 0.8),
                         }),
                     ],
                 ),

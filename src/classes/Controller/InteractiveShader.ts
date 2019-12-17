@@ -14,22 +14,34 @@ export default class InteractiveShader extends AbstractController {
     private smoother: SmoothedPoint
 
     private getShader: () => THREE.Shader
+    private uvCompensation: (uv: THREE.Vector2) => THREE.Vector2
+    private customCollider: THREE.Object3D
 
     private static hoveredObject: THREE.Object3D
     private lastIsHovered: boolean
 
-    constructor(getShader: () => THREE.Shader = () => null, speed: THREE.Vector2 = new THREE.Vector2(0.1, 0.1)) {
+    constructor(
+        getShader: () => THREE.Shader = () => null,
+        uvCompensation: (uv: THREE.Vector2) => THREE.Vector2 = (uv: THREE.Vector2) => uv,
+        customCollider: THREE.Object3D = null,
+        speed: THREE.Vector2 = new THREE.Vector2(0.1, 0.1),
+    ) {
         super()
+        this.uvCompensation = uvCompensation
+        this.customCollider = customCollider
         this.smoother = new SmoothedPoint(speed, new THREE.Vector2(0, 0))
         this.getShader = getShader
         this.eventEmitter = EventEmitter.getInstance()
     }
 
     public onMount(component: THREE.Object3D) {
-        Raycaster.getInstance().Subscribe(component, ({ order, uv }) => {
+        const collider = this.customCollider === null ? component : this.customCollider
+        Raycaster.getInstance().Subscribe(collider, ({ order, uv }) => {
             if (order == 0) {
+                if (component.userData.name === 'Buste') console.log(uv)
+
                 InteractiveShader.hoveredObject = component
-                this.smoother.setTarget(uv)
+                this.smoother.setTarget(this.uvCompensation(uv))
             }
         })
 

@@ -11,8 +11,6 @@ import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextureLoader from './classes/Core/TextureLoader'
 import TextInfo from './classes/Components/TextInfo'
-import SmoothedPoint from './classes/Utils/SmoothPoint'
-import NormalizePoint from './classes/Utils/NormalizePoint'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
@@ -134,9 +132,13 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             elementId: 'Palette',
         }),
         new TextInfo({
-            position: new THREE.Vector3(-1.9, 2.2, -1.2),
-            childPos: new THREE.Vector3(0, -1, 1),
+            position: new THREE.Vector3(-1.9, 2, -1.2),
+            childPos: new THREE.Vector3(0, -0.7, 1),
             elementId: 'Rubens',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(0.9, 1.5, 1.1),
+            elementId: 'Buste',
         }),
     ]
 
