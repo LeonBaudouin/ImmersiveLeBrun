@@ -76,7 +76,7 @@ export default function Load() {
             jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg', 
             jp_lebrun_sketch: 'room/cadre_droite_v01.jpg', 
 
-            front_wall_2: 'room2/mur_face_3.jpg',
+            front_wall_2: 'room2/mur_face_4.jpg',
             left_wall_2: 'room2/mur_gauche.jpg',
             right_wall_2: 'room2/mur_droite.jpg',
             floor_2: 'room2/sol.jpg',
@@ -122,7 +122,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             mesh.position.set(0, 0, -50)
             return mesh
         }, [new InteractiveShader()]),
-        new Room2(textures),
+        new Room(textures),
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
