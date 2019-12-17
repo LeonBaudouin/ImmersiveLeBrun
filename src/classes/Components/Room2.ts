@@ -112,6 +112,36 @@ export default class Room2 extends Component {
                         }),
                     ],
                 ),
+                new SceneObject({
+                    size: new THREE.Vector2(0.476*1.3, 0.708*1.3),
+                    position: new THREE.Vector3(-1.2, -1.05, 1.2),
+                    texture: textures.character_1,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.669*1.3, 0.676*1.3),
+                    position: new THREE.Vector3(-1.1, -1.05, 1.4),
+                    texture: textures.character_2,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.530*1.3, 0.675*1.3),
+                    position: new THREE.Vector3(-0.25, -1, 1.55),
+                    texture: textures.character_3,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.452*1.4, 0.685*1.4),
+                    position: new THREE.Vector3(0.75, -1.05, 1.2),
+                    texture: textures.character_4,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.686*1.2, 0.693*1.2),
+                    position: new THREE.Vector3(1.1, -0.9, 1.5),
+                    texture: textures.character_5,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.298*1.2, 1.231*1.2),
+                    position: new THREE.Vector3(1.5, -0.7, 1.6),
+                    texture: textures.character_6,
+                }),
             ],
         )
     }

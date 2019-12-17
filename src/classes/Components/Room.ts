@@ -178,22 +178,40 @@ export default class Room extends Component {
                     size: new THREE.Vector2(0.8, 1.3),
                     position: new THREE.Vector3(0.7, -1.15, 0.4),
                     texture: textures.chair,
+                    depthWrite: false,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.9, 1.4),
                     position: new THREE.Vector3(0.725, -1.15, 0.25),
                     texture: textures.chair_leg,
+                    depthWrite: false,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(1.9, 0.6),
+                    position: new THREE.Vector3(1.2, -1.745, 0.27),
+                    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                    texture: textures.chair_shadow,
+                    depthWrite: false,
                 }),
                 // tabouret
                 new SceneObject({
                     size: new THREE.Vector2(0.8, 0.7),
                     position: new THREE.Vector3(-1, -1.425, 0.3),
                     texture: textures.stool,
+                    depthWrite: false,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.9, 0.8),
                     position: new THREE.Vector3(-1, -1.45, 0.2),
                     texture: textures.stool_leg,
+                    depthWrite: false,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(1, 0.7),
+                    position: new THREE.Vector3(-0.95, -1.749, 0.2),
+                    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                    texture: textures.stool_shadow,
+                    depthWrite: false,
                 }),
                 //palette
                 new Component(
@@ -231,6 +249,12 @@ export default class Room extends Component {
                     size: new THREE.Vector2(2, 2.4),
                     position: new THREE.Vector3(0, -0.5, -0.48),
                     texture: textures.painting_front,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(2.9, 0.6),
+                    position: new THREE.Vector3(0.45, -1.745, -0.9),
+                    rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                    texture: textures.painting_shadow,
                 }),
                 // table
                 new SceneObject({

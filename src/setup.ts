@@ -30,10 +30,10 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.domElement.classList.add('css3d-canvas')
 
-    // const controls = new OrbitControls(camera, renderer.domElement)
-    // controls.enabled = true
-    // controls.maxDistance = 1500
-    // controls.minDistance = 0
+    const controls = new OrbitControls(camera, renderer.domElement)
+    controls.enabled = true
+    controls.maxDistance = 1500
+    controls.minDistance = 0
     return renderer
 }
 
@@ -44,7 +44,7 @@ export default function Load() {
             floor: 'room/sol_v05.jpg',
             floor_shadow: 'room/ombre.png',
             ceil: 'room/plafond_v02.jpg',
-            left_wall_window: 'room/Porte_v01.jpg',
+            left_wall_window: 'room/porte_fenete_v01.png',
             left_wall_painting: 'room/mur_de_gauche_avec_rubens_v01.jpg',
             left_wall_corner: 'room/mur_de_gauche_recoin_v01.jpg',
             right_wall: 'room/mur_du_droite_v01.jpg',
@@ -53,12 +53,15 @@ export default function Load() {
             chest_sculpture_table: 'room/scene_01_premier_plan_v02.png',
             chair: 'room/01_chaise.png',
             chair_leg: 'room/02_chaise.png',
+            chair_shadow: 'room/scene_01_chaise_ombre_v01.png',
             stool: 'room/01_tabouret.png',
             stool_leg: 'room/02_tabouret.png',
+            stool_shadow: 'room/scene_01_Tabouret_ombre_v01.png',
             palette: 'room/palette.png',
             palette_sketch: 'room/scene_01_esquisse_palette_v01.png',
             painting: 'room/01_chevalet.png',
             painting_leg: 'room/02_chevalet.png',
+            painting_shadow: 'room/scene_01_chevalet_ombre_v01.png',
             painting_front: 'room/scene_01_chevalet_barre_milieu_v01.png',
             table: 'room/scene_01_petit_meuble_v01.png',
             brushs: 'room/pinceaux.png',
@@ -77,6 +80,12 @@ export default function Load() {
             left_wall_2: 'room2/mur_gauche.jpg',
             right_wall_2: 'room2/mur_droite.jpg',
             floor_2: 'room2/sol.jpg',
+            character_1: 'room2/scene_02_personnage_extreme_gauche_v01.png',
+            character_2: 'room2/scene_02_personnage_gauche_v01.png',
+            character_3: 'room2/scene_02_personnage_milieu_v01.png',
+            character_4: 'room2/scene_02_homme_droite_chaise2_v01.png',
+            character_5: 'room2/scene_02_homme_droite_chaise_v01.png',
+            character_6: 'room2/scene_02_homme_extreme_droite_v01.png',
         },
         './assets/',
     ).then(Setup)
@@ -113,7 +122,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             mesh.position.set(0, 0, -50)
             return mesh
         }, [new InteractiveShader()]),
-        new Room(textures),
+        new Room2(textures),
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
