@@ -98,7 +98,7 @@ export default class Room extends Component {
                     {},
                     [
                         new Interactive({
-                            name: 'Jplebrun',
+                            name: 'JBLeBrun',
                             sketch: textures.jp_lebrun_sketch,
                             painting: textures.jp_lebrun,
                             ratio: new THREE.Vector2(0.61, 1.28),

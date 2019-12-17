@@ -69,8 +69,8 @@ export default function Load() {
             peace_painting: 'room/elisabeth_peinture_v01.jpg',
             peace_sketch: 'room/elisabeth_v01.jpg',
             magnifying_glass: 'loupe.png',
-            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg', 
-            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg', 
+            jp_lebrun: 'room/Jean-Baptiste-Pierre_Le_Brun_1796.jpg',
+            jp_lebrun_sketch: 'room/cadre_droite_v01.jpg',
         },
         './assets/',
     ).then(Setup)
@@ -115,8 +115,8 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
 
     const cssComponents = [
         new TextInfo({
-            position: new THREE.Vector3(2, 1.8, -0.7),
-            childPos: new THREE.Vector3(0, -1, 1),
+            position: new THREE.Vector3(1.6, 2, -0.7),
+            childPos: new THREE.Vector3(0, -1.2, 1),
             elementId: 'JBLeBrun',
         }),
         new TextInfo({
