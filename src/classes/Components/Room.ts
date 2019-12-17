@@ -87,6 +87,26 @@ export default class Room extends Component {
                     rotation: new THREE.Euler(0, -Math.PI / 2, 0),
                     texture: textures.right_wall,
                 }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(size.x / 2 - 0.01, 0.32, -1.425)
+                        object.rotation.set(0, -Math.PI / 2, 0)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'Jplebrun',
+                            sketch: textures.jp_lebrun_sketch,
+                            painting: textures.jp_lebrun,
+                            ratio: new THREE.Vector2(0.61, 1.28),
+                            glassTexture: textures.magnifying_glass,
+                            glassPosition: new THREE.Vector3(-0.2, 0, 0.2),
+                        }),
+                    ],
+                ),
                 new Component(() => new THREE.PointLight(0x987656, 0.4)),
                 new Component(() => {
                     const ligth = new THREE.SpotLight(0xd9ebed, 0.4, 50, Math.PI, 2, 2)
