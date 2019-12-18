@@ -105,6 +105,7 @@ export default class Room2 extends Component {
                     [
                         new Interactive({
                             name: 'LaPaix2',
+                            sceneName: 'Demo',
                             sketch: textures.peace_sketch,
                             painting: textures.peace_painting,
                             ratio: new THREE.Vector2(1.7, 1.2),

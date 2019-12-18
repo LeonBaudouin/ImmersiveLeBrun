@@ -7,11 +7,13 @@ import InteractiveClickInfo from '../Events/InteractiveClickInfo'
 import SmoothedPoint from '../Utils/SmoothPoint'
 
 export default class InteractiveShader extends AbstractController {
-    private eventEmitter: EventEmitter<string, InteractiveClickInfo>
+    private eventEmitter: EventEmitter
 
     private dMultTween: any
     private isClicked: boolean = false
     private smoother: SmoothedPoint
+
+    private scene: string
 
     private getShader: () => THREE.Shader
     private uvCompensation: (uv: THREE.Vector2) => THREE.Vector2
@@ -21,12 +23,14 @@ export default class InteractiveShader extends AbstractController {
     private lastIsHovered: boolean
 
     constructor(
+        scene: string,
         getShader: () => THREE.Shader = () => null,
         uvCompensation: (uv: THREE.Vector2) => THREE.Vector2 = (uv: THREE.Vector2) => uv,
         customCollider: THREE.Object3D = null,
         speed: THREE.Vector2 = new THREE.Vector2(0.1, 0.1),
     ) {
         super()
+        this.scene = scene
         this.uvCompensation = uvCompensation
         this.customCollider = customCollider
         this.smoother = new SmoothedPoint(speed, new THREE.Vector2(0, 0))
@@ -35,31 +39,49 @@ export default class InteractiveShader extends AbstractController {
     }
 
     public onMount(component: THREE.Object3D) {
-        const collider = this.customCollider === null ? component : this.customCollider
-        Raycaster.getInstance().Subscribe(collider, ({ order, uv }) => {
-            if (order == 0) {
-                InteractiveShader.hoveredObject = component
-                this.smoother.setTarget(this.uvCompensation(uv))
-            }
-        })
+        this.bind(component)
+    }
 
-        document.querySelector('.css3d-canvas').addEventListener('click', () => {
-            if (InteractiveShader.hoveredObject === component) {
-                if (!this.isClicked) {
-                    this.isClicked = true
-                    this.Clicked()
-                }
-                this.eventEmitter.Emit(EVENT.INTERACTIVE_CLICK, {
-                    component,
-                    controller: this,
-                })
+    private bind(component: THREE.Object3D) {
+        const css3dCanvas = document.querySelector('.css3d-canvas')
+        const collider = this.customCollider === null ? component : this.customCollider
+
+        const raycastCallback = infos => this.onRayCollide(component, infos)
+        const clickCallback = () => this.onClick(component)
+
+        this.eventEmitter.Subscribe(EVENT.CHANGE_SCENE, name => {
+            if (name === this.scene) {
+                Raycaster.getInstance().Subscribe(collider, raycastCallback)
+                css3dCanvas.addEventListener('click', clickCallback)
+            } else {
+                Raycaster.getInstance().Unsubscribe(collider, raycastCallback)
+                css3dCanvas.removeEventListener('click', clickCallback)
             }
         })
     }
 
+    private onRayCollide(component: THREE.Object3D, { order, uv }: THREE.Intersection & { order: number }) {
+        if (order == 0) {
+            InteractiveShader.hoveredObject = component
+            this.smoother.setTarget(this.uvCompensation(uv))
+        }
+    }
+
+    private onClick(component: THREE.Object3D) {
+        if (InteractiveShader.hoveredObject === component) {
+            if (!this.isClicked) {
+                this.isClicked = true
+                this.Clicked()
+            }
+            this.eventEmitter.Emit(EVENT.INTERACTIVE_CLICK, {
+                component,
+                controller: this,
+            })
+        }
+    }
+
     public update(component: THREE.Object3D, time: number) {
         if (this.getShader()) {
-            if (InteractiveShader.hoveredObject) console.log(InteractiveShader.hoveredObject.userData.name)
             this.smoother.Smooth()
             const newMouse = this.smoother.getPoint()
 

@@ -8,6 +8,7 @@ import DetailHint from './DetailHint'
 
 export default class Interactive extends Component {
     constructor({
+        sceneName,
         name,
         sketch,
         painting,
@@ -17,6 +18,7 @@ export default class Interactive extends Component {
         customChildCollider = undefined,
         uvColliderCompensation = undefined,
     }: Partial<{
+        sceneName: string
         name: string
         sketch: THREE.Texture
         painting: THREE.Texture
@@ -71,7 +73,14 @@ export default class Interactive extends Component {
 
         super(
             gen,
-            [new InteractiveShader(() => materialShader, uvColliderCompensation, customChildCollider?.object3d)],
+            [
+                new InteractiveShader(
+                    sceneName,
+                    () => materialShader,
+                    uvColliderCompensation,
+                    customChildCollider?.object3d,
+                ),
+            ],
             {},
             children,
         )

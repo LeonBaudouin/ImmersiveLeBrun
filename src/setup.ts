@@ -112,14 +112,22 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
             return mesh
-        }, [new InteractiveShader()]),
+        }, [new InteractiveShader('Workshop')]),
         new Room(textures),
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
     const scene1 = new ThreeScene(new Component(() => camera), webGLrenderer, components1)
 
-    const components2 = [new Room2(textures), new Component(() => new THREE.AmbientLight(0x999999, 0.7))]
+    const components2 = [
+        new Component(() => {
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
+            mesh.position.set(0, 0, -50)
+            return mesh
+        }, [new InteractiveShader('Demo')]),
+        new Room2(textures),
+        new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
+    ]
 
     const scene2 = new ThreeScene(new Component(() => camera), webGLrenderer, components2)
 
@@ -158,11 +166,13 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         cssComponents,
     )
 
+    EventEmitter.getInstance().Emit(EVENT.CHANGE_SCENE, 'Workshop')
     const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
 
-    // setTimeout(() => transitionScene.transition(scene2, 4), 4000)
-
-    document.querySelector('.hud-nextscene').addEventListener('click', () => transitionScene.transition(scene2, 4))
+    document.querySelector('.hud-nextscene').addEventListener('click', () => {
+        transitionScene.transition(scene2, 4)
+        EventEmitter.getInstance().Emit(EVENT.CHANGE_SCENE, 'Demo')
+    })
 
     return {
         raf: () => {

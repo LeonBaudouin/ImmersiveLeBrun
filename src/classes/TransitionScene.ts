@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import TransitionQuad from './Components/TransitionQuad'
 import ThreeScene from './Core/ThreeScene'
+import EventEmitter, { EVENT } from './Events/EventEmitter'
 
 export default class TransitionScene {
     public time: number = 0

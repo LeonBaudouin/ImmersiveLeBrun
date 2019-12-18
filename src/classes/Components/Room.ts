@@ -72,6 +72,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'Rubens',
+                            sceneName: 'Workshop',
                             sketch: textures.rubens_sketch,
                             painting: textures.rubens_painting,
                             ratio: new THREE.Vector2(0.65, 1.27),
@@ -99,6 +100,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'JBLeBrun',
+                            sceneName: 'Workshop',
                             sketch: textures.jp_lebrun_sketch,
                             painting: textures.jp_lebrun,
                             ratio: new THREE.Vector2(0.61, 1.28),
@@ -146,6 +148,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'Buste',
+                            sceneName: 'Workshop',
                             sketch: textures.chest_sculpture_sketch,
                             painting: textures.chest_sculpture,
                             ratio: new THREE.Vector2(0.6, 0.8),
@@ -225,6 +228,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'Palette',
+                            sceneName: 'Workshop',
                             sketch: textures.palette_sketch,
                             painting: textures.palette,
                             ratio: new THREE.Vector2(0.45, 0.3),
@@ -273,6 +277,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'Pencils',
+                            sceneName: 'Workshop',
                             sketch: textures.brushs_sketch,
                             painting: textures.brushs,
                             ratio: new THREE.Vector2(0.3, 0.6),
@@ -304,6 +309,7 @@ export default class Room extends Component {
                     [
                         new Interactive({
                             name: 'LaPaix',
+                            sceneName: 'Workshop',
                             sketch: textures.peace_sketch,
                             painting: textures.peace_painting,
                             ratio: new THREE.Vector2(1.7, 1.2),
