@@ -14,6 +14,7 @@ import TextureLoader from './classes/Core/TextureLoader'
 import TextInfo from './classes/Components/TextInfo'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TransitionScene from './classes/TransitionScene'
+import SceneButton, { Scene } from './classes/SceneButton'
 
 function initWebglRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new THREE.WebGLRenderer({
@@ -90,7 +91,6 @@ export default function Load() {
             character_6: 'room2/scene_02_homme_extreme_droite_v01.png',
             character_7: 'room2/scene_02_assis_fond_v01.png',
             characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
-
         },
         './assets/',
     ).then(Setup)
@@ -170,13 +170,27 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         cssComponents,
     )
 
-    EventEmitter.getInstance().Emit(EVENT.CHANGE_SCENE, 'Workshop')
     const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
 
-    document.querySelector('.hud-nextscene').addEventListener('click', () => {
-        transitionScene.transition(scene2, 4)
-        EventEmitter.getInstance().Emit(EVENT.CHANGE_SCENE, 'Demo')
-    })
+    const scenes: Scene[] = [
+        {
+            three: scene1,
+            name: 'Workshop',
+            buttonText: "Atelier d'Élisabeth Vigée Le Brun",
+        },
+        {
+            three: scene2,
+            name: 'Demo',
+            buttonText: 'Académie royale de peinture et de sculpture',
+        },
+    ]
+
+    const sceneButton = new SceneButton(
+        scenes,
+        transitionScene,
+        document.querySelector('.hud-previousscene'),
+        document.querySelector('.hud-nextscene'),
+    )
 
     return {
         raf: () => {

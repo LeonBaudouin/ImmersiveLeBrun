@@ -1,8 +1,18 @@
 .hud {
+    width: 100%;
     position: absolute;
     z-index: 10;
+    top: 0;
+}
+
+.hud-scenebutton {
+    position: absolute;
+}
+
+.hud-previousscene {
+    left: 0;
 }
 
 .hud-nextscene {
-    position: absolute;
+    right: 0;
 }

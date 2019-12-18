@@ -18,7 +18,10 @@ export default class TransitionController extends AbstractController {
         this.tween = TweenLite.to(this.uniforms.mixRatio, delay, {
             value: 1.0,
             ease: Power1.easeOut,
-            onComplete: callback,
+            onComplete: () => {
+                callback()
+                this.uniforms.mixRatio.value = 0.0
+            },
         })
     }
 }
