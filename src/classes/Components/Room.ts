@@ -133,8 +133,8 @@ export default class Room extends Component {
                 }),
                 // premier_plan
                 new SceneObject({
-                    size: new THREE.Vector2(1.2, 0.7),
-                    position: new THREE.Vector3(1, -0.74, 1.85),
+                    size: new THREE.Vector2(1.2, 0.9),
+                    position: new THREE.Vector3(1.05, -0.74, 1.85),
                     texture: textures.chest_sculpture_table,
                 }),
                 new Component(
