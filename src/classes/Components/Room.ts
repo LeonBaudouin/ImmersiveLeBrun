@@ -233,6 +233,7 @@ export default class Room extends Component {
                             painting: textures.palette,
                             ratio: new THREE.Vector2(0.45, 0.3),
                             glassTexture: textures.magnifying_glass,
+                            glassPosition: new THREE.Vector3(0, 0.1, 0.2),
                         }),
                     ],
                 ),

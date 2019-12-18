@@ -146,7 +146,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             elementId: 'Pencils',
         }),
         new TextInfo({
-            position: new THREE.Vector3(-1, 1, 0.3),
+            position: new THREE.Vector3(-1, 1.15, 0.3),
             elementId: 'Palette',
         }),
         new TextInfo({
