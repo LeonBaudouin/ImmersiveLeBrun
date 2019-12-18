@@ -162,6 +162,10 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             position: new THREE.Vector3(0.9, 1.5, 1.1),
             elementId: 'Buste',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(-0.8, 1.5, 1.1),
+            elementId: 'Character3',
+        }),
     ]
 
     const CSS3DScene = new ThreeScene(
