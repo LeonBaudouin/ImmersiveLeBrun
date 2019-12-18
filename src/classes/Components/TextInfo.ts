@@ -36,6 +36,11 @@ export default class TextInfo extends Component {
             }
         })
 
+        EventEmitter.getInstance().Subscribe(EVENT.CHANGE_SCENE, () => {
+            elem.classList.remove('show')
+            elem.classList.remove('secondary')
+        })
+
         EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
             if (component.userData.name === elementId) {
                 elem.classList.add('show')
