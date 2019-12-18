@@ -6,6 +6,7 @@ let threeRaf = () => {}
 Setup().then(({ cb, raf }) => {
     threeRaf = raf
     setTimeout(cb, 0)
+    document.querySelector('.loading-title').classList.add('hidden')
 })
 
 raf()

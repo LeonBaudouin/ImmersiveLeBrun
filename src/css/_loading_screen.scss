@@ -28,6 +28,7 @@ body.loaded {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    font-family: 'Libre Baskerville', serif;
 
     position: relative;
     height: 100%;
@@ -49,9 +50,9 @@ body.loaded {
         background-size: contain;
         height: 250px;
         width: 150px;
-        
+
         transform: translate3d(-50%, -50%, 0);
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out, opacity 0.5s 3s ease;
 
         &:hover {
             transform: translate3d(-50%, -50%, 0) scale3d(1.2, 1.2, 1.2);
@@ -59,6 +60,9 @@ body.loaded {
     }
 
     .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         p {
             margin: 5px 0;
             font-size: 20px;
@@ -67,12 +71,57 @@ body.loaded {
     }
 }
 
+.loading-title {
+    align-self: stretch;
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    top: 50%;
+    height: 40vh;
+    width: 100%;
+    transform: translateY(-50%);
+
+    font-size: 1.7rem;
+    line-height: 1.6;
+    color: #edd7a6;
+    $color: #3b342e;
+    background: linear-gradient(
+        to bottom,
+        transparentize($color, 1) 0%,
+        transparentize($color, 0.2) 30%,
+        transparentize($color, 0.2) 70%,
+        transparentize($color, 1) 100%
+    );
+
+    visibility: visible;
+    opacity: 1;
+
+    transition: opacity ease 600ms 3s, visibility ease 600ms 3s;
+
+    div:nth-of-type(1) {
+        font-weight: 700;
+    }
+
+    div:nth-of-type(2) {
+        font-style: italic;
+    }
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
 .lds-ring {
     display: inline-block;
     position: relative;
     width: 40px;
     height: 40px;
-    margin: 0 28px;
+    margin-bottom: 15px;
 
     div {
         box-sizing: border-box;
