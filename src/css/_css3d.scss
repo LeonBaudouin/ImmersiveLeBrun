@@ -12,8 +12,16 @@
         }
     }
 
-    em {
+    .strong {
+        font-weight: 700;
+    }
+
+    .em {
         font-weight: 300;
+    }
+
+    .italic {
+        font-style: italic;
     }
 
     &.show {
@@ -49,6 +57,11 @@
     max-width: 540px;
 
     background-image: url('../assets/ui/fond_bleu.png');
+
+    &#Buste {
+        padding: 2.5rem;
+        padding-bottom: 1.8rem;
+    }
 }
 
 .css3d-quote {
