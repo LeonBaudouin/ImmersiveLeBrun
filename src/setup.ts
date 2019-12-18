@@ -176,12 +176,12 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         {
             three: scene1,
             name: 'Workshop',
-            buttonText: "Atelier d'Élisabeth Vigée Le Brun",
+            buttonText: "Vers l'Atelier",
         },
         {
             three: scene2,
             name: 'Demo',
-            buttonText: 'Académie royale de peinture et de sculpture',
+            buttonText: "Vers l'Académie",
         },
     ]
 

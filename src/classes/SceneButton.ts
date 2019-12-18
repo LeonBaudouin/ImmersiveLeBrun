@@ -42,19 +42,19 @@ export default class SceneButton {
 
     private setRightButton() {
         if (this.currentIndex < this.scenes.length - 1) {
-            this.rightButton.style.display = 'block'
+            this.rightButton.classList.remove('hidden')
             this.rightButton.textContent = this.scenes[this.currentIndex + 1].buttonText
         } else {
-            this.rightButton.style.display = 'none'
+            this.rightButton.classList.add('hidden')
         }
     }
 
     private setLeftButton() {
         if (this.currentIndex > 0) {
-            this.leftButton.style.display = 'block'
+            this.leftButton.classList.remove('hidden')
             this.leftButton.textContent = this.scenes[this.currentIndex - 1].buttonText
         } else {
-            this.leftButton.style.display = 'none'
+            this.leftButton.classList.add('hidden')
         }
     }
 
