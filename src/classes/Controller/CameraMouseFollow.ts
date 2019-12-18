@@ -1,6 +1,5 @@
 import AbstractController from '../Core/AbstractController'
 import { MouseMoveListener } from '../Events/MouseMoveListener'
-import * as dat from 'dat.gui'
 import * as THREE from 'three'
 import SmoothedPoint from '../Utils/SmoothPoint'
 import NormalizePoint from '../Utils/NormalizePoint'
@@ -11,7 +10,6 @@ export default class CameraMouseFollow extends AbstractController {
     private basePosition: THREE.Vector3
     private maxRotation: THREE.Vector3
     private maxMove: THREE.Vector2
-    private gui: any
 
     constructor(
         initialPos: THREE.Vector2 = new THREE.Vector2(0, 0),
@@ -20,15 +18,6 @@ export default class CameraMouseFollow extends AbstractController {
         maxMove: THREE.Vector2 = new THREE.Vector2(0.15, 0),
     ) {
         super()
-        this.gui = new dat.GUI()
-
-        const rot = this.gui.addFolder('Rotation')
-        rot.add(maxRotation, 'x', 0, 0.1)
-        rot.add(maxRotation, 'y', 0, 0.1)
-        rot.add(maxRotation, 'z', 0, 0.1)
-        const move = this.gui.addFolder('Position')
-        move.add(maxMove, 'x', -0.3, 0.3)
-        move.add(maxMove, 'y', -0.3, 0.3)
 
         this.maxMove = maxMove
         this.maxRotation = maxRotation
@@ -39,10 +28,6 @@ export default class CameraMouseFollow extends AbstractController {
 
     onMount(object3d: THREE.Object3D) {
         this.basePosition = object3d.position.clone()
-        const basePos = this.gui.addFolder('Base Position')
-        basePos.add(this.basePosition, 'x', -3, 3)
-        basePos.add(this.basePosition, 'y', -3, 3)
-        basePos.add(this.basePosition, 'z', -3, 3)
     }
 
     update(object3d: THREE.Object3D, time: number) {

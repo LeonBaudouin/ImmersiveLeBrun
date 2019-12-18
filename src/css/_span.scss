@@ -1,0 +1,17 @@
+span {
+    &.strong {
+        font-weight: 700;
+    }
+
+    &.em {
+        font-weight: 300;
+    }
+
+    &.italic {
+        font-style: italic;
+    }
+
+    &.nobreak {
+        white-space: nowrap;
+    }
+}

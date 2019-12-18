@@ -52,11 +52,12 @@ void main() {
     vec2 m = vec2(0.5,0.5) * ratio * 2.;
     vec2 st = vUv * ratio * 2.;
 
-    float dist = (pow(distance(m, st) + (1. - mixRatio), 1.5) + 0.1) * (1. - mixRatio);
+    float dist = (pow(distance(m, st) + (1. - mixRatio) * .4, 1.5) + 0.1) * (1. - mixRatio) * .4;
     float noise = pNoise(st * 5., 5);
     noise = noise * 10. + noise * (1. - 1.) * 10.;
     float ring = smoothstep(.3, .8, dist);
     float a = pow(1., .5) - pow(1., .5) * clamp(noise * dist * 1. * 1. + dist * 0.9, 0., 1.);
+    a = smoothstep(0.9, 1., a);
 
     vec4 texel1 = texture2D( tDiffuse1, vUv );
     vec4 texel2 = texture2D( tDiffuse2, vUv );
