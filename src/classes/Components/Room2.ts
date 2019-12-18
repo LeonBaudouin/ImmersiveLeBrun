@@ -77,42 +77,35 @@ export default class Room2 extends Component {
                     ligth.position.z = 3.5
                     return ligth
                 }),
-                // chevalet
                 new SceneObject({
-                    size: new THREE.Vector2(2, 2.4),
-                    position: new THREE.Vector3(0, -0.5, -0.5),
-                    texture: textures.painting,
+                    size: new THREE.Vector2(1.02*3, 0.835*2.9),
+                    position: new THREE.Vector3(-0.175, -0.72, -0.51),
+                    texture: textures.characters_painting,
                 }),
+                // new Component(
+                //     () => {
+                //         const object = new THREE.Object3D()
+                //         object.position.set(0, -0.4, -0.49)
+                //         return object
+                //     },
+                //     [],
+                //     {},
+                //     [
+                //         new Interactive({
+                //             name: 'LaPaix2',
+                //             sceneName: 'Demo',
+                //             sketch: textures.peace_sketch,
+                //             painting: textures.peace_painting,
+                //             ratio: new THREE.Vector2(1.7, 1.2),
+                //             glassTexture: textures.magnifying_glass,
+                //         }),
+                //     ],
+                // ),
                 new SceneObject({
-                    size: new THREE.Vector2(2, 1),
-                    position: new THREE.Vector3(0, -1.4, -0.7),
-                    rotation: new THREE.Euler(0.4, 0, 0),
-                    texture: textures.painting_leg,
+                    size: new THREE.Vector2(1.7, 1.2),
+                    position: new THREE.Vector3(0, -0.4, -0.49),
+                    texture: textures.peace_painting,
                 }),
-                new SceneObject({
-                    size: new THREE.Vector2(2, 2.4),
-                    position: new THREE.Vector3(0, -0.5, -0.48),
-                    texture: textures.painting_front,
-                }),
-                new Component(
-                    () => {
-                        const object = new THREE.Object3D()
-                        object.position.set(0, -0.4, -0.49)
-                        return object
-                    },
-                    [],
-                    {},
-                    [
-                        new Interactive({
-                            name: 'LaPaix2',
-                            sceneName: 'Demo',
-                            sketch: textures.peace_sketch,
-                            painting: textures.peace_painting,
-                            ratio: new THREE.Vector2(1.7, 1.2),
-                            glassTexture: textures.magnifying_glass,
-                        }),
-                    ],
-                ),
                 new SceneObject({
                     size: new THREE.Vector2(0.476*1.3, 0.708*1.3),
                     position: new THREE.Vector3(-1.2, -1.05, 1.2),
@@ -123,11 +116,25 @@ export default class Room2 extends Component {
                     position: new THREE.Vector3(-1.25, -1.05, 1.4),
                     texture: textures.character_2,
                 }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.530*1.3, 0.675*1.3),
-                    position: new THREE.Vector3(-0.25, -1, 1.55),
-                    texture: textures.character_3,
-                }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-0.25, -1, 1.55)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'Character3',
+                            sceneName: 'Demo',
+                            sketch: textures.character_3_sketch,
+                            painting: textures.character_3,
+                            ratio: new THREE.Vector2(0.530*1.3, 0.675*1.3),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
+                ),
                 new SceneObject({
                     size: new THREE.Vector2(0.452*1.4, 0.685*1.4),
                     position: new THREE.Vector3(0.75, -1.05, 1.2),
@@ -142,6 +149,11 @@ export default class Room2 extends Component {
                     size: new THREE.Vector2(0.867*1.2, 1.231*1.2),
                     position: new THREE.Vector3(1.75, -0.7, 1.6),
                     texture: textures.character_6,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.547*1.2, 0.765*1.2),
+                    position: new THREE.Vector3(1.35, -1, 0.9),
+                    texture: textures.character_7,
                 }),
             ],
         )
