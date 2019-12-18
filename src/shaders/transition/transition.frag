@@ -52,7 +52,7 @@ void main() {
     vec2 m = vec2(0.5,0.5) * ratio * 2.;
     vec2 st = vUv * ratio * 2.;
 
-    float dist = (pow(distance(m, st) * 4. + distance(m, st) * (1. - 1.) * 3., .5 + 1. * 1.) + 0.1) * (1. - mixRatio);
+    float dist = (pow(distance(m, st) + (1. - mixRatio), 1.5) + 0.1) * (1. - mixRatio);
     float noise = pNoise(st * 5., 5);
     noise = noise * 10. + noise * (1. - 1.) * 10.;
     float ring = smoothstep(.3, .8, dist);

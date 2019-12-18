@@ -3,6 +3,7 @@
     opacity: 0;
     transition: opacity ease-in-out 1s, visibility 0s 1s;
     visibility: hidden;
+    font-size: 1.6rem;
 
     p {
         margin: 0;
@@ -25,22 +26,26 @@
         opacity: 0.5;
     }
 
+    &.css3d-font-s {
+        font-size: 1.4rem;
+    }
+
     &.css3d-font-l {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
 
     &.css3d-font-xl {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
     }
 }
 
 .css3d-textinfo {
     color: #f1ede5;
     font-weight: 400;
-    font-size: 1.4rem;
     line-height: 1.6;
 
-    padding: 2rem;
+    padding: 3rem;
+    padding-bottom: 2.5rem;
     max-width: 540px;
 
     background-image: url('../assets/ui/fond_bleu.png');
@@ -51,8 +56,9 @@
     font-weight: 500;
     font-size: 1.2rem;
     line-height: 1.6;
+    padding: 2.5rem;
+    padding-bottom: 2.2rem;
 
-    padding: 1.4rem;
     max-width: 440px;
 
     background-image: url('../assets/ui/fond_citation.png');

@@ -59,6 +59,7 @@ export default class InteractiveShader extends AbstractController {
 
     public update(component: THREE.Object3D, time: number) {
         if (this.getShader()) {
+            if (InteractiveShader.hoveredObject) console.log(InteractiveShader.hoveredObject.userData.name)
             this.smoother.Smooth()
             const newMouse = this.smoother.getPoint()
 

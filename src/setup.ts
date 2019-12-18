@@ -160,7 +160,9 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
 
     const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
 
-    setTimeout(() => transitionScene.transition(scene2, 4), 4000)
+    // setTimeout(() => transitionScene.transition(scene2, 4), 4000)
+
+    document.querySelector('.hud-nextscene').addEventListener('click', () => transitionScene.transition(scene2, 4))
 
     return {
         raf: () => {
