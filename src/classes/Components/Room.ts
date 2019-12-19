@@ -155,16 +155,16 @@ export default class Room extends Component {
                             glassTexture: textures.magnifying_glass,
                             glassPosition: new THREE.Vector3(-0.1, -0.1, 0.05),
                             customChildCollider: new Component(() => {
-                                const heartShape = new THREE.Shape()
+                                const shape = new THREE.Shape()
                                 const size = new THREE.Vector2(0.6, 0.8)
-                                heartShape.moveTo(-size.x / 2, -size.y / 2)
-                                heartShape.lineTo(size.x / 2, -size.y / 2)
-                                heartShape.lineTo(size.x / 2, size.y / 2)
-                                heartShape.lineTo(-size.x / 2 + 0.12, size.y / 2)
-                                heartShape.lineTo(-size.x / 2 + 0.12, size.y / 2 - 0.4)
-                                heartShape.lineTo(-size.x / 2, size.y / 2 - 0.45)
+                                shape.moveTo(-size.x / 2, -size.y / 2)
+                                shape.lineTo(size.x / 2, -size.y / 2)
+                                shape.lineTo(size.x / 2, size.y / 2)
+                                shape.lineTo(-size.x / 2 + 0.12, size.y / 2)
+                                shape.lineTo(-size.x / 2 + 0.12, size.y / 2 - 0.4)
+                                shape.lineTo(-size.x / 2, size.y / 2 - 0.45)
                                 const mesh = new THREE.Mesh(
-                                    new THREE.ShapeGeometry(heartShape),
+                                    new THREE.ShapeGeometry(shape),
                                     new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }),
                                 )
                                 mesh.position.set(0, 0, 0)
