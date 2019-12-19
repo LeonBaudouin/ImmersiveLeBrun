@@ -29,15 +29,15 @@ export default class Room2 extends Component {
                 }),
                 // Floor
                 new Wall({
-                    size: new THREE.Vector2(size.x + 0.4, size.z - 1),
-                    position: new THREE.Vector3(0 - 0.2, -size.y / 2, -0.5),
+                    size: new THREE.Vector2(size.x, size.z - 1),
+                    position: new THREE.Vector3(0, -size.y / 2, -0.5),
                     rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
                     texture: textures.floor_2,
                 }),
                 // Ceil
                 new Wall({
-                    size: new THREE.Vector2(size.x + 0.4, size.z),
-                    position: new THREE.Vector3(0 - 0.2, size.y / 2, 0),
+                    size: new THREE.Vector2(size.x, size.z),
+                    position: new THREE.Vector3(0, size.y / 2, 0),
                     rotation: new THREE.Euler(Math.PI / 2, 0, 0),
                     texture: textures.ceil,
                 }),
@@ -78,9 +78,19 @@ export default class Room2 extends Component {
                     return ligth
                 }),
                 new SceneObject({
-                    size: new THREE.Vector2(1.02*3, 0.835*2.9),
-                    position: new THREE.Vector3(-0.175, -0.72, -0.51),
-                    texture: textures.characters_painting,
+                    size: new THREE.Vector2(0.733*2.9, 0.835*2.75),
+                    position: new THREE.Vector3(-0, -0.73, -0.48),
+                    texture: textures.frame,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.333*2.8, 0.835*2.8),
+                    position: new THREE.Vector3(-1.25, -0.7, -0.575),
+                    texture: textures.character_left,
+                }),
+                new SceneObject({
+                    size: new THREE.Vector2(0.333*2.8, 0.835*2.8),
+                    position: new THREE.Vector3(0.9, -0.65, -0.575),
+                    texture: textures.character_right,
                 }),
                 // new Component(
                 //     () => {
@@ -151,7 +161,7 @@ export default class Room2 extends Component {
                     texture: textures.character_6,
                 }),
                 new SceneObject({
-                    size: new THREE.Vector2(0.547*1.2, 0.765*1.2),
+                    size: new THREE.Vector2(0.547*1.4, 0.765*1.4),
                     position: new THREE.Vector3(1.35, -1, 0.9),
                     texture: textures.character_7,
                 }),

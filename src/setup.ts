@@ -91,6 +91,9 @@ export default function Load() {
             character_6: 'room2/scene_02_homme_extreme_droite_v01.png',
             character_7: 'room2/scene_02_assis_fond_v01.png',
             characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
+            frame: 'room2/scene_02_cadres_v02.png',
+            character_left: 'room2/scene_02_personnages_derriere_cadres_gauche_v02.png',
+            character_right: 'room2/scene_02_personnages_derriere_cadres_droite_v01.png',
         },
         './assets/',
     ).then(Setup)
