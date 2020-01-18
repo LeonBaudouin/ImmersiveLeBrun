@@ -7,14 +7,14 @@ import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class Room2 extends Component {
     constructor(textures: { [name: string]: THREE.Texture } = {}) {
-        const height = 3.5
-        const width = height * 1.7134637
+        const height = 4
+        const width = 3.5 * 1.7134637
         const size = new THREE.Vector3(width, height, 4.5)
 
         super(
             () => {
                 const obj = new THREE.Object3D()
-                obj.position.y = size.y / 2
+                obj.position.y = size.y / 2 - 0.25
                 return obj
             },
             [],

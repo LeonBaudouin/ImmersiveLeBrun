@@ -96,9 +96,9 @@ export default function Load() {
             character_left: 'room2/scene_02_personnages_derriere_cadres_gauche_v02.png',
             character_right: 'room2/scene_02_personnages_derriere_cadres_droite_v01.png',
 
-            right_wall_3: 'room3/mur_droite_v01.jpg',
-            left_wall_3: 'room3/mur_gauche_v01.jpg',
-            front_wall_3: 'room3/mur_fond_v01.jpg',
+            right_wall_3: 'room3/mur_droite_v02.jpg',
+            left_wall_3: 'room3/mur_gauche_v02.jpg',
+            front_wall_3: 'room3/mur_fond_v02.jpg',
             floor_3: 'room3/sol_v01.jpg',
             perso_01: 'room3/Perso_01_v01.png',
             perso_02: 'room3/Perso_02_v01.png',
