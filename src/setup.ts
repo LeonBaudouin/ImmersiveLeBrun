@@ -7,6 +7,7 @@ import RendererInterface from './classes/Core/RendererInterface'
 import Raycaster from './classes/Events/Raycaster'
 import Room from './classes/Components/Room'
 import Room2 from './classes/Components/Room2'
+import Room3 from './classes/Components/Room3'
 import CameraMouseFollow from './classes/Controller/CameraMouseFollow'
 import { MouseMoveListener } from './classes/Events/MouseMoveListener'
 import InteractiveShader from './classes/Controller/InteractiveShader'
@@ -94,6 +95,15 @@ export default function Load() {
             frame: 'room2/scene_02_cadres_v02.png',
             character_left: 'room2/scene_02_personnages_derriere_cadres_gauche_v02.png',
             character_right: 'room2/scene_02_personnages_derriere_cadres_droite_v01.png',
+
+            right_wall_3: 'room3/mur_droite_v01.jpg',
+            left_wall_3: 'room3/mur_gauche_v01.jpg',
+            front_wall_3: 'room3/mur_fond_v01.jpg',
+            floor_3: 'room3/sol_v01.jpg',
+            perso_01: 'room3/Perso_01_v01.png',
+            perso_02: 'room3/Perso_02_v01.png',
+            perso_03: 'room3/Perso_03_v01.png',
+            perso_04: 'room3/Perso_04_v01.png',
         },
         './assets/',
     ).then(Setup)
@@ -137,6 +147,18 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
     ]
 
     const scene2 = new ThreeScene(new Component(() => camera), webGLrenderer, components2)
+
+    const components3 = [
+        new Component(() => {
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
+            mesh.position.set(0, 0, -50)
+            return mesh
+        }, [new InteractiveShader('Galerie')]),
+        new Room3(textures),
+        new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
+    ]
+
+    const scene3 = new ThreeScene(new Component(() => camera), webGLrenderer, components3)
 
     const cssComponents = [
         new TextInfo({
@@ -189,6 +211,11 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
             three: scene2,
             name: 'Demo',
             buttonText: "Vers l'Académie",
+        },
+        {
+            three: scene3,
+            name: 'Galerie',
+            buttonText: "Vers la Galerie",
         },
     ]
 
