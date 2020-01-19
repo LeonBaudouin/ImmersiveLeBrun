@@ -52,7 +52,9 @@ export default class ThreeScene {
 
     update(onFbo: boolean = false) {
         this.cameraComponent.update(this.time)
-        this.objects.forEach(obj => obj.update(this.time))
+        for (let i = 0; i < this.objects.length; i++) {
+            this.objects[i].update(this.time)
+        }
         if (onFbo && this.renderer instanceof WebGLRenderer) {
             this.renderer.setRenderTarget(this.fbo)
             this.renderer.clear()

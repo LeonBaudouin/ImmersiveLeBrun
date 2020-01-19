@@ -17,26 +17,33 @@ export default class Component {
         this.object3d = object3dCallback()
         this.controllers = controllers
         this.children = children
-        this.children.forEach(child => {
+
+        for (let i = 0; i < this.children.length; i++) {
+            const child = this.children[i]
             this.object3d.add(child.object3d)
-        })
-        this.controllers.forEach(controller => {
+        }
+
+        for (let i = 0; i < this.controllers.length; i++) {
+            const controller = this.controllers[i]
             if (typeof controller == 'object') {
                 controller.onMount(this.object3d)
             }
-        })
+        }
     }
 
     update(time: number) {
-        this.controllers.forEach(controller => {
+        for (let i = 0; i < this.controllers.length; i++) {
+            const controller = this.controllers[i]
             if (typeof controller == 'object') {
                 controller.update(this.object3d, time, this.data)
             } else if (typeof controller == 'function') {
                 controller(this.object3d, time, this.data)
             }
-        })
-        this.children.forEach(child => {
+        }
+
+        for (let i = 0; i < this.children.length; i++) {
+            const child = this.children[i]
             child.update(time)
-        })
+        }
     }
 }

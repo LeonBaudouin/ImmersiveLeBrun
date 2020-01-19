@@ -23,7 +23,10 @@ export default abstract class AbstractEventEmitter<ID, INFO> implements EventEmi
 
     Emit(id: ID, info: INFO) {
         if (this.callbackAssoc.has(id)) {
-            this.callbackAssoc.get(id).forEach(callback => callback(info))
+            const callbacks = this.callbackAssoc.get(id)
+            for (let i = 0; i < callbacks.length; i++) {
+                callbacks[i](info)
+            }
         }
     }
 }
