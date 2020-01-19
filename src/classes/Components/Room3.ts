@@ -83,25 +83,91 @@ export default class Room2 extends Component {
                     texture: textures.peace_painting,
                 }),
                 new SceneObject({
-                    size: new THREE.Vector2(0.417*1.8, 0.886*1.8),
-                    position: new THREE.Vector3(-1.25, -0.7, 0.2),
-                    texture: textures.perso_01,
+                    size: new THREE.Vector2(1.7*1.2, 1.2*1.32),
+                    position: new THREE.Vector3(0, -0.4, -0.48),
+                    texture: textures.room3_frame,
                 }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.493*1.8, 0.853*1.8),
-                    position: new THREE.Vector3(-0.75, -0.7, 0.3),
-                    texture: textures.perso_03,
-                }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.452*1.8, 0.834*1.8),
-                    position: new THREE.Vector3(0.75, -0.7, 0.3),
-                    texture: textures.perso_02,
-                }),
-                new SceneObject({
-                    size: new THREE.Vector2(0.562*1.8, 0.886*1.8),
-                    position: new THREE.Vector3(1.5, -0.7, 0.2),
-                    texture: textures.perso_04,
-                }),
+                // new SceneObject({
+                //     size: new THREE.Vector2(0.286*2.5, 0.746*2.5),
+                //     position: new THREE.Vector3(-1.25, -0.7, 0.2),
+                //     texture: textures.perso_01,
+                // }),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-1.25, -1, 0.2)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'room3_perso1',
+                            sceneName: 'Galerie',
+                            sketch: textures.perso_01_sketch,
+                            painting: textures.perso_01,
+                            ratio: new THREE.Vector2(0.286*2.5, 0.746*2.5),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
+                ),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(-0.75, -1, 0.3)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'room3_perso3',
+                            sceneName: 'Galerie',
+                            sketch: textures.perso_03_sketch,
+                            painting: textures.perso_03,
+                            ratio: new THREE.Vector2(0.296*2.5, 0.780*2.5),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
+                ),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(0.75, -1, 0.3)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'room3_perso2',
+                            sceneName: 'Galerie',
+                            sketch: textures.perso_02_sketch,
+                            painting: textures.perso_02,
+                            ratio: new THREE.Vector2(0.291*2.5, 0.766*2.5),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
+                ),
+                new Component(
+                    () => {
+                        const object = new THREE.Object3D()
+                        object.position.set(1.5, -0.9, 0.2)
+                        return object
+                    },
+                    [],
+                    {},
+                    [
+                        new Interactive({
+                            name: 'room3_perso4',
+                            sceneName: 'Galerie',
+                            sketch: textures.perso_04_sketch,
+                            painting: textures.perso_04,
+                            ratio: new THREE.Vector2(0.373*2.5, 0.822*2.5),
+                            glassTexture: textures.magnifying_glass,
+                        }),
+                    ],
+                ),
             ],
         )
     }
