@@ -1,0 +1,153 @@
+.menu-card {
+    position: relative;
+    width: 25vw;
+
+    filter: drop-shadow(20px 30px 20px rgba(0, 0, 0, 0.2));
+    perspective: 1000px;
+
+    &:nth-child(1) &-front {
+        background-color: #735463;
+    }
+    &:nth-child(2) &-front {
+        background-color: #7b685a;
+    }
+    &:nth-child(3) &-front {
+        background-color: #9c7324;
+    }
+
+    &s {
+        display: flex;
+
+        margin: 0 10vw;
+
+        align-self: stretch;
+        justify-content: space-between;
+    }
+
+    &:hover &-inner {
+        transform: rotateY(180deg);
+    }
+
+    &-inner {
+        transition: transform 0.8s;
+        transform: rotateY(0deg);
+        transform-style: preserve-3d;
+    }
+
+    &-front {
+        transform-style: preserve-3d;
+        position: relative;
+        color: #e9e6e9;
+        backface-visibility: hidden;
+    }
+
+    &-titles {
+        position: absolute;
+        display: flex;
+
+        width: 100%;
+
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &-image {
+        width: 100%;
+        display: block;
+    }
+
+    &-date {
+        font-size: 0.7rem;
+        font-weight: 700;
+        margin: 1.4rem 0 1rem 0;
+        transform: translateZ(10px);
+    }
+
+    &-title {
+        margin: 0 0 0.4rem 0;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 400;
+        transform: translateZ(5px);
+
+        &-secondary {
+            margin: 0;
+            transform: translateZ(8px);
+        }
+    }
+
+    &-back {
+        transform-style: preserve-3d;
+        position: absolute;
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: space-around;
+        justify-content: space-evenly;
+
+        top: 0;
+        width: 100%;
+        height: 100%;
+
+        background-color: #f8e4cc;
+
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
+    }
+
+    &-description {
+        font-family: 'Open Sans';
+        font-weight: 400;
+        font-size: 1.065rem;
+
+        text-align: center;
+        color: rgb(63, 63, 63);
+
+        transform: translateZ(10px);
+        margin: 0 3.8rem;
+    }
+
+    &-button {
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        position: relative;
+        padding: 0.8rem 1.3rem;
+        margin-bottom: 1rem;
+        transform: translateZ(8px);
+
+        &.upcoming {
+            filter: saturate(0);
+            cursor: default;
+        }
+
+        &:hover::after,
+        &.upcoming::after {
+            opacity: 0.5;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 130%;
+            height: 180%;
+            background: url('../assets/menu/Brush_CTA_v01.png') center no-repeat;
+            background-size: contain;
+            opacity: 1;
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, -3px);
+            transition: opacity 300ms ease-out;
+        }
+    }
+
+    &-key {
+        height: 50%;
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+        transform: translateZ(10px);
+    }
+}

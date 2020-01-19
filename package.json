@@ -4,7 +4,7 @@
     "description": "Threejs boiler plate",
     "main": "index.js",
     "scripts": {
-        "build": "webpack",
+        "build": "webpack --optimize-minimize --optimize-occurrence-order --optimize-dedupe",
         "start": "webpack-dev-server",
         "prettify": "prettier --config prettier.config.js --write src/**"
     },

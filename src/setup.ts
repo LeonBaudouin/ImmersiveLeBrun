@@ -215,7 +215,7 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         {
             three: scene3,
             name: 'Galerie',
-            buttonText: "Vers la Galerie",
+            buttonText: 'Vers la Galerie',
         },
     ]
 
@@ -226,38 +226,51 @@ function Setup(textures: { [name: string]: THREE.Texture }): { raf: Function; cb
         document.querySelector('.hud-nextscene'),
     )
 
+    let started = false
+
     return {
         raf: () => {
-            CSS3DScene.update()
-            transitionScene.update()
+            if (started) {
+                CSS3DScene.update()
+                transitionScene.update()
+            }
         },
         cb: () => {
             const mouse = new THREE.Vector2()
 
-            document.addEventListener('mousemove', e => {
-                const { clientX, clientY } = e
-                mouse.x = (clientX / window.innerWidth) * 2 - 1
-                mouse.y = -(clientY / window.innerHeight) * 2 + 1
-                Raycaster.getInstance().Cast(camera, mouse)
-                MouseMoveListener.getInstance().UpdateValue(e)
-            })
-
             document.querySelector('#enterButton').addEventListener('click', () => {
-                document.body.classList.add('start')
+                ;(document.querySelector('.ui-container') as HTMLElement).style.display = 'none'
+                started = true
+
+                // -- Raycast --
+
+                document.addEventListener('mousemove', e => {
+                    const { clientX, clientY } = e
+                    mouse.x = (clientX / window.innerWidth) * 2 - 1
+                    mouse.y = -(clientY / window.innerHeight) * 2 + 1
+                    Raycaster.getInstance().Cast(camera, mouse)
+                    MouseMoveListener.getInstance().UpdateValue(e)
+                })
+
+                EventEmitter.getInstance().Subscribe(
+                    EVENT.INTERACTIVE_MOUSEENTER,
+                    () => (document.body.style.cursor = 'pointer'),
+                )
+
+                EventEmitter.getInstance().Subscribe(
+                    EVENT.INTERACTIVE_MOUSELEAVE,
+                    () => (document.body.style.cursor = 'default'),
+                )
             })
-            document.body.classList.add('loaded')
-            const preventClick = document.querySelectorAll('.preventClick')
-            preventClick.forEach(elem => {
+            ;(document.querySelector('.loader') as HTMLElement).style.display = 'none'
+            ;(document.querySelector('#enterButton') as HTMLElement).style.opacity = '1'
+            ;(document.querySelector('#enterButton') as HTMLElement).style.cursor = 'pointer'
+
+            // -- Prevent Click --
+
+            document.querySelectorAll('.preventClick').forEach(elem => {
                 elem.addEventListener('click', e => e.stopPropagation())
             })
-            EventEmitter.getInstance().Subscribe(
-                EVENT.INTERACTIVE_MOUSEENTER,
-                () => (document.body.style.cursor = 'pointer'),
-            )
-            EventEmitter.getInstance().Subscribe(
-                EVENT.INTERACTIVE_MOUSELEAVE,
-                () => (document.body.style.cursor = 'default'),
-            )
         },
     }
 }
