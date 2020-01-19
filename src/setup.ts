@@ -98,12 +98,17 @@ export default function Load() {
 
             right_wall_3: 'room3/mur_droite_v02.jpg',
             left_wall_3: 'room3/mur_gauche_v02.jpg',
-            front_wall_3: 'room3/mur_fond_v02.jpg',
+            front_wall_3: 'room3/mur_fond_v03.jpg',
             floor_3: 'room3/sol_v01.jpg',
             perso_01: 'room3/Perso_01_v01.png',
             perso_02: 'room3/Perso_02_v01.png',
             perso_03: 'room3/Perso_03_v01.png',
             perso_04: 'room3/Perso_04_v01.png',
+            perso_01_sketch: 'room3/Esquisse_Perso_01_v01.png',
+            perso_02_sketch: 'room3/Esquisse_Perso_02_v01.png',
+            perso_03_sketch: 'room3/Esquisse_Perso_03_v01.png',
+            perso_04_sketch: 'room3/Esquisse_Perso_04_v01.png',
+            room3_frame: 'room3/Cadre_v01.png',
         },
         './assets/',
     ).then(Setup)
