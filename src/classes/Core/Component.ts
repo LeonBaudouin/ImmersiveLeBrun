@@ -15,13 +15,22 @@ export default class Component {
         children: Component[] = [],
     ) {
         this.object3d = object3dCallback()
-        this.controllers = controllers
+
+        this.setChildren(children)
+        this.setControllers(controllers)
+    }
+
+    protected setChildren(children: Component[]) {
         this.children = children
 
         for (let i = 0; i < this.children.length; i++) {
             const child = this.children[i]
             this.object3d.add(child.object3d)
         }
+    }
+
+    protected setControllers(controllers: Controller[]) {
+        this.controllers = controllers
 
         for (let i = 0; i < this.controllers.length; i++) {
             const controller = this.controllers[i]

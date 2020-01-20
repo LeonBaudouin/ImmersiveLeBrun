@@ -1,6 +1,11 @@
 import ThreeScene from './Core/ThreeScene'
 import TransitionScene from './TransitionScene'
 import EventEmitter, { EVENT } from './Events/EventEmitter'
+import Room from './Components/Room'
+import Room2 from './Components/Room2'
+import Room3 from './Components/Room3'
+
+const rooms = [Room, Room2, Room3]
 
 export default class SceneButton {
     private scenes: Scene[]
@@ -20,14 +25,20 @@ export default class SceneButton {
         this.setScene(0)
         this.leftButton.addEventListener('click', () => this.previousScene())
         this.rightButton.addEventListener('click', () => this.nextScene())
+        this.eventEmitter.Subscribe(EVENT.ROOM_LOADED, () => {
+            this.setLeftButton()
+            this.setRightButton()
+        })
     }
 
     private nextScene() {
-        if (this.currentIndex <= this.scenes.length - 1) this.setScene(this.currentIndex + 1)
+        const i = this.currentIndex + 1
+        if (this.currentIndex <= this.scenes.length - 1 && rooms[i].isLoaded) this.setScene(i)
     }
 
     private previousScene() {
-        if (this.currentIndex >= 0) this.setScene(this.currentIndex - 1)
+        const i = this.currentIndex - 1
+        if (this.currentIndex >= 0 && rooms[i].isLoaded) this.setScene(i)
     }
 
     private setScene(index: number) {
@@ -35,15 +46,17 @@ export default class SceneButton {
         if (this.transitionScene.currentScene !== this.currentScene.three) {
             this.transitionScene.transition(this.currentScene.three, 4)
         }
-        this.eventEmitter.Emit(EVENT.CHANGE_SCENE, this.currentScene.name)
+        this.eventEmitter.Emit(EVENT.INTERACTIVE_BIND, this.currentScene.name)
+        this.eventEmitter.Emit(EVENT.CLOSE_TEXTS, this.currentScene.name)
         this.setLeftButton()
         this.setRightButton()
     }
 
     private setRightButton() {
         if (this.currentIndex < this.scenes.length - 1) {
+            const i = this.currentIndex + 1
             this.rightButton.classList.remove('hidden')
-            this.rightButton.textContent = this.scenes[this.currentIndex + 1].buttonText
+            this.rightButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
             this.rightButton.classList.add('hidden')
         }
@@ -51,8 +64,9 @@ export default class SceneButton {
 
     private setLeftButton() {
         if (this.currentIndex > 0) {
+            const i = this.currentIndex - 1
             this.leftButton.classList.remove('hidden')
-            this.leftButton.textContent = this.scenes[this.currentIndex - 1].buttonText
+            this.leftButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
             this.leftButton.classList.add('hidden')
         }

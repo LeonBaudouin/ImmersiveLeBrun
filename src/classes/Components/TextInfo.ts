@@ -36,7 +36,7 @@ export default class TextInfo extends Component {
             }
         })
 
-        EventEmitter.getInstance().Subscribe(EVENT.CHANGE_SCENE, () => {
+        EventEmitter.getInstance().Subscribe(EVENT.CLOSE_TEXTS, () => {
             elem.classList.remove('show')
             elem.classList.remove('secondary')
         })

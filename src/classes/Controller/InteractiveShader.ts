@@ -49,7 +49,7 @@ export default class InteractiveShader extends AbstractController {
         const raycastCallback = infos => this.onRayCollide(component, infos)
         const clickCallback = () => this.onClick(component)
 
-        this.eventEmitter.Subscribe(EVENT.CHANGE_SCENE, name => {
+        this.eventEmitter.Subscribe(EVENT.INTERACTIVE_BIND, name => {
             if (name === this.scene) {
                 Raycaster.getInstance().Subscribe(collider, raycastCallback)
                 css3dCanvas.addEventListener('click', clickCallback)
