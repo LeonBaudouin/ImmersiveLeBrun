@@ -5,7 +5,7 @@ import SceneObject from './SceneObject'
 import Interactive from './Interactive'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
-export default class Room2 extends Component {
+export default class Room3 extends Component {
     constructor(textures: { [name: string]: THREE.Texture } = {}) {
         const height = 4
         const width = 3.5 * 1.7134637

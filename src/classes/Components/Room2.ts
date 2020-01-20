@@ -7,9 +7,9 @@ import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class Room2 extends Component {
     constructor(textures: { [name: string]: THREE.Texture } = {}) {
-        const height = 3.5
-        const width = height * 1.7134637
-        const size = new THREE.Vector3(width, height, 4.5)
+        const height = 4.5
+        const width = height * 1.422
+        const size = new THREE.Vector3(width, height, 6)
 
         super(
             () => {
@@ -79,17 +79,17 @@ export default class Room2 extends Component {
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.733*2.9, 0.835*2.75),
-                    position: new THREE.Vector3(-0, -0.73, -0.48),
+                    position: new THREE.Vector3(-0, -1.23, -0.48),
                     texture: textures.frame,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.333*2.8, 0.835*2.8),
-                    position: new THREE.Vector3(-1.25, -0.7, -0.575),
+                    position: new THREE.Vector3(-1.25, -1.2, -0.575),
                     texture: textures.character_left,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.333*2.8, 0.835*2.8),
-                    position: new THREE.Vector3(0.9, -0.65, -0.575),
+                    position: new THREE.Vector3(0.9, -1.15, -0.575),
                     texture: textures.character_right,
                 }),
                 // new SceneObject({
@@ -118,23 +118,23 @@ export default class Room2 extends Component {
                 // ),
                 new SceneObject({
                     size: new THREE.Vector2(1.7, 1.2),
-                    position: new THREE.Vector3(0, -0.4, -0.49),
+                    position: new THREE.Vector3(0, -0.9, -0.49),
                     texture: textures.peace_painting,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.476 * 1.3, 0.708 * 1.3),
-                    position: new THREE.Vector3(-1.2, -1.05, 1.2),
+                    position: new THREE.Vector3(-1.2, -1.55, 1.2),
                     texture: textures.character_1,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.958 * 1.3, 0.676 * 1.3),
-                    position: new THREE.Vector3(-1.25, -1.05, 1.4),
+                    position: new THREE.Vector3(-1.25, -1.55, 1.4),
                     texture: textures.character_2,
                 }),
                 new Component(
                     () => {
                         const object = new THREE.Object3D()
-                        object.position.set(-0.25, -1, 1.55)
+                        object.position.set(-0.25, -1.5, 1.55)
                         return object
                     },
                     [],
@@ -168,22 +168,22 @@ export default class Room2 extends Component {
                 ),
                 new SceneObject({
                     size: new THREE.Vector2(0.452 * 1.4, 0.685 * 1.4),
-                    position: new THREE.Vector3(0.75, -1.05, 1.2),
+                    position: new THREE.Vector3(0.75, -1.55, 1.2),
                     texture: textures.character_4,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.686 * 1.2, 0.693 * 1.2),
-                    position: new THREE.Vector3(1.1, -0.9, 1.5),
+                    position: new THREE.Vector3(1.1, -1.4, 1.5),
                     texture: textures.character_5,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.867 * 1.2, 1.231 * 1.2),
-                    position: new THREE.Vector3(1.75, -0.7, 1.6),
+                    position: new THREE.Vector3(1.75, -1.2, 1.6),
                     texture: textures.character_6,
                 }),
                 new SceneObject({
                     size: new THREE.Vector2(0.547 * 1.2, 0.765 * 1.2),
-                    position: new THREE.Vector3(1.35, -1, 0.9),
+                    position: new THREE.Vector3(1.35, -1.5, 0.9),
                     texture: textures.character_7,
                 }),
             ],
