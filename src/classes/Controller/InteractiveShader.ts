@@ -3,7 +3,6 @@ import * as THREE from 'three'
 import Raycaster from '../Events/Raycaster'
 import { TweenLite, Power4 } from 'gsap/all'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
-import InteractiveClickInfo from '../Events/InteractiveClickInfo'
 import SmoothedPoint from '../Utils/SmoothPoint'
 
 export default class InteractiveShader extends AbstractController {
@@ -82,7 +81,7 @@ export default class InteractiveShader extends AbstractController {
 
     public update(component: THREE.Object3D, time: number) {
         if (this.getShader()) {
-            this.smoother.Smooth()
+            this.smoother.smooth()
             const newMouse = this.smoother.getPoint()
 
             const {
@@ -99,6 +98,7 @@ export default class InteractiveShader extends AbstractController {
             const hoveredChange = this.lastIsHovered !== isHovered
 
             if (hoveredChange) {
+                if (isHovered) this.smoother.jumbToTarget()
                 this.eventEmitter.Emit(isHovered ? EVENT.INTERACTIVE_MOUSEENTER : EVENT.INTERACTIVE_MOUSELEAVE, {
                     component,
                     controller: this,

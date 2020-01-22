@@ -14,6 +14,7 @@ export default class SceneButton {
     private rightButton: HTMLElement
     private currentIndex: number
     private eventEmitter: EventEmitter
+    private isTransitioning: boolean = false
 
     constructor(scenes: Scene[], transitionScene: TransitionScene, leftButton: HTMLElement, rightButton: HTMLElement) {
         this.scenes = scenes
@@ -25,6 +26,8 @@ export default class SceneButton {
         this.setScene(0)
         this.leftButton.addEventListener('click', () => this.previousScene())
         this.rightButton.addEventListener('click', () => this.nextScene())
+        this.eventEmitter.Subscribe(EVENT.TRANSITION_START, () => (this.isTransitioning = true))
+        this.eventEmitter.Subscribe(EVENT.TRANSITION_END, () => (this.isTransitioning = false))
         this.eventEmitter.Subscribe(EVENT.ROOM_LOADED, () => {
             this.setLeftButton()
             this.setRightButton()
@@ -33,7 +36,7 @@ export default class SceneButton {
 
     private nextScene() {
         const i = this.currentIndex + 1
-        if (this.currentIndex <= this.scenes.length - 1 && rooms[i].isLoaded) this.setScene(i)
+        if (this.currentIndex < this.scenes.length - 1 && rooms[i].isLoaded) this.setScene(i)
     }
 
     private previousScene() {
@@ -42,6 +45,7 @@ export default class SceneButton {
     }
 
     private setScene(index: number) {
+        if (this.isTransitioning) return
         this.currentIndex = index
         if (this.transitionScene.currentScene !== this.currentScene.three) {
             this.transitionScene.transition(this.currentScene.three, 4)

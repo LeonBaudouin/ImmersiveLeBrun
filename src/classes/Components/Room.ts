@@ -26,6 +26,7 @@ export default class Room extends LoadedComponent {
     }
 
     loadRoom(): Promise<void> {
+        if (Room.isLoaded) return this.load(TextureLoader.load([]), () => [])
         return this.load(
             TextureLoader.load(
                 {

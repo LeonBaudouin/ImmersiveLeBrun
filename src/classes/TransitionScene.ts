@@ -55,10 +55,12 @@ export default class TransitionScene {
     }
 
     transition(transitioningScene: ThreeScene, delay: number) {
+        EventEmitter.getInstance().Emit(EVENT.TRANSITION_START, transitioningScene)
         this.transitioningScene = transitioningScene
         this.quad
             .getTransitionController()
             .transition(this.transitioningScene.fbo.texture, this.currentScene.fbo.texture, delay, () => {
+                EventEmitter.getInstance().Emit(EVENT.TRANSITION_END, transitioningScene)
                 this.currentScene = this.transitioningScene
                 this.transitioningScene = null
             })

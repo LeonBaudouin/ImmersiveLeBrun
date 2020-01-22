@@ -11,11 +11,15 @@ export default class SmoothedPoint {
         this.speed = speed
     }
 
+    public jumbToTarget() {
+        this.smoothedPoint.set(this.targetPoint.x, this.targetPoint.y)
+    }
+
     public setTarget({ x, y }: { x: number; y: number }): void {
         this.targetPoint.set(x, y)
     }
 
-    public Smooth(): void {
+    public smooth(): void {
         this.smoothedPoint.set(
             this.smoothedPoint.x + (this.targetPoint.x - this.smoothedPoint.x) * this.speed.x,
             this.smoothedPoint.y + (this.targetPoint.y - this.smoothedPoint.y) * this.speed.y,

@@ -34,7 +34,7 @@ export default class CameraMouseFollow extends AbstractController {
         const mouse = this.mouseMoveListener.getValue()
         if (mouse) {
             this.smoother.setTarget(mouse)
-            this.smoother.Smooth()
+            this.smoother.smooth()
             const newPoint = this.smoother.getPoint()
             NormalizePoint(newPoint)
             object3d.rotation.y = newPoint.x * this.maxRotation.x

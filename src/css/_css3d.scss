@@ -16,6 +16,10 @@
         transition: opacity ease-in-out 1s;
         visibility: visible;
         opacity: 1;
+
+        .css3d-quoteicon {
+            opacity: 1;
+        }
     }
 
     &.secondary {
@@ -78,11 +82,12 @@
     display: block;
     width: 6rem;
     position: absolute;
+    opacity: 0;
     bottom: 0.4rem;
     right: -2rem;
     cursor: pointer;
     transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
-    transition: all ease 0.2s;
+    transition: transform ease 0.2s, opacity ease 1s 1s;
 
     &:hover {
         transform: rotate3d(0, 0, 1, 5deg) scale3d(1.1, 1.1, 1.1);
