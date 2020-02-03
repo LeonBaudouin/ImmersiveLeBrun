@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import TransitionQuad from './Components/TransitionQuad'
-import ThreeScene from './Core/ThreeScene'
+import Transitionable from './Core/Transitionable'
 import EventEmitter, { EVENT } from './Events/EventEmitter'
 
 export default class TransitionScene {
@@ -9,10 +9,10 @@ export default class TransitionScene {
     public camera: THREE.OrthographicCamera
     public quad: TransitionQuad
     public scene: THREE.Scene
-    public currentScene: ThreeScene
-    public transitioningScene: ThreeScene | null = null
+    public currentScene: Transitionable
+    public transitioningScene: Transitionable | null = null
 
-    constructor(renderer: THREE.WebGLRenderer, currentScene: ThreeScene) {
+    constructor(renderer: THREE.WebGLRenderer, currentScene: Transitionable) {
         this.renderer = renderer
         this.scene = new THREE.Scene()
         this.currentScene = currentScene
@@ -54,12 +54,12 @@ export default class TransitionScene {
         this.time++
     }
 
-    transition(transitioningScene: ThreeScene, delay: number) {
+    transition(transitioningScene: Transitionable, delay: number) {
         EventEmitter.getInstance().Emit(EVENT.TRANSITION_START, transitioningScene)
         this.transitioningScene = transitioningScene
         this.quad
             .getTransitionController()
-            .transition(this.transitioningScene.fbo.texture, this.currentScene.fbo.texture, delay, () => {
+            .transition(this.transitioningScene.getFbo().texture, this.currentScene.getFbo().texture, delay, () => {
                 EventEmitter.getInstance().Emit(EVENT.TRANSITION_END, transitioningScene)
                 this.currentScene = this.transitioningScene
                 this.transitioningScene = null

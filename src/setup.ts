@@ -15,8 +15,9 @@ import TextInfo from './classes/Components/TextInfo'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TransitionScene from './classes/TransitionScene'
 import SceneButton, { Scene } from './classes/SceneButton'
+import ComposerScene from './classes/Core/ComposerScene'
 
-function initWebglRenderer(camera: THREE.Camera): RendererInterface {
+function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
@@ -65,7 +66,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
-    const scene1 = new ThreeScene(new Component(() => camera), webGLrenderer, components1)
+    const scene1 = new ComposerScene(new Component(() => camera), webGLrenderer, components1)
 
     const room2 = new Room2()
     const components2 = [
@@ -78,7 +79,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
-    const scene2 = new ThreeScene(new Component(() => camera), webGLrenderer, components2)
+    const scene2 = new ComposerScene(new Component(() => camera), webGLrenderer, components2)
 
     const room3 = new Room3()
     const components3 = [
@@ -91,7 +92,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
 
-    const scene3 = new ThreeScene(new Component(() => camera), webGLrenderer, components3)
+    const scene3 = new ComposerScene(new Component(() => camera), webGLrenderer, components3)
 
     const cssComponents = [
         new TextInfo({

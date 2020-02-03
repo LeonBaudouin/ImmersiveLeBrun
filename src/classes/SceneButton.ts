@@ -4,6 +4,7 @@ import EventEmitter, { EVENT } from './Events/EventEmitter'
 import Room from './Components/Room'
 import Room2 from './Components/Room2'
 import Room3 from './Components/Room3'
+import Transitionable from './Core/Transitionable'
 
 const rooms = [Room, Room2, Room3]
 
@@ -82,7 +83,7 @@ export default class SceneButton {
 }
 
 export interface Scene {
-    three: ThreeScene
+    three: Transitionable
     name: string
     buttonText: string
 }

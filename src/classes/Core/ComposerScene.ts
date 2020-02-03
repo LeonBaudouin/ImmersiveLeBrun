@@ -1,32 +1,30 @@
-import {
-    Camera,
-    Scene,
-    PerspectiveCamera,
-    Color,
-    WebGLRenderTarget,
-    LinearFilter,
-    RGBFormat,
-    WebGLRenderer,
-} from 'three'
+import { Camera, Scene, PerspectiveCamera, Color, WebGLRenderTarget, WebGLRenderer } from 'three'
 import Component from './Component'
-import RendererInterface from './RendererInterface'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import Transitionable from './Transitionable'
 
-export default class ThreeScene {
+export default class ComposerScene implements Transitionable {
     public cameraComponent: Component
     public objects: Component[]
     public scene: Scene
-    public renderer: RendererInterface
+    public composer: EffectComposer
     public controls: any
     public time: number
+    public renderer: WebGLRenderer
 
-    constructor(cameraComponent: Component, renderer: RendererInterface, objects: Component[] = []) {
+    constructor(cameraComponent: Component, renderer: WebGLRenderer, objects: Component[] = []) {
         this.cameraComponent = cameraComponent
         this.objects = objects
         this.time = 0
         this.renderer = renderer
+        this.composer = new EffectComposer(renderer)
 
         this.bind()
         this.setupScene()
+
+        const renderPass = new RenderPass(this.scene, <Camera>this.cameraComponent.object3d)
+        this.composer.addPass(renderPass)
     }
 
     setupScene() {
@@ -40,18 +38,24 @@ export default class ThreeScene {
         window.addEventListener('resize', this.resizeCanvas)
     }
 
-    update() {
+    update(onFbo: boolean = false) {
         this.cameraComponent.update(this.time)
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].update(this.time)
         }
-        this.renderer.render(this.scene, <Camera>this.cameraComponent.object3d)
+        ;(<any>this.composer).renderToScreen = !onFbo
+        this.composer.render()
         this.time++
     }
 
     resizeCanvas() {
+        this.composer.setSize(window.innerWidth, window.innerHeight)
         this.renderer.setSize(window.innerWidth, window.innerHeight)
         ;(<PerspectiveCamera>this.cameraComponent.object3d).aspect = window.innerWidth / window.innerHeight
         ;(<PerspectiveCamera>this.cameraComponent.object3d).updateProjectionMatrix()
+    }
+
+    getFbo(): WebGLRenderTarget {
+        return this.composer.renderTarget2
     }
 }
