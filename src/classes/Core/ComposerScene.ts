@@ -3,7 +3,10 @@ import Component from './Component'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import Transitionable from './Transitionable'
-
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
+import fragmentShader from '../../shaders/effect/noise.frag'
+import vertexShader from '../../shaders/effect/default.vert'
+import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
 export default class ComposerScene implements Transitionable {
     public cameraComponent: Component
     public objects: Component[]
@@ -22,9 +25,17 @@ export default class ComposerScene implements Transitionable {
 
         this.bind()
         this.setupScene()
-
+        const grainPass = new ShaderPass({
+            uniforms: {
+                tDiffuse: { value: null },
+            },
+            fragmentShader,
+            vertexShader,
+        })
         const renderPass = new RenderPass(this.scene, <Camera>this.cameraComponent.object3d)
         this.composer.addPass(renderPass)
+        // this.composer.addPass(grainPass)
+        this.composer.addPass(new FilmPass(0.35, 0, 2048, 0.5))
     }
 
     setupScene() {
