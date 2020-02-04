@@ -24,7 +24,7 @@ export default class SceneButton {
         this.rightButton = rightButton
         this.eventEmitter = EventEmitter.getInstance()
 
-        this.setScene(0)
+        this.currentIndex = 0
         this.leftButton.addEventListener('click', () => this.previousScene())
         this.rightButton.addEventListener('click', () => this.nextScene())
         this.eventEmitter.Subscribe(EVENT.TRANSITION_START, () => (this.isTransitioning = true))
