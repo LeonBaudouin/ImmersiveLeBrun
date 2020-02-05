@@ -10,12 +10,7 @@ export default class Wall extends Component {
         color = null,
     }: Partial<WallParameters>) {
         super(() => {
-            const geometry = new THREE.PlaneGeometry(
-                size.x,
-                size.y,
-                Math.ceil(size.x),
-                Math.ceil(size.y),
-            )
+            const geometry = new THREE.PlaneGeometry(size.x, size.y, Math.ceil(size.x), Math.ceil(size.y))
             const material = new THREE.MeshLambertMaterial({
                 color: color,
                 map: texture,

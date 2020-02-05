@@ -1,4 +1,15 @@
-import { Camera, Scene, PerspectiveCamera, Color, WebGLRenderTarget, WebGLRenderer } from 'three'
+import {
+    Camera,
+    Scene,
+    PerspectiveCamera,
+    Color,
+    WebGLRenderTarget,
+    WebGLRenderer,
+    Shader,
+    ShaderMaterial,
+    MeshDepthMaterial,
+    MeshNormalMaterial,
+} from 'three'
 import Component from './Component'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
@@ -16,6 +27,8 @@ export default class ComposerScene implements Transitionable {
     public time: number
     public renderer: WebGLRenderer
 
+    private shaderPass: ShaderPass
+
     constructor(cameraComponent: Component, renderer: WebGLRenderer, objects: Component[] = []) {
         this.cameraComponent = cameraComponent
         this.objects = objects
@@ -25,17 +38,19 @@ export default class ComposerScene implements Transitionable {
 
         this.bind()
         this.setupScene()
-        const grainPass = new ShaderPass({
+
+        this.shaderPass = new ShaderPass({
             uniforms: {
                 tDiffuse: { value: null },
+                tTime: { value: 1 },
             },
             fragmentShader,
             vertexShader,
         })
+
         const renderPass = new RenderPass(this.scene, <Camera>this.cameraComponent.object3d)
         this.composer.addPass(renderPass)
-        // this.composer.addPass(grainPass)
-        this.composer.addPass(new FilmPass(0.35, 0, 2048, 0.5))
+        // this.composer.addPass(this.shaderPass)
     }
 
     setupScene() {
@@ -57,6 +72,7 @@ export default class ComposerScene implements Transitionable {
         ;(<any>this.composer).renderToScreen = !onFbo
         this.composer.render()
         this.time++
+        ;(<ShaderMaterial>this.shaderPass.material).uniforms.tTime.value = this.time
     }
 
     resizeCanvas() {
