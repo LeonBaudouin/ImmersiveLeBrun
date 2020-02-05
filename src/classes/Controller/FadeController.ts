@@ -1,13 +1,19 @@
 import AbstractController from '../Core/AbstractController'
 import * as THREE from 'three'
+import { TweenLite, Power1 } from 'gsap'
+import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class FadeController extends AbstractController {
     private static controllers: FadeController[] = []
     private meshLambertMaterial: THREE.MeshLambertMaterial
     private defaultColor: THREE.Color
+    private restoreAll: boolean
+    private tween: any
+    private doesForceRestore: boolean = false
 
-    constructor() {
+    constructor(restoreAll: boolean = false) {
         super()
+        this.restoreAll = restoreAll
         FadeController.controllers.push(this)
     }
 
@@ -16,15 +22,51 @@ export default class FadeController extends AbstractController {
     public onMount(component: THREE.Object3D) {
         this.meshLambertMaterial = (<THREE.Mesh>component).material as THREE.MeshLambertMaterial
         this.defaultColor = this.meshLambertMaterial.color.clone()
+
+        if (this.restoreAll) {
+            EventEmitter.getInstance().Subscribe(
+                EVENT.INTERACTIVE_CLICK,
+                ({ component: m }: { component: THREE.Mesh }) => {
+                    if (m.material === this.meshLambertMaterial) {
+                        FadeController.controllers.forEach(c => c.restoreMaterial(1.5, true))
+                    }
+                },
+            )
+        } else {
+            EventEmitter.getInstance().Subscribe(
+                EVENT.INTERACTIVE_CLICK,
+                ({ component: m }: { component: THREE.Mesh }) => {
+                    if (m.material === this.meshLambertMaterial) {
+                        this.restoreMaterial(1.5)
+                    } else {
+                        this.darkenMaterial(1.5, 0.4)
+                    }
+                },
+            )
+        }
     }
 
     public darkenMaterial(duration: number, amount: number) {
-        this.meshLambertMaterial.color.lerp(new THREE.Color(0x000000), amount)
+        if (this.doesForceRestore) return
+        if (this.tween !== undefined) this.tween.kill()
+        this.tween = TweenLite.to(this.meshLambertMaterial.color, duration, {
+            r: amount,
+            g: amount,
+            b: amount,
+            ease: Power1.easeInOut,
+        })
     }
 
-    public restoreMaterial(duration: number) {
-        this.meshLambertMaterial.color.set(this.defaultColor)
+    public restoreMaterial(duration: number, force: boolean = false) {
+        if (this.tween !== undefined) this.tween.kill()
+        const onComplete = force ? () => (this.doesForceRestore = false) : () => {}
+        this.doesForceRestore = force
+        this.tween = TweenLite.to(this.meshLambertMaterial.color, duration, {
+            r: this.defaultColor.r,
+            g: this.defaultColor.g,
+            b: this.defaultColor.b,
+            ease: Power1.easeInOut,
+            onComplete,
+        })
     }
-
-    public static darkenAllButOne(material: THREE.MeshLambertMaterial) {}
 }

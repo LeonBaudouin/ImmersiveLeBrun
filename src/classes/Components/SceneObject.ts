@@ -1,5 +1,6 @@
 import Component from '../Core/Component'
 import * as THREE from 'three'
+import FadeController from '../Controller/FadeController'
 
 export default class SceneObject extends Component {
     constructor({
@@ -23,6 +24,6 @@ export default class SceneObject extends Component {
             mesh.position.set(position.x, position.y, position.z)
             mesh.rotation.set(rotation.x, rotation.y, rotation.z)
             return mesh
-        })
+        }, [new FadeController()])
     }
 }

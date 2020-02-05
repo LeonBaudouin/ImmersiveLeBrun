@@ -17,7 +17,7 @@ import Transitionable from './Transitionable'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
 import fragmentShader from '../../shaders/effect/noise.frag'
 import vertexShader from '../../shaders/effect/default.vert'
-import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
+
 export default class ComposerScene implements Transitionable {
     public cameraComponent: Component
     public objects: Component[]

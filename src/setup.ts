@@ -16,6 +16,7 @@ import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TransitionScene from './classes/TransitionScene'
 import SceneButton, { Scene } from './classes/SceneButton'
 import ComposerScene from './classes/Core/ComposerScene'
+import FadeController from './classes/Controller/FadeController'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -61,7 +62,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
             return mesh
-        }, [new InteractiveShader('Workshop')]),
+        }, [new InteractiveShader('Workshop'), new FadeController(true)]),
         room,
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
@@ -74,7 +75,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
             return mesh
-        }, [new InteractiveShader('Demo')]),
+        }, [new InteractiveShader('Demo'), new FadeController(true)]),
         room2,
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]
@@ -87,7 +88,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial())
             mesh.position.set(0, 0, -50)
             return mesh
-        }, [new InteractiveShader('Galerie')]),
+        }, [new InteractiveShader('Galerie'), new FadeController(true)]),
         room3,
         new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
     ]

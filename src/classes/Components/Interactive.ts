@@ -5,6 +5,7 @@ import MainChunk from '../../shaders/interactive/chunk_main.frag'
 import UniformChunk from '../../shaders/interactive/chunk_uniforms.frag'
 import InteractiveShader from '../Controller/InteractiveShader'
 import DetailHint from './DetailHint'
+import FadeController from '../Controller/FadeController'
 
 export default class Interactive extends Component {
     constructor({
@@ -80,6 +81,7 @@ export default class Interactive extends Component {
                     uvColliderCompensation,
                     customChildCollider?.object3d,
                 ),
+                new FadeController(),
             ],
             {},
             children,
