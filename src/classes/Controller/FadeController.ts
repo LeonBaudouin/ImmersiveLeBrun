@@ -71,6 +71,9 @@ export default class FadeController extends AbstractController {
                     }
                 },
             )
+            EventEmitter.getInstance().Subscribe(EVENT.TRANSITION_START, () => {
+                this.restoreMaterial(1.5)
+            })
         }
     }
 

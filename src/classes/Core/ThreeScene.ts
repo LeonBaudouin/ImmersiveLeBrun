@@ -1,13 +1,4 @@
-import {
-    Camera,
-    Scene,
-    PerspectiveCamera,
-    Color,
-    WebGLRenderTarget,
-    LinearFilter,
-    RGBFormat,
-    WebGLRenderer,
-} from 'three'
+import { Camera, Scene, PerspectiveCamera, Color } from 'three'
 import Component from './Component'
 import RendererInterface from './RendererInterface'
 
