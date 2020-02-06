@@ -10,6 +10,7 @@ export default class InteractiveShader extends AbstractController {
 
     private dMultTween: any
     private isClicked: boolean = false
+    public currentFocus: boolean = false
     private smoother: SmoothedPoint
 
     private scene: string
@@ -67,6 +68,7 @@ export default class InteractiveShader extends AbstractController {
     }
 
     private onClick(component: THREE.Object3D) {
+        this.currentFocus = InteractiveShader.hoveredObject === component
         if (InteractiveShader.hoveredObject === component) {
             if (!this.isClicked) {
                 this.isClicked = true
