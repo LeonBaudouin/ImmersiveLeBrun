@@ -39,8 +39,8 @@ export default class FadeController extends AbstractController {
             EventEmitter.getInstance().Subscribe(
                 EVENT.INTERACTIVE_CLICK,
                 ({ component: m }: { component: THREE.Mesh }) => {
-                    FadeController.globalFade = true
                     if (m.material === this.meshLambertMaterial) {
+                        FadeController.globalFade = true
                         this.restoreMaterial(1.5)
                     } else {
                         this.darkenMaterial(1.5, 0.4)

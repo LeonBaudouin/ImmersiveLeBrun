@@ -114,7 +114,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             elementId: 'Palette',
         }),
         new TextInfo({
-            position: new THREE.Vector3(-1.9, 2, -1.2),
+            position: new THREE.Vector3(-1.4, 2, -1.2),
             childPos: new THREE.Vector3(-0.3, -1, 1),
             elementId: 'Rubens',
         }),

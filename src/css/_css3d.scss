@@ -12,6 +12,11 @@
         }
     }
 
+    h5 {
+        margin: 0 0 2rem 0;
+        font-size: 2.4rem;
+    }
+
     &.show {
         transition: opacity ease-in-out 1s;
         visibility: visible;
@@ -52,7 +57,28 @@
     padding-bottom: 2.5rem;
     max-width: 540px;
 
-    background-image: url('../assets/ui/fond_bleu.png');
+    &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        display: block;
+        width: 100%;
+        padding-bottom: 100%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, -5px);
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        filter: blur(50px);
+    }
+
+    &#Rubens {
+        max-width: 800px;
+    }
+
+    &#JBLeBrun {
+        max-width: 600px;
+    }
 
     &#Buste,
     &#Character3 {
@@ -81,10 +107,7 @@
 .css3d-quoteicon {
     display: block;
     width: 6rem;
-    position: absolute;
-    opacity: 0;
-    bottom: 0.4rem;
-    right: -2rem;
+    margin: 1.5rem auto 0 auto;
     cursor: pointer;
     transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
     transition: transform ease 0.2s, opacity ease 1s 1s;
