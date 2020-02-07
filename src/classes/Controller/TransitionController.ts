@@ -15,6 +15,7 @@ export default class TransitionController extends AbstractController {
     public transition(sceneA: THREE.Texture, sceneB: THREE.Texture, delay: number, callback: Function) {
         this.uniforms.tDiffuse1.value = sceneA
         this.uniforms.tDiffuse2.value = sceneB
+        this.uniforms.seed.value = Math.random()
         this.tween = TweenLite.to(this.uniforms.mixRatio, delay, {
             value: 1.0,
             ease: Power1.easeOut,

@@ -20,6 +20,9 @@ export default class TransitionQuad extends Component {
                     mixRatio: {
                         value: 0.0,
                     },
+                    seed: {
+                        value: 0.0,
+                    },
                     ratio: {
                         value: new THREE.Vector2(1, window.innerHeight / window.innerWidth),
                     },

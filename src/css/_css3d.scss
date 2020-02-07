@@ -57,6 +57,24 @@
     padding-bottom: 2.5rem;
     max-width: 540px;
 
+    &.show > * {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    & > * {
+        opacity: 0;
+        transform: translateY(20px);
+
+        transition: opacity 1s linear, transform 1s ease-out;
+    }
+
+    @for $i from 5 to 0 {
+        & > :nth-child(#{$i}) {
+            transition-delay: 300ms + $i * 150ms;
+        }
+    }
+
     &:after {
         content: '';
         position: absolute;
@@ -77,7 +95,7 @@
     }
 
     &#JBLeBrun {
-        max-width: 600px;
+        max-width: 700px;
     }
 
     &#Buste,

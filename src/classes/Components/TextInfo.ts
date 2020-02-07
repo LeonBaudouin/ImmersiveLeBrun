@@ -25,20 +25,20 @@ export default class TextInfo extends Component {
         }
 
         EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSEENTER, ({ component }) => {
-            if (component.userData.name !== elementId) {
+            if (component.userData.name !== elementId && false) {
                 this.fadeOut(quote, elem)
             }
         })
 
         EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSELEAVE, ({ component }) => {
-            if (component.userData.name !== elementId) {
+            if (component.userData.name !== elementId && false) {
                 this.fadeIn(quote, elem)
             }
         })
 
         EventEmitter.getInstance().Subscribe(EVENT.CLOSE_TEXTS, () => {
             elem.classList.remove('show')
-            elem.classList.remove('secondary')
+            // elem.classList.remove('secondary')
         })
 
         EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
@@ -46,10 +46,10 @@ export default class TextInfo extends Component {
                 elem.classList.add('show')
             } else {
                 elem.classList.remove('show')
-                elem.classList.remove('secondary')
+                // elem.classList.remove('secondary')
                 if (quote) {
                     quote.classList.remove('show')
-                    quote.classList.remove('secondary')
+                    // quote.classList.remove('secondary')
                 }
             }
         })
