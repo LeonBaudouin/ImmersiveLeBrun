@@ -43,7 +43,7 @@ export default class FadeController extends AbstractController {
                         FadeController.globalFade = true
                         this.restoreMaterial(1.5)
                     } else {
-                        this.darkenMaterial(1.5, 0.4)
+                        this.darkenMaterial(1.5, 0.65)
                     }
                 },
             )
@@ -67,7 +67,7 @@ export default class FadeController extends AbstractController {
                         FadeController.globalFade &&
                         !controller.currentFocus
                     ) {
-                        this.darkenMaterial(1.5, 0.4)
+                        this.darkenMaterial(1.5, 0.65)
                     }
                 },
             )

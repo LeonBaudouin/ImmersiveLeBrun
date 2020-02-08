@@ -66,6 +66,24 @@ float quadraticThroughAGivenPoint (float x, float a, float b){
 }
 
 
+float doubleExponentialSigmoid (float x, float a){
+
+  float epsilon = 0.00001;
+  float min_param_a = 0.0 + epsilon;
+  float max_param_a = 1.0 - epsilon;
+  a = min(max_param_a, max(min_param_a, a));
+  a = 1.0-a; // for sensible results
+  
+  float y = 0.;
+  if (x<=0.5){
+    y = (pow(2.0*x, 1.0/a))/2.0;
+  } else {
+    y = 1.0 - (pow(2.0*(1.0-x), 1.0/a))/2.0;
+  }
+  return y;
+}
+
+
 void main() {
 
     vec2 m = vec2(0.5,0.5) * ratio * 2.;
@@ -85,7 +103,7 @@ void main() {
     noise = noise * 10. + noise * (1. - 1.) * 10.;
     float ring = smoothstep(.3, .8, dist);
     float a = pow(1., .5) - pow(1., .5) * clamp(noise * dist * 1. * 1. + dist * 0.9, 0., 1.);
-    a = smoothstep(0.9, 1., a);
+    a = doubleExponentialSigmoid(smoothstep(0.9 - mixRatio * 0.4, 1., a), 0.6);
     
     vec3 color = vec3(a);
     vec4 texel1 = texture2D( tDiffuse1, vUv );

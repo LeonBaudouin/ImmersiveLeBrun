@@ -12,6 +12,7 @@ export default class Interactive extends Component {
         sceneName,
         name,
         sketch,
+        alpha = null,
         painting,
         ratio = new THREE.Vector2(),
         glassTexture,
@@ -22,6 +23,7 @@ export default class Interactive extends Component {
         sceneName: string
         name: string
         sketch: THREE.Texture
+        alpha: THREE.Texture
         painting: THREE.Texture
         ratio: THREE.Vector2
         glassTexture: THREE.Texture
@@ -37,7 +39,7 @@ export default class Interactive extends Component {
         }
 
         const gen = () => {
-            const material = new THREE.MeshLambertMaterial({ map: sketch, transparent: true })
+            const material = new THREE.MeshLambertMaterial({ map: sketch, transparent: true, alphaMap: alpha })
 
             material.onBeforeCompile = function(shader: THREE.Shader) {
                 shader.uniforms.sketch = { value: sketch }

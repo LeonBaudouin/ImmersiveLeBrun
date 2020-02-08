@@ -8,10 +8,14 @@ document.querySelectorAll('.menu-card-button').forEach(b => {
     b.addEventListener('click', e => e.preventDefault())
 })
 
-Promise.all([Setup(), toLebrun()]).then(([{ cb, raf }]) => {
-    threeRaf = raf
-    setTimeout(cb, 0)
-    css3dContainer.style.display = 'flex'
+document.addEventListener('DOMContentLoaded', () => {
+    window.setTimeout(() => {
+        Promise.all([Setup(), toLebrun()]).then(([{ cb, raf }]) => {
+            threeRaf = raf
+            setTimeout(cb, 0)
+            css3dContainer.style.display = 'flex'
+        })
+    }, 1000)
 })
 
 function toLebrun() {
