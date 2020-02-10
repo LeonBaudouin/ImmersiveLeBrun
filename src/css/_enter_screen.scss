@@ -1,0 +1,44 @@
+.enter-screen {
+    position: absolute;
+    display: flex;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(#e7dec9 0%, #c29e4a 100%);
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s linear, visibility 0s 0.4s linear;
+
+    @keyframes rotate-key {
+        0% {
+            transform: rotateZ(0);
+        }
+
+        20% {
+            transform: rotateZ(-10deg);
+        }
+
+        75% {
+            transform: rotateZ(362deg);
+        }
+        100% {
+            transform: rotateZ(360deg);
+        }
+    }
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &-key {
+        height: 200px;
+        animation: rotate-key 1.5s infinite cubic-bezier(0.55, 0, 0.27, 1);
+
+        &-path {
+            fill: #c38c08;
+        }
+    }
+}

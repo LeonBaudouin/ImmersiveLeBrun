@@ -2,11 +2,7 @@ import './css/index.scss'
 import Setup from './setup.ts'
 
 let threeRaf = () => {}
-
 const css3dContainer = document.querySelector('.css3d-container')
-document.querySelectorAll('.menu-card-button').forEach(b => {
-    b.addEventListener('click', e => e.preventDefault())
-})
 
 document.addEventListener('DOMContentLoaded', () => {
     window.setTimeout(() => {
@@ -16,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             css3dContainer.style.display = 'flex'
         })
     }, 1000)
+
+    document.querySelectorAll('.menu-card-button').forEach(b => {
+        b.addEventListener('click', e => e.preventDefault())
+    })
+
+    document.querySelector('.enter-screen').classList.add('hidden')
 })
 
 function toLebrun() {
