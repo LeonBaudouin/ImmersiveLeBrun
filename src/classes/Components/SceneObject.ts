@@ -7,6 +7,7 @@ export default class SceneObject extends Component {
         size = new THREE.Vector2(1, 1),
         rotation = new THREE.Euler(),
         position = new THREE.Vector3(),
+        alpha = null,
         texture = null,
         color = null,
         transparent = true,
@@ -19,6 +20,8 @@ export default class SceneObject extends Component {
                 map: texture,
                 transparent: transparent ? true : false,
                 depthWrite: depthWrite ? true : false,
+                alphaMap: alpha,
+                alphaTest: alpha === null ? 0 : 0.3,
             })
             const mesh = new THREE.Mesh(geometry, material)
             mesh.position.set(position.x, position.y, position.z)
