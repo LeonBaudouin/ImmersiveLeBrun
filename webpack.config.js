@@ -48,6 +48,7 @@ module.exports = {
                     fallback: 'style-loader',
                     use: [
                         'css-loader', // translates CSS into CommonJS
+                        'postcss-loader',
                         'sass-loader', // compiles Sass to CSS, using Node Sass by default
                     ],
                 }),
