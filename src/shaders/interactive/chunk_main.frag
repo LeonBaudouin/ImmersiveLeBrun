@@ -10,5 +10,13 @@ float a = pow(enterProg, .5) - pow(enterProg, .5) * clamp(noise * dist * enterPr
 
 vec4 texelColor = mix(texture2D(sketch, vUv), texture2D(painting, vUv), a);
 texelColor = mapTexelToLinear( texelColor );
-diffuseColor *= texelColor;
 
+#ifdef USE_ALPHAMAP
+    vec3 texelRgb = texelColor.rgb;
+    float alpha = texture2D(alphaMap, vUv).x;
+    vec3 texelHsv = rgb2hsv(texelRgb);
+    texelHsv.z -= (1. - alpha);
+    texelColor.rgb = hsv2rgb(texelHsv);
+#endif
+
+diffuseColor *= texelColor;
