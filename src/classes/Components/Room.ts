@@ -45,7 +45,7 @@ export default class Room extends LoadedComponent {
                     chest_sculpture_table_alpha: 'room/o/scene_01_premier_plan_v01.png',
                     chair: 'room/o/scene_01_chaise_v01.jpg',
                     chair_alpha: 'room/o/scene_01_chaise_v01.png',
-                    chair_leg: 'room/02_chaise.png',
+                    // chair_leg: 'room/02_chaise.png',
                     chair_shadow: 'room/o/scene_01_chaise_ombre_v01.png',
                     stool: 'room/o/scene_01_Tabouret_v01.jpg',
                     stool_alpha: 'room/o/scene_01_Tabouret_v01.png',
@@ -259,12 +259,12 @@ export default class Room extends LoadedComponent {
                         alpha: textures.chair_alpha,
                         depthWrite: false,
                     }),
-                    new SceneObject({
-                        size: new THREE.Vector2(0.9, 1.4),
-                        position: new THREE.Vector3(0.725, -1.15, 0.25),
-                        texture: textures.chair_leg,
-                        depthWrite: false,
-                    }),
+                    // new SceneObject({
+                    //     size: new THREE.Vector2(0.9, 1.4),
+                    //     position: new THREE.Vector3(0.725, -1.15, 0.25),
+                    //     texture: textures.chair_leg,
+                    //     depthWrite: false,
+                    // }),
                     new SceneObject({
                         size: new THREE.Vector2(1.9, 0.6),
                         position: new THREE.Vector3(1.2, -1.745, 0.27),

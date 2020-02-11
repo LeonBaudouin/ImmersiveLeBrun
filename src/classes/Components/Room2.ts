@@ -47,7 +47,7 @@ export default class Room2 extends LoadedComponent {
                     frame: 'room2/scene_02_cadres_v02.png',
                     character_left: 'room2/scene_02_personnages_derriere_cadres_gauche_v02.png',
                     character_right: 'room2/scene_02_personnages_derriere_cadres_droite_v01.png',
-                    peace_painting: 'room/elisabeth_peinture_v01.jpg',
+                    peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
                 './assets/',

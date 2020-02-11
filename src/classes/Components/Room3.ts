@@ -43,7 +43,7 @@ export default class Room3 extends LoadedComponent {
                     perso_03_sketch: 'room3/Esquisse_Perso_03_v01.png',
                     perso_04_sketch: 'room3/Esquisse_Perso_04_v01.png',
                     room3_frame: 'room3/Cadre_v01.png',
-                    peace_painting: 'room/elisabeth_peinture_v01.jpg',
+                    peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
                 './assets/',
