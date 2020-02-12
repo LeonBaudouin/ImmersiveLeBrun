@@ -205,7 +205,6 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
 
                     room2.loadRoom()
                 })
-                ;(document.querySelector('.loader') as HTMLElement).style.display = 'none'
                 ;(document.querySelector('#enterButton') as HTMLElement).style.opacity = '1'
                 ;(document.querySelector('#enterButton') as HTMLElement).style.cursor = 'pointer'
 

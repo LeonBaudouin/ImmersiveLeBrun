@@ -7,6 +7,7 @@ const css3dContainer = document.querySelector('.css3d-container')
 document.addEventListener('DOMContentLoaded', () => {
     window.setTimeout(() => {
         Promise.all([Setup(), toLebrun()]).then(([{ cb, raf }]) => {
+            document.querySelector('.loading-screen').classList.remove('show')
             threeRaf = raf
             setTimeout(cb, 0)
             css3dContainer.style.display = 'flex'
@@ -21,13 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function toLebrun() {
-    const loadingScreen = document.querySelector('.loading-screen')
-
     css3dContainer.style.display = 'none'
-    loadingScreen.style.display = 'none'
     document.querySelector('#menu-to-lebrun').addEventListener('click', () => {
-        loadingScreen.style.display = 'flex'
-        document.querySelector('.menu').style.display = 'none'
+        document.querySelector('.loading-screen').classList.add('show')
 
         return Promise.resolve()
     })

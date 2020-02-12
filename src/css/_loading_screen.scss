@@ -4,15 +4,10 @@
     align-items: center;
     justify-content: flex-end;
     font-family: 'Libre Baskerville', serif;
-
+    visibility: hidden;
     position: absolute;
     height: 100%;
     width: 100%;
-
-    background-image: url('../assets/loading/Porte_v01.jpg');
-    background-color: rgb(161, 137, 105);
-    background-size: cover;
-    background-position: center;
 
     #enterButton {
         position: absolute;
@@ -33,99 +28,39 @@
         }
     }
 
-    .loader {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        p {
-            margin: 5px 0;
-            font-size: 20px;
-            color: #f8e1af;
+    .doors {
+        height: 100%;
+        width: 100%;
+        filter: drop-shadow(0px 0px 200px rgba(0, 0, 0, 0.301));
+        &-left,
+        &-right {
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            transition: transform 1s ease;
+        }
+
+        &-left {
+            transform: translateX(-100%);
+            float: left;
+            background-position: right center;
+            background-image: url(../assets/loading/porte_gauche.jpg);
+        }
+        &-right {
+            transform: translateX(100%);
+            float: right;
+            background-position: left center;
+            background-image: url(../assets/loading/porte_droite.jpg);
         }
     }
-}
 
-// .loading-title {
-//     align-self: stretch;
-//     position: absolute;
-
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-
-//     top: 50%;
-//     height: 40vh;
-//     width: 100%;
-//     transform: translateY(-50%);
-
-//     font-size: 1.7rem;
-//     line-height: 1.6;
-//     color: #edd7a6;
-//     $color: #3b342e;
-//     background: linear-gradient(
-//         to bottom,
-//         transparentize($color, 1) 0%,
-//         transparentize($color, 0.2) 30%,
-//         transparentize($color, 0.2) 70%,
-//         transparentize($color, 1) 100%
-//     );
-
-//     visibility: visible;
-//     opacity: 1;
-
-//     transition: opacity cubic-bezier(0.9, 0, 1, 0.6) 600ms 3s, visibility ease 600ms 3s;
-
-//     div:nth-of-type(1) {
-//         font-weight: 700;
-//     }
-
-//     div:nth-of-type(2) {
-//         font-style: italic;
-//     }
-
-//     &.hidden {
-//         visibility: hidden;
-//         opacity: 0;
-//     }
-// }
-
-.lds-ring {
-    display: inline-block;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    margin-bottom: 15px;
-
-    div {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 32px;
-        height: 32px;
-        margin: 4px;
-        border: 3px solid #e6ddca;
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #e6ddca transparent transparent transparent;
-
-        &:nth-child(1) {
-            animation-delay: -0.45s;
+    &.show {
+        visibility: visible;
+        & .doors {
+            &-left,
+            &-right {
+                transform: translateX(0%);
+            }
         }
-        &:nth-child(2) {
-            animation-delay: -0.3s;
-        }
-        &:nth-child(3) {
-            animation-delay: -0.15s;
-        }
-    }
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
     }
 }
