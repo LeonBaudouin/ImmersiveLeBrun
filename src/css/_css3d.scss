@@ -57,12 +57,12 @@
     padding-bottom: 2.5rem;
     max-width: 540px;
 
-    &.show > * {
+    &.show > :not(.css3d-quoteicon) {
         opacity: 1;
         transform: translateY(0);
     }
 
-    & > * {
+    & > :not(.css3d-quoteicon) {
         opacity: 0;
         transform: translateY(20px);
 
@@ -70,7 +70,7 @@
     }
 
     @for $i from 5 to 0 {
-        & > :nth-child(#{$i}) {
+        & > :nth-child(#{$i}):not(.css3d-quoteicon) {
             transition-delay: 300ms + $i * 150ms;
         }
     }
@@ -123,14 +123,38 @@
 }
 
 .css3d-quoteicon {
+    &-wrapper {
+        width: 6rem;
+        margin: 1.5rem auto 0 auto;
+        animation: floating-quoteicon 2.5s cubic-bezier(0.4, 0.01, 0.6, 0.99) infinite;
+    }
+
     display: block;
-    width: 6rem;
-    margin: 1.5rem auto 0 auto;
     cursor: pointer;
-    transform: rotate3d(0, 0, 0, 0) scale3d(1, 1, 1);
+    width: 6rem;
     transition: transform ease 0.2s, opacity ease 1s 1s;
+    transform: rotateZ(var(--rotate-z)) scale3d(var(--scale), var(--scale), var(--scale));
+
+    --scale: 1;
+    --rotate-z: 0;
 
     &:hover {
-        transform: rotate3d(0, 0, 1, 5deg) scale3d(1.1, 1.1, 1.1);
+        animation: none;
+        --scale: 1.12;
+        --rotate-z: 5deg;
+    }
+
+    @keyframes floating-quoteicon {
+        0% {
+            transform: translateY(-4px);
+        }
+
+        50% {
+            transform: translateY(4px);
+        }
+
+        100% {
+            transform: translateY(-4px);
+        }
     }
 }
