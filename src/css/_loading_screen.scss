@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: flex-end;
     font-family: 'Libre Baskerville', serif;
-    visibility: hidden;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -32,34 +31,65 @@
         height: 100%;
         width: 100%;
         filter: drop-shadow(0px 0px 200px rgba(0, 0, 0, 0.301));
+
         &-left,
         &-right {
             width: 50%;
             height: 100%;
             background-size: cover;
-            transition: transform 1s ease;
         }
 
         &-left {
-            transform: translateX(-100%);
+            --direction: -1;
             float: left;
             background-position: right center;
             background-image: url(../assets/loading/porte_gauche.jpg);
         }
         &-right {
-            transform: translateX(100%);
+            --direction: 1;
             float: right;
             background-position: left center;
             background-image: url(../assets/loading/porte_droite.jpg);
         }
     }
 
-    &.show {
+    &.close {
         visibility: visible;
+        transition: visibility 0s 0s linear;
         & .doors {
             &-left,
             &-right {
+                animation: close-door 1s ease;
+            }
+        }
+
+        @keyframes close-door {
+            0% {
+                transform: translateX(calc(var(--direction) * 100%));
+            }
+            100% {
                 transform: translateX(0%);
+            }
+        }
+    }
+
+    &.open {
+        visibility: hidden;
+        transition: visibility 0s 1s linear;
+
+        & .doors {
+            &-left,
+            &-right {
+                animation: open-door 1s ease;
+            }
+        }
+
+        @keyframes open-door {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(calc(var(--direction) * 100%));
             }
         }
     }

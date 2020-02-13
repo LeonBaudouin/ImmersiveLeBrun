@@ -176,7 +176,9 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
                 const mouse = new THREE.Vector2()
 
                 document.querySelector('#enterButton').addEventListener('click', () => {
-                    ;(document.querySelector('.ui-container') as HTMLElement).style.display = 'none'
+                    document.querySelector('.loading-screen').classList.remove('close')
+                    document.querySelector('.loading-screen').classList.add('open')
+                    ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
                     started = true
 
                     // -- Raycast --
