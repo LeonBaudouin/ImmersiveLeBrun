@@ -2,7 +2,6 @@ import './css/index.scss'
 import Setup from './setup.ts'
 
 let threeRaf = () => {}
-const css3dContainer = document.querySelector('.css3d-container')
 
 document.addEventListener('DOMContentLoaded', () => {
     window.setTimeout(() => {
@@ -11,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.loading-screen').classList.add('close')
             threeRaf = raf
             setTimeout(cb, 0)
-            css3dContainer.style.display = 'flex'
+            document.querySelector('.css3d-container').style.display = 'flex'
         })
     }, 1000)
 
@@ -24,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function toLebrun() {
     return new Promise(resolve => {
-        css3dContainer.style.display = 'none'
+        document.querySelector('.css3d-container').style.display = 'none'
+        // Key
         document.querySelector('#menu-to-lebrun').addEventListener('click', () => {
             resolve()
         })

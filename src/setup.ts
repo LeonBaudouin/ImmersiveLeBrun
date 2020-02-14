@@ -175,6 +175,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             cb: () => {
                 const mouse = new THREE.Vector2()
 
+                // Key
                 document.querySelector('#enterButton').addEventListener('click', () => {
                     document.querySelector('.loading-screen').classList.remove('close')
                     document.querySelector('.loading-screen').classList.add('open')
