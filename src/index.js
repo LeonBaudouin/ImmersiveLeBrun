@@ -1,18 +1,21 @@
 import './css/index.scss'
 import Setup from './setup.ts'
+import Key from './classes/Key'
 
 let threeRaf = () => {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.setTimeout(() => {
-        Promise.all([Setup(), toLebrun()]).then(([{ cb, raf }]) => {
-            document.querySelector('.loading-screen').classList.remove('open')
-            document.querySelector('.loading-screen').classList.add('close')
+    const key = new Key(document.querySelector('.js-key-1'), document.querySelector('.js-button-1'))
+    key.addButtonCb(() => {
+        document.querySelector('.css3d-container').style.display = 'none'
+
+        Setup(key).then(({ cb, raf }) => {
             threeRaf = raf
             setTimeout(cb, 0)
             document.querySelector('.css3d-container').style.display = 'flex'
+            key.isLoaded = true
         })
-    }, 1000)
+    })
 
     document.querySelectorAll('.menu-card-button').forEach(b => {
         b.addEventListener('click', e => e.preventDefault())
@@ -20,16 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.enter-screen').classList.add('hidden')
 })
-
-function toLebrun() {
-    return new Promise(resolve => {
-        document.querySelector('.css3d-container').style.display = 'none'
-        // Key
-        document.querySelector('#menu-to-lebrun').addEventListener('click', () => {
-            resolve()
-        })
-    })
-}
 
 raf()
 

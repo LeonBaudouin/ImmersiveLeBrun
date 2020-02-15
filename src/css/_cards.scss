@@ -24,7 +24,8 @@
         justify-content: space-between;
     }
 
-    &:hover &-inner {
+    &:hover &-inner,
+    &.flip &-inner {
         transform: rotateY(180deg) scale3d(1.05, 1.05, 1.05);
     }
 
@@ -151,5 +152,9 @@
     &-key {
         height: 50%;
         filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+
+        &.button {
+            cursor: grab;
+        }
     }
 }

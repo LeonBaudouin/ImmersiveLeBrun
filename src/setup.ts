@@ -17,6 +17,7 @@ import TransitionScene from './classes/TransitionScene'
 import SceneButton, { Scene } from './classes/SceneButton'
 import ComposerScene from './classes/Core/ComposerScene'
 import FadeController from './classes/Controller/FadeController'
+import Key from './classes/Key'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -41,11 +42,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     return renderer
 }
 
-export default function Load() {
-    return Setup()
-}
-
-function Setup(): Promise<{ raf: Function; cb: Function }> {
+export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }> {
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0.2, 1.25, 2.8)
     camera.rotateX(-0.05)
@@ -175,8 +172,7 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
             cb: () => {
                 const mouse = new THREE.Vector2()
 
-                // Key
-                document.querySelector('#enterButton').addEventListener('click', () => {
+                key.addKeyCb(() => {
                     document.querySelector('.loading-screen').classList.remove('close')
                     document.querySelector('.loading-screen').classList.add('open')
                     ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
@@ -208,8 +204,6 @@ function Setup(): Promise<{ raf: Function; cb: Function }> {
 
                     room2.loadRoom()
                 })
-                ;(document.querySelector('#enterButton') as HTMLElement).style.opacity = '1'
-                ;(document.querySelector('#enterButton') as HTMLElement).style.cursor = 'pointer'
 
                 // -- Prevent Click --
 
