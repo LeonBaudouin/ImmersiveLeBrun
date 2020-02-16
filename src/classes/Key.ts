@@ -1,4 +1,4 @@
-import { TweenLite, Circ, Power1 } from 'gsap'
+import { TweenLite, Circ, Power1, Power2 } from 'gsap'
 import * as CSSPlugin from 'gsap/CSSPlugin'
 import * as THREE from 'three'
 
@@ -7,6 +7,8 @@ const activated = [CSSPlugin]
 export default class Key {
     private domElement: HTMLElement
     private boundingBox: ClientRect
+    private loadingScreen: HTMLElement
+    private card: HTMLElement
     private isLoaded: boolean = false
     private isLoading: boolean = false
     private buttonCb: Array<Function> = []
@@ -15,6 +17,8 @@ export default class Key {
     constructor(key: HTMLElement, button: HTMLElement) {
         this.domElement = key
         this.boundingBox = key.getBoundingClientRect()
+        this.loadingScreen = document.querySelector('.loading-screen')
+        this.card = document.querySelector('.js-card-1')
 
         button.addEventListener('click', () => {
             if (!this.isLoaded && !this.isLoading) {
@@ -62,31 +66,51 @@ export default class Key {
 
     private transitionIn() {
         this.clone()
-        document.querySelector('.loading-screen').classList.remove('open')
-        document.querySelector('.loading-screen').classList.add('close')
+        this.loadingScreen.classList.remove('open')
+        this.loadingScreen.classList.add('close')
 
         const start = new THREE.Vector2(this.boundingBox.left, this.boundingBox.top)
         const end = new THREE.Vector2(
-            window.innerWidth * 0.55 + this.boundingBox.width / 2,
-            (window.innerHeight + this.boundingBox.height) / 2,
+            window.innerWidth * 0.4 - this.boundingBox.width * 0.5,
+            (window.innerHeight - this.boundingBox.height) / 2,
         )
-        TweenLite.to(this.domElement, 0, {
-            x: start.x,
-            y: start.y,
-            z: 0.3,
-        })
+        const mid = new THREE.Vector2((start.x + end.x) / 2, start.y * 0.8)
 
-        TweenLite.to(this.domElement, 1, {
-            scale: 1.2,
-            ease: Circ.easeOut,
-        })
+        // Position animation
+        TweenLite.fromTo(
+            this.domElement,
+            1,
+            {
+                x: start.x,
+                y: start.y,
+                z: 0.3,
+                scale: 1,
+            },
+            {
+                x: mid.x,
+                y: mid.y,
+                z: 0.3,
+                scale: 1.4,
+                ease: Power2.easeInOut,
+                onComplete: () => {
+                    TweenLite.to(this.domElement, 1, {
+                        x: end.x,
+                        y: end.y,
+                        z: 0.3,
+                        scale: 1.2,
+                        ease: Power2.easeIn,
+                    })
+                },
+            },
+        )
 
-        TweenLite.to(this.domElement, 1, {
-            x: end.x - start.x,
-            y: end.y - start.y,
-            z: 0.3,
-            ease: Power1.easeInOut,
-        })
+        // Position animation
+        // TweenLite.to(this.domElement, 1, {
+        //     x: end.x - start.x,
+        //     y: end.y - start.y,
+        //     z: 0.3,
+        //     ease: Power1.easeInOut,
+        // })
     }
 
     private clone() {
@@ -94,12 +118,12 @@ export default class Key {
         this.domElement = <HTMLElement>this.domElement.cloneNode()
         setTimeout(() => (remainingKey.style.opacity = '0'), 0)
 
-        document.querySelector('.loading-screen').appendChild(this.domElement)
+        this.loadingScreen.appendChild(this.domElement)
         this.domElement.style.width = this.boundingBox.width.toString() + 'px'
         this.domElement.style.height = this.boundingBox.height.toString() + 'px'
         this.domElement.classList.add('button')
 
-        document.querySelector('.js-card-1').classList.add('flip')
+        this.card.classList.add('flip')
         this.domElement.style.zIndex = '10'
     }
 }

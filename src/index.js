@@ -7,13 +7,14 @@ let threeRaf = () => {}
 
 document.addEventListener('DOMContentLoaded', () => {
     const key = new Key(document.querySelector('.js-key-1'), document.querySelector('.js-button-1'))
+    const css3dContainer = document.querySelector('.css3d-container')
     key.addButtonCb(() => {
-        document.querySelector('.css3d-container').style.display = 'none'
+        css3dContainer.style.display = 'none'
 
         Setup(key).then(({ cb, raf }) => {
             threeRaf = raf
             setTimeout(cb, 0)
-            document.querySelector('.css3d-container').style.display = 'flex'
+            css3dContainer.style.display = 'flex'
             key.isLoaded = true
         })
     })
