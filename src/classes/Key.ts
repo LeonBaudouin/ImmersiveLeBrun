@@ -1,5 +1,8 @@
 import { TweenLite, Circ, Power1 } from 'gsap'
+import * as CSSPlugin from 'gsap/CSSPlugin'
 import * as THREE from 'three'
+
+const activated = [CSSPlugin]
 
 export default class Key {
     private domElement: HTMLElement

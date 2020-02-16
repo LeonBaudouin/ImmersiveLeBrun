@@ -1,6 +1,7 @@
 import './css/index.scss'
 import Setup from './setup.ts'
 import Key from './classes/Key'
+import 'gsap'
 
 let threeRaf = () => {}
 
