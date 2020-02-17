@@ -1,4 +1,5 @@
 .css3d-div {
+    pointer-events: auto;
     font-family: 'Open Sans', sans-serif;
     opacity: 0;
     transition: opacity ease-in-out 1s, visibility 0s 1s;
