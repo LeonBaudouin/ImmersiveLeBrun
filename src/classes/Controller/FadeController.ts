@@ -90,14 +90,13 @@ export default class FadeController extends AbstractController {
 
     public restoreMaterial(duration: number, force: boolean = false) {
         if (this.tween !== undefined) this.tween.kill()
-        const onComplete = force ? () => (this.doesForceRestore = false) : () => {}
+        if (force) setTimeout(() => (this.doesForceRestore = false), 0)
         this.doesForceRestore = force
         this.tween = TweenLite.to(this.meshLambertMaterial.color, duration, {
             r: this.defaultColor.r,
             g: this.defaultColor.g,
             b: this.defaultColor.b,
             ease: Power1.easeInOut,
-            onComplete,
         })
     }
 }
