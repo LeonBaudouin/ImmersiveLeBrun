@@ -30,19 +30,23 @@ export default class Room3 extends LoadedComponent {
         return this.load(
             TextureLoader.load(
                 {
-                    right_wall_3: 'room3/mur_droite_v04.jpg',
-                    left_wall_3: 'room3/mur_gauche_v03.jpg',
-                    front_wall_3: 'room3/mur_fond_v05.jpg',
-                    floor_3: 'room3/sol_v01.jpg',
-                    perso_01: 'room3/Perso_01_v01.png',
-                    perso_02: 'room3/Perso_02_v01.png',
-                    perso_03: 'room3/Perso_03_v01.png',
-                    perso_04: 'room3/Perso_04_v01.png',
-                    perso_01_sketch: 'room3/Esquisse_Perso_01_v01.png',
-                    perso_02_sketch: 'room3/Esquisse_Perso_02_v01.png',
-                    perso_03_sketch: 'room3/Esquisse_Perso_03_v01.png',
-                    perso_04_sketch: 'room3/Esquisse_Perso_04_v01.png',
-                    room3_frame: 'room3/Cadre_v01.png',
+                    right_wall_3: 'room3/mur_droite.jpg',
+                    left_wall_3: 'room3/mur_gauche.jpg',
+                    front_wall_3: 'room3/mur_fond.jpg',
+                    floor_3: 'room3/sol.jpg',
+                    perso_01: 'room3/perso_01.jpg',
+                    perso_01_alpha: 'room3/perso_01_alpha.png',
+                    perso_02: 'room3/perso_02.jpg',
+                    perso_02_alpha: 'room3/perso_02_alpha.png',
+                    perso_02_sketch: 'room3/perso_02_croquis.png',
+                    perso_03: 'room3/perso_03.jpg',
+                    perso_03_alpha: 'room3/perso_03_alpha.png',
+                    perso_03_sketch: 'room3/perso_03_croquis.png',
+                    perso_04: 'room3/perso_04.jpg',
+                    perso_04_alpha: 'room3/perso_04_alpha.png',
+                    perso_04_sketch: 'room3/perso_04_croquis.png',
+                    room3_frame: 'room3/cadre_v01.jpg',
+                    room3_frame_alpha: 'room3/cadre_v01_alpha.png',
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
@@ -123,31 +127,14 @@ export default class Room3 extends LoadedComponent {
                         size: new THREE.Vector2(1.7 * 1.2, 1.2 * 1.32),
                         position: new THREE.Vector3(0, -0.4, -0.48),
                         texture: textures.room3_frame,
+                        alpha: textures.room3_frame_alpha,
                     }),
-                    // new SceneObject({
-                    //     size: new THREE.Vector2(0.286*2.5, 0.746*2.5),
-                    //     position: new THREE.Vector3(-1.25, -0.7, 0.2),
-                    //     texture: textures.perso_01,
-                    // }),
-                    new Component(
-                        () => {
-                            const object = new THREE.Object3D()
-                            object.position.set(-1.25, -1, 0.2)
-                            return object
-                        },
-                        [],
-                        {},
-                        [
-                            new Interactive({
-                                name: 'room3_perso1',
-                                sceneName: 'Galerie',
-                                sketch: textures.perso_01_sketch,
-                                painting: textures.perso_01,
-                                ratio: new THREE.Vector2(0.286 * 2.5, 0.746 * 2.5),
-                                glassTexture: textures.magnifying_glass,
-                            }),
-                        ],
-                    ),
+                    new SceneObject({
+                        size: new THREE.Vector2(0.286 * 2.5, 0.746 * 2.5),
+                        position: new THREE.Vector3(-1.25, -1, 0.2),
+                        texture: textures.perso_01,
+                        alpha: textures.perso_01_alpha,
+                    }),
                     new Component(
                         () => {
                             const object = new THREE.Object3D()
@@ -162,6 +149,7 @@ export default class Room3 extends LoadedComponent {
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_03_sketch,
                                 painting: textures.perso_03,
+                                alpha: textures.perso_03_alpha,
                                 ratio: new THREE.Vector2(0.296 * 2.5, 0.78 * 2.5),
                                 glassTexture: textures.magnifying_glass,
                             }),
@@ -181,6 +169,7 @@ export default class Room3 extends LoadedComponent {
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_02_sketch,
                                 painting: textures.perso_02,
+                                alpha: textures.perso_02_alpha,
                                 ratio: new THREE.Vector2(0.291 * 2.5, 0.766 * 2.5),
                                 glassTexture: textures.magnifying_glass,
                             }),
@@ -200,6 +189,7 @@ export default class Room3 extends LoadedComponent {
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_04_sketch,
                                 painting: textures.perso_04,
+                                alpha: textures.perso_04_alpha,
                                 ratio: new THREE.Vector2(0.373 * 2.5, 0.822 * 2.5),
                                 glassTexture: textures.magnifying_glass,
                             }),
