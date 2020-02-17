@@ -63,7 +63,8 @@ export default class InteractiveShader extends AbstractController {
     private onRayCollide(component: THREE.Object3D, { order, uv }: THREE.Intersection & { order: number }) {
         if (order == 0) {
             InteractiveShader.hoveredObject = component
-            this.smoother.setTarget(this.uvCompensation(uv))
+            const { x, y } = this.uvCompensation(uv)
+            this.smoother.setTarget(x, y)
         }
     }
 

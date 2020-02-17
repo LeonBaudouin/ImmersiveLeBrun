@@ -15,7 +15,7 @@ export default class SmoothedPoint {
         this.smoothedPoint.set(this.targetPoint.x, this.targetPoint.y)
     }
 
-    public setTarget({ x, y }: { x: number; y: number }): void {
+    public setTarget(x: number, y: number): void {
         this.targetPoint.set(x, y)
     }
 
@@ -28,5 +28,9 @@ export default class SmoothedPoint {
 
     public getPoint(): THREE.Vector2 {
         return this.smoothedPoint.clone()
+    }
+
+    public setSpeed(x: number, y: number): void {
+        this.speed.set(x, y)
     }
 }

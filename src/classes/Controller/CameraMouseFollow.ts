@@ -33,7 +33,7 @@ export default class CameraMouseFollow extends AbstractController {
     update(object3d: THREE.Object3D, time: number) {
         const mouse = this.mouseMoveListener.getValue()
         if (mouse) {
-            this.smoother.setTarget(mouse)
+            this.smoother.setTarget(mouse.x, mouse.y)
             this.smoother.smooth()
             const newPoint = this.smoother.getPoint()
             NormalizePoint(newPoint)

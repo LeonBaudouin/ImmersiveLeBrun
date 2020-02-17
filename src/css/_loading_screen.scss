@@ -79,7 +79,7 @@
         & .doors {
             &-left,
             &-right {
-                animation: open-door 1s ease;
+                animation: open-door 1s 0.2s ease;
             }
         }
 

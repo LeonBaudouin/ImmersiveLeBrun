@@ -168,6 +168,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     CSS3DScene.update()
                     transitionScene.update()
                 }
+                key.updateKeyPos()
             },
             cb: () => {
                 const mouse = new THREE.Vector2()

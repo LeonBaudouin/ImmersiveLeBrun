@@ -155,6 +155,9 @@
 
         &.button {
             cursor: grab;
+            &.grabbed {
+                cursor: grabbing;
+            }
         }
     }
 }
