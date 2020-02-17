@@ -53,7 +53,8 @@ export default class Key {
                 0.25,
                 { scale: 1.2, x: this.grabPoint.getPoint().x, y: this.grabPoint.getPoint().y },
                 {
-                    scale: 0,
+                    scale: 0.5,
+                    opacity: 0,
                 },
             )
         }, 0)
@@ -111,7 +112,7 @@ export default class Key {
         this.loadingScreen.appendChild(this.domElement)
         this.domElement.style.width = this.boundingBox.width.toString() + 'px'
         this.domElement.style.height = this.boundingBox.height.toString() + 'px'
-        this.domElement.classList.add('button')
+        this.domElement.classList.add('draggable')
         this.domElement.setAttribute('draggable', 'false')
 
         this.card.classList.add('flip')
@@ -140,6 +141,8 @@ export default class Key {
 
                 if (this.hoverLock) {
                     if (!lastHoverLock) {
+                        this.domElement.classList.add('onLock')
+
                         this.grabPoint.setSpeed(0.1, 0.1)
                         this.recalcBoundingBox()
                         const x = this.boundingBox.width / 2
@@ -148,7 +151,10 @@ export default class Key {
                         this.grabPoint.setTarget(lockPos.x - x, lockPos.y - y)
                     }
                 } else {
-                    if (lastHoverLock) this.grabPoint.setSpeed(0.5, 0.5)
+                    if (lastHoverLock) {
+                        this.grabPoint.setSpeed(0.5, 0.5)
+                        this.domElement.classList.remove('onLock')
+                    }
                     this.grabPoint.setTarget(clientX - this.mouseOffset.x, clientY - this.mouseOffset.y)
                 }
             }

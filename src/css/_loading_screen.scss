@@ -77,6 +77,8 @@
         transition: visibility 0s 1s linear;
 
         & .doors {
+            filter: drop-shadow(0px 0px 500px rgba(0, 0, 0, 1));
+
             &-left,
             &-right {
                 animation: open-door 1s 0.2s ease;
