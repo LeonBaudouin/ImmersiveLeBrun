@@ -30,23 +30,45 @@ export default class Room2 extends LoadedComponent {
         return this.load(
             TextureLoader.load(
                 {
-                    front_wall_2: 'room2/mur_fond__haut.jpg',
-                    left_wall_2: 'room2/mur_gauche_haut.jpg',
-                    right_wall_2: 'room2/mur_droite_haut.jpg',
-                    floor_2: 'room2/sol_4.jpg',
+                    front_wall_2: 'room2/mur_fond.jpg',
+                    left_wall_2: 'room2/mur_gauche.jpg',
+                    right_wall_2: 'room2/mur_droite.jpg',
+                    floor_2: 'room2/sol.jpg',
                     ceil: 'room/plafond_v03.jpg',
-                    character_1: 'room2/scene_02_personnage_extreme_gauche_v01.png',
-                    character_2: 'room2/scene_02_personnage_gauche_v01.png',
-                    character_3: 'room2/scene_02_personnage_milieu_v02.png',
-                    character_3_sketch: 'room2/scene_02_personnage_milieu_esquisse_v01.png',
-                    character_4: 'room2/scene_02_homme_droite_chaise2_v01.png',
-                    character_5: 'room2/scene_02_homme_droite_chaise_v01.png',
+
+                    character_1: 'room2/s2_personnage_extreme_gauche.jpg',
+                    character_1_alpha: 'room2/s2_personnage_extreme_gauche_alpha.png',
+
+                    character_2: 'room2/s2_personnage_gauche.jpg',
+                    character_2_alpha: 'room2/s2_personnage_gauche_alpha.png',
+
+                    character_3: 'room2/s2_personnage_milieu.jpg',
+                    character_3_sketch: 'room2/s2_personnage_milieu_croquis.png',
+                    character_3_alpha: 'room2/s2_personnage_milieu_alpha.png',
+
+                    character_4: 'room2/s2_homme_droite_chaise_2.jpg',
+                    character_4_alpha: 'room2/s2_homme_droite_chaise_2_alpha.png',
+
+                    character_5: 'room2/s2_homme_droite_chaise.jpg',
+                    character_5_alpha: 'room2/s2_homme_droite_chaise_alpha.png',
+
                     character_6: 'room2/scene_02_homme_extreme_droite_v01.png',
-                    character_7: 'room2/scene_02_assis_fond_v01.png',
+                    character_6_sketch: 'room2/scene_02_homme_extreme_droite_v01_croquis.png',
+
+                    character_7: 'room2/s2_assis_fond.jpg',
+                    character_7_alpha: 'room2/s2_assis_fond_alpha.png',
+
+                    character_left: 'room2/s2_personnages_derriere_gauche.jpg',
+                    character_left_sketch: 'room2/s2_personnages_derriere_gauche_croquis.png',
+                    character_left_alpha: 'room2/s2_personnages_derriere_gauche_alpha.png',
+
+                    character_right: 'room2/s2_personnages_derriere_cadres_droite.jpg',
+                    character_right_sketch: 'room2/s2_personnages_derriere_cadres_droite_croquis.png',
+                    character_right_alpha: 'room2/s2_personnages_derriere_cadres_droite_alpha.png',
+
                     characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
                     frame: 'room2/scene_02_cadres_v02.png',
-                    character_left: 'room2/scene_02_personnages_derriere_cadres_gauche_v02.png',
-                    character_right: 'room2/scene_02_personnages_derriere_cadres_droite_v01.png',
+                    
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
@@ -123,40 +145,46 @@ export default class Room2 extends LoadedComponent {
                         position: new THREE.Vector3(-0, -1.23, -0.48),
                         texture: textures.frame,
                     }),
-                    new SceneObject({
-                        size: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
-                        position: new THREE.Vector3(-1.25, -1.2, -0.575),
-                        texture: textures.character_left,
-                    }),
-                    new SceneObject({
-                        size: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
-                        position: new THREE.Vector3(0.9, -1.15, -0.575),
-                        texture: textures.character_right,
-                    }),
-                    // new SceneObject({
-                    //     size: new THREE.Vector2(1.02 * 3, 0.835 * 2.9),
-                    //     position: new THREE.Vector3(-0.175, -0.72, -0.51),
-                    //     texture: textures.characters_painting,
-                    // }),
-                    // new Component(
-                    //     () => {
-                    //         const object = new THREE.Object3D()
-                    //         object.position.set(0, -0.4, -0.49)
-                    //         return object
-                    //     },
-                    //     [],
-                    //     {},
-                    //     [
-                    //         new Interactive({
-                    //             name: 'LaPaix2',
-                    //             sceneName: 'Demo',
-                    //             sketch: textures.peace_sketch,
-                    //             painting: textures.peace_painting,
-                    //             ratio: new THREE.Vector2(1.7, 1.2),
-                    //             glassTexture: textures.magnifying_glass,
-                    //         }),
-                    //     ],
-                    // ),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
+                            object.position.set(-1.25, -1.2, -0.575)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new Interactive({
+                                name: 'CharacterLeft',
+                                sceneName: 'Demo',
+                                sketch: textures.character_left_sketch,
+                                painting: textures.character_left,
+                                alpha: textures.character_left_alpha,
+                                ratio: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
+                                glassTexture: textures.magnifying_glass,
+                            })
+                        ],
+                    ),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
+                            object.position.set(0.9, -1.15, -0.575)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new Interactive({
+                                name: 'CharacterRight',
+                                sceneName: 'Demo',
+                                sketch: textures.character_right_sketch,
+                                painting: textures.character_right,
+                                alpha: textures.character_right_alpha,
+                                ratio: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
+                                glassTexture: textures.magnifying_glass,
+                            })
+                        ],
+                    ),
                     new SceneObject({
                         size: new THREE.Vector2(1.7, 1.2),
                         position: new THREE.Vector3(0, -0.9, -0.49),
@@ -166,11 +194,13 @@ export default class Room2 extends LoadedComponent {
                         size: new THREE.Vector2(0.476 * 1.3, 0.708 * 1.3),
                         position: new THREE.Vector3(-1.2, -1.55, 1.2),
                         texture: textures.character_1,
+                        alpha: textures.character_1_alpha,
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.958 * 1.3, 0.676 * 1.3),
                         position: new THREE.Vector3(-1.25, -1.55, 1.4),
                         texture: textures.character_2,
+                        alpha: textures.character_2_alpha,
                     }),
                     new Component(
                         () => {
@@ -186,6 +216,7 @@ export default class Room2 extends LoadedComponent {
                                 sceneName: 'Demo',
                                 sketch: textures.character_3_sketch,
                                 painting: textures.character_3,
+                                alpha: textures.character_3_alpha,
                                 ratio: new THREE.Vector2(0.53 * 1.3, 0.675 * 1.3),
                                 glassTexture: textures.magnifying_glass,
                                 customChildCollider: new Component(() => {
@@ -215,21 +246,25 @@ export default class Room2 extends LoadedComponent {
                         size: new THREE.Vector2(0.452 * 1.4, 0.685 * 1.4),
                         position: new THREE.Vector3(0.75, -1.55, 1.2),
                         texture: textures.character_4,
+                        alpha: textures.character_4_alpha,
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.686 * 1.2, 0.693 * 1.2),
                         position: new THREE.Vector3(1.1, -1.4, 1.5),
                         texture: textures.character_5,
+                        alpha: textures.character_5_alpha,
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.867 * 1.2, 1.231 * 1.2),
                         position: new THREE.Vector3(1.75, -1.2, 1.6),
                         texture: textures.character_6,
+                        alpha: textures.character_6_alpha,
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.547 * 1.2, 0.765 * 1.2),
                         position: new THREE.Vector3(1.35, -1.5, 0.9),
                         texture: textures.character_7,
+                        alpha: textures.character_7_alpha,
                     }),
                 ]
             },
