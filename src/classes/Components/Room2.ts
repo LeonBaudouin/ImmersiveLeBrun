@@ -66,9 +66,10 @@ export default class Room2 extends LoadedComponent {
                     character_right_sketch: 'room2/s2_personnages_derriere_cadres_droite_croquis.png',
                     character_right_alpha: 'room2/s2_personnages_derriere_cadres_droite_alpha.png',
 
-                    characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
-                    frame: 'room2/scene_02_cadres_v02.png',
-                    
+                    // characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
+                    frame: 'room2/s2_cadres.jpg',
+                    frame_alpha: 'room2/s2_cadres.png',
+
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
@@ -141,9 +142,10 @@ export default class Room2 extends LoadedComponent {
                         return ligth
                     }),
                     new SceneObject({
-                        size: new THREE.Vector2(0.733 * 2.9, 0.835 * 2.75),
-                        position: new THREE.Vector3(-0, -1.23, -0.48),
+                        size: new THREE.Vector2(0.733 * 2.9, 0.835 * 2.64),
+                        position: new THREE.Vector3(-0, -1.177, -0.48),
                         texture: textures.frame,
+                        alpha: textures.frame_alpha,
                     }),
                     new Component(
                         () => {
@@ -155,14 +157,15 @@ export default class Room2 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'CharacterLeft',
+                                name: 'Abondance',
                                 sceneName: 'Demo',
                                 sketch: textures.character_left_sketch,
                                 painting: textures.character_left,
                                 alpha: textures.character_left_alpha,
                                 ratio: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
                                 glassTexture: textures.magnifying_glass,
-                            })
+                                glassPosition: new THREE.Vector3(0.2, 0.4, 0.3),
+                            }),
                         ],
                     ),
                     new Component(
@@ -175,14 +178,15 @@ export default class Room2 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'CharacterRight',
+                                name: 'LaPaix',
                                 sceneName: 'Demo',
                                 sketch: textures.character_right_sketch,
                                 painting: textures.character_right,
                                 alpha: textures.character_right_alpha,
                                 ratio: new THREE.Vector2(0.333 * 2.8, 0.835 * 2.8),
                                 glassTexture: textures.magnifying_glass,
-                            })
+                                glassPosition: new THREE.Vector3(0.15, 0.5, 0.3),
+                            }),
                         ],
                     ),
                     new SceneObject({
@@ -212,7 +216,7 @@ export default class Room2 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'Character3',
+                                name: 'Hiérarchie',
                                 sceneName: 'Demo',
                                 sketch: textures.character_3_sketch,
                                 painting: textures.character_3,

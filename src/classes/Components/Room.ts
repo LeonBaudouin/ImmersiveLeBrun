@@ -394,7 +394,7 @@ export default class Room extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'LaPaix',
+                                name: 'Tableau',
                                 sceneName: 'Workshop',
                                 sketch: textures.peace_sketch,
                                 painting: textures.peace_painting,

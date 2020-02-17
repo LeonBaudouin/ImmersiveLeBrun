@@ -100,7 +100,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
         }),
         new TextInfo({
             position: new THREE.Vector3(1.2, 1.6, 0.1),
-            elementId: 'LaPaix',
+            elementId: 'Tableau',
         }),
         new TextInfo({
             position: new THREE.Vector3(-0.2, 1, -0.1),
@@ -121,7 +121,15 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
         }),
         new TextInfo({
             position: new THREE.Vector3(-0.8, 1.5, 1.1),
-            elementId: 'Character3',
+            elementId: 'Hiérarchie',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(-1.5, 1.4, 0),
+            elementId: 'Abondance',
+        }),
+        new TextInfo({
+            position: new THREE.Vector3(1.5, 1.6, 0),
+            elementId: 'LaPaix',
         }),
     ]
 
