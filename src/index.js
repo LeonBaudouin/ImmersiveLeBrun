@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
+    document.querySelector('.menu').classList.add('domLoaded')
     document.querySelectorAll('.menu-card-button').forEach(b => {
         b.addEventListener('click', e => e.preventDefault())
     })

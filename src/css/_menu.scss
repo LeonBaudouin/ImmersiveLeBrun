@@ -33,6 +33,21 @@
         text-align: center;
         font-size: 1.52rem;
 
+        position: relative;
+        z-index: 1;
+        $start-opacity: 0.3s;
+        $start-transform: 0.8s;
+
+        transition: transform 1.5s $start-transform + $start-opacity ease-in-out, opacity 1.5s $start-opacity ease-in;
+        transform: translateY(calc(50vh - 150%)) scale3d(1.5, 1.5, 1.5);
+        opacity: 0;
+
+        .domLoaded & {
+            opacity: 1;
+
+            transform: translateY(0) scale3d(1, 1, 1);
+        }
+
         .first-letter {
             font-size: 2.4rem;
         }

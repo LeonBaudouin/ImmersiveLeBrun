@@ -2,6 +2,21 @@
     position: relative;
     width: 25vw;
 
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform ease-out 1.5s, opacity ease-in 1.3s;
+
+    .menu.domLoaded & {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    @for $i from 1 to 4 {
+        &:nth-of-type(#{$i}) {
+            transition-delay: 2s + $i * 0.4s;
+        }
+    }
+
     filter: drop-shadow(20px 30px 20px rgba(0, 0, 0, 0.2));
     perspective: 1000px;
 
@@ -24,8 +39,8 @@
         justify-content: space-between;
     }
 
-    &:hover &-inner,
-    &.flip &-inner {
+    .menu.domLoaded &:hover &-inner,
+    .menu.domLoaded &.flip &-inner {
         transform: rotateY(180deg) scale3d(1.05, 1.05, 1.05);
     }
 
