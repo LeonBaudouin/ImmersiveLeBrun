@@ -34,7 +34,7 @@ export default class Room2 extends LoadedComponent {
                     left_wall_2: 'room2/mur_gauche.jpg',
                     right_wall_2: 'room2/mur_droite.jpg',
                     floor_2: 'room2/sol.jpg',
-                    ceil: 'room/plafond_v03.jpg',
+                    ceil: 'room/o/structure/plafond.jpg',
 
                     character_1: 'room2/s2_personnage_extreme_gauche.jpg',
                     character_1_alpha: 'room2/s2_personnage_extreme_gauche_alpha.png',
@@ -52,7 +52,8 @@ export default class Room2 extends LoadedComponent {
                     character_5: 'room2/s2_homme_droite_chaise.jpg',
                     character_5_alpha: 'room2/s2_homme_droite_chaise_alpha.png',
 
-                    character_6: 'room2/scene_02_homme_extreme_droite_v01.png',
+                    character_6: 'room2/scene_02_homme_extreme_droite_v01.jpg',
+                    character_6_alpha: 'room2/scene_02_homme_extreme_droite_v01.png',
                     character_6_sketch: 'room2/scene_02_homme_extreme_droite_v01_croquis.png',
 
                     character_7: 'room2/s2_assis_fond.jpg',
@@ -67,8 +68,9 @@ export default class Room2 extends LoadedComponent {
                     character_right_alpha: 'room2/s2_personnages_derriere_cadres_droite_alpha.png',
 
                     // characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
-                    frame: 'room2/s2_cadres.jpg',
-                    frame_alpha: 'room2/s2_cadres.png',
+                    frame: 'room2/scene_02_cadres_v01.jpg',
+                    frame_alpha: 'room2/scene_02_cadres_v01.png',
+                    frame_shadow: 'room2/scene_02_cadres_ombre_v01.png',
 
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
@@ -143,9 +145,16 @@ export default class Room2 extends LoadedComponent {
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.733 * 2.9, 0.835 * 2.64),
-                        position: new THREE.Vector3(-0, -1.177, -0.48),
+                        position: new THREE.Vector3(0, -1.177, -0.48),
                         texture: textures.frame,
                         alpha: textures.frame_alpha,
+                    }),
+                    new SceneObject({
+                        size: new THREE.Vector2(2.126, 1),
+                        position: new THREE.Vector3(0, -2.2, -0.6),
+                        rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                        texture: textures.frame_shadow,
+                        depthWrite: false,
                     }),
                     new Component(
                         () => {
@@ -258,12 +267,27 @@ export default class Room2 extends LoadedComponent {
                         texture: textures.character_5,
                         alpha: textures.character_5_alpha,
                     }),
-                    new SceneObject({
-                        size: new THREE.Vector2(0.867 * 1.2, 1.231 * 1.2),
-                        position: new THREE.Vector3(1.75, -1.2, 1.6),
-                        texture: textures.character_6,
-                        alpha: textures.character_6_alpha,
-                    }),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
+                            object.position.set(1.75, -1.2, 1.6)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new Interactive({
+                                name: 'JBPierre',
+                                sceneName: 'Demo',
+                                sketch: textures.character_6_sketch,
+                                painting: textures.character_6,
+                                alpha: textures.character_6_alpha,
+                                ratio: new THREE.Vector2(0.867 * 1.2, 1.231 * 1.2),
+                                glassTexture: textures.magnifying_glass,
+                                glassPosition: new THREE.Vector3(-0.5, 0.1, 0.3),
+                            }),
+                        ],
+                    ),
                     new SceneObject({
                         size: new THREE.Vector2(0.547 * 1.2, 0.765 * 1.2),
                         position: new THREE.Vector3(1.35, -1.5, 0.9),

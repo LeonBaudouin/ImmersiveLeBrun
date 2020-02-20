@@ -131,6 +131,10 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
             position: new THREE.Vector3(1.5, 1.6, 0),
             elementId: 'LaPaix',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(1.2, 1.5, 1.1),
+            elementId: 'JBPierre',
+        }),
     ]
 
     const CSS3DScene = new ThreeScene(
