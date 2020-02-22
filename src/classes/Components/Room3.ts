@@ -34,17 +34,20 @@ export default class Room3 extends LoadedComponent {
                     left_wall_3: 'room3/mur_gauche.jpg',
                     front_wall_3: 'room3/mur_fond.jpg',
                     floor_3: 'room3/sol.jpg',
-                    perso_01: 'room3/perso_01.jpg',
-                    perso_01_alpha: 'room3/perso_01_alpha.png',
-                    perso_02: 'room3/perso_02.jpg',
-                    perso_02_alpha: 'room3/perso_02_alpha.png',
+                    perso_01: 'room3/perso_01_v01.jpg',
+                    perso_01_alpha: 'room3/perso_01_v01.png',
+                    perso_02: 'room3/perso_02_v01.jpg',
+                    perso_02_alpha: 'room3/perso_02_v01.png',
                     perso_02_sketch: 'room3/perso_02_croquis.png',
-                    perso_03: 'room3/perso_03.jpg',
-                    perso_03_alpha: 'room3/perso_03_alpha.png',
+                    perso_02_shadow: 'room3/perso_02_ombre_v01.png',
+                    perso_03: 'room3/perso_03_v01.jpg',
+                    perso_03_alpha: 'room3/perso_03_v01.png',
                     perso_03_sketch: 'room3/perso_03_croquis.png',
-                    perso_04: 'room3/perso_04.jpg',
-                    perso_04_alpha: 'room3/perso_04_alpha.png',
+                    perso_03_shadow: 'room3/perso_03_ombre_v01.png',
+                    perso_04: 'room3/perso_04_v01.jpg',
+                    perso_04_alpha: 'room3/perso_04_v01.png',
                     perso_04_sketch: 'room3/perso_04_croquis.png',
+                    perso_04_shadow: 'room3/perso_04_ombre_v01.png',
                     room3_frame: 'room3/cadre_v01.jpg',
                     room3_frame_alpha: 'room3/cadre_v01_alpha.png',
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
@@ -155,6 +158,12 @@ export default class Room3 extends LoadedComponent {
                             }),
                         ],
                     ),
+                    new SceneObject({
+                        size: new THREE.Vector2(0.9, 0.4),
+                        position: new THREE.Vector3(-0.75, -1.95, 0.17),
+                        rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                        texture: textures.perso_03_shadow,
+                    }),
                     new Component(
                         () => {
                             const object = new THREE.Object3D()
@@ -175,6 +184,12 @@ export default class Room3 extends LoadedComponent {
                             }),
                         ],
                     ),
+                    new SceneObject({
+                        size: new THREE.Vector2(0.7, 0.4),
+                        position: new THREE.Vector3(0.85, -1.95, 0.13),
+                        rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                        texture: textures.perso_02_shadow,
+                    }),
                     new Component(
                         () => {
                             const object = new THREE.Object3D()
@@ -195,6 +210,12 @@ export default class Room3 extends LoadedComponent {
                             }),
                         ],
                     ),
+                    new SceneObject({
+                        size: new THREE.Vector2(1, 0.4),
+                        position: new THREE.Vector3(1.7, -1.95, -0.05),
+                        rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                        texture: textures.perso_04_shadow,
+                    }),
                 ]
             },
         )
