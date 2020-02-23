@@ -19,6 +19,7 @@ export default class Key {
     private mouseOffset: THREE.Vector2 = new THREE.Vector2()
     private grabPoint: SmoothedPoint = new SmoothedPoint(new THREE.Vector2(0.5, 0.5), new THREE.Vector2())
     private hoverLock: boolean = false
+    private loadingSmoothing: SmoothedPoint = new SmoothedPoint(new THREE.Vector2(0.02, 0.02), new THREE.Vector2())
 
     constructor() {
         this.card = document.querySelector('.js-card-1')
@@ -145,7 +146,6 @@ export default class Key {
                         this.grabPoint.setTarget(lockPos.x - x, lockPos.y - y)
                     }
                 } else {
-                    console.log('slt')
                     if (lastHoverLock) {
                         this.grabPoint.setSpeed(0.5, 0.5)
                         this.loadingSreenKey.classList.remove('onLock')
@@ -181,8 +181,20 @@ export default class Key {
         this.loadingSreenKey.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
     }
 
+    public updateProgressSmoothing() {
+        if (!this.isLoaded) {
+            this.loadingSmoothing.smooth()
+            const { x: value } = this.loadingSmoothing.getPoint()
+            this.wrapper.style.setProperty('--progress', value.toString())
+            if (value > 0.99) {
+                this.isLoaded = true
+                this.wrapper.classList.add('finished')
+            }
+        }
+    }
+
     public updateProgress(_, load, tot) {
-        this.wrapper.style.setProperty('--progress', (load / tot).toString())
-        // if (load == tot) this.isLoaded = true
+        const a = load / tot
+        this.loadingSmoothing.setTarget(a, a)
     }
 }

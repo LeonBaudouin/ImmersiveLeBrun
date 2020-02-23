@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'
         rafCbs.push(key.updateKeyPos.bind(key))
+        rafCbs.push(key.updateProgressSmoothing.bind(key))
 
         Setup(key).then(({ cb, raf }) => {
             rafCbs.push(raf)

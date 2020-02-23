@@ -45,7 +45,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 
 function waitAnim(): Promise<void> {
     return new Promise(resolve => {
-        setTimeout(resolve, 1500)
+        setTimeout(resolve, 2000)
     })
 }
 

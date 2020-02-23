@@ -129,6 +129,12 @@
             transform-origin: center bottom;
             overflow: hidden;
 
+            filter: brightness(0.8);
+            transition: filter 0.5s linear;
+            &.finished {
+                filter: brightness(1);
+            }
+
             .loading-screen-key-loaded {
                 transform: scale3d(1, calc(1 / var(--progress)), 1);
                 transform-origin: center bottom;
