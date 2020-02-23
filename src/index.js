@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
             threeRaf = raf
             setTimeout(cb, 0)
             css3dContainer.style.display = 'flex'
-            key.isLoaded = true
         })
     })
 

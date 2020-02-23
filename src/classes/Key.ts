@@ -9,6 +9,7 @@ export default class Key {
     private domElement: HTMLElement
     private boundingBox: ClientRect
     private loadingScreen: HTMLElement
+    private wrapper: HTMLElement
     private card: HTMLElement
     private isLoaded: boolean = false
     private isLoading: boolean = false
@@ -23,6 +24,7 @@ export default class Key {
         this.domElement = key
         this.boundingBox = key.getBoundingClientRect()
         this.loadingScreen = document.querySelector('.loading-screen')
+        this.wrapper = this.domElement.querySelector('.menu-card-key-wrapper')
         this.card = document.querySelector('.js-card-1')
 
         button.addEventListener('click', () => {
@@ -106,7 +108,8 @@ export default class Key {
 
     private clone() {
         const remainingKey = this.domElement
-        this.domElement = <HTMLElement>this.domElement.cloneNode()
+        this.domElement = <HTMLElement>this.domElement.cloneNode(true)
+        this.wrapper = this.domElement.querySelector('.menu-card-key-wrapper')
         setTimeout(() => (remainingKey.style.opacity = '0'), 0)
 
         this.loadingScreen.appendChild(this.domElement)
@@ -139,7 +142,7 @@ export default class Key {
                     ) <
                     window.innerWidth / 6
 
-                if (this.hoverLock) {
+                if (this.hoverLock && this.isLoaded) {
                     if (!lastHoverLock) {
                         this.domElement.classList.add('onLock')
 
@@ -185,5 +188,10 @@ export default class Key {
             const y = grabPoint.y
             this.domElement.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
         }
+    }
+
+    public updateProgress(_, load, tot) {
+        this.wrapper.style.setProperty('--progress', (load / tot).toString())
+        // if (load == tot) this.isLoaded = true
     }
 }

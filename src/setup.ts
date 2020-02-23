@@ -18,6 +18,7 @@ import SceneButton, { Scene } from './classes/SceneButton'
 import ComposerScene from './classes/Core/ComposerScene'
 import FadeController from './classes/Controller/FadeController'
 import Key from './classes/Key'
+import TextureLoader from './classes/Core/TextureLoader'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -40,6 +41,12 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     // controls.maxDistance = 1500
     // controls.minDistance = 0
     return renderer
+}
+
+function waitAnim(): Promise<void> {
+    return new Promise(resolve => {
+        setTimeout(resolve, 2500)
+    })
 }
 
 export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }> {
@@ -172,58 +179,57 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
 
     let started = false
 
-    return room.loadRoom().then(() => {
-        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
-        return {
-            raf: () => {
-                if (started) {
-                    CSS3DScene.update()
-                    transitionScene.update()
-                }
-                key.updateKeyPos()
-            },
-            cb: () => {
-                const mouse = new THREE.Vector2()
+    TextureLoader.setLoadingManager(new THREE.LoadingManager())
+    TextureLoader.addOnProgressCallback(key.updateProgress.bind(key))
 
-                key.addKeyCb(() => {
-                    document.querySelector('.loading-screen').classList.remove('close')
-                    document.querySelector('.loading-screen').classList.add('open')
-                    ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
-                    started = true
+    return waitAnim()
+        .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
+        .then(() => {
+            EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
+            return {
+                raf: () => {
+                    if (started) {
+                        CSS3DScene.update()
+                        transitionScene.update()
+                    }
+                    key.updateKeyPos()
+                },
+                cb: () => {
+                    const mouse = new THREE.Vector2()
 
-                    // -- Raycast --
+                    key.addKeyCb(() => {
+                        document.querySelector('.loading-screen').classList.remove('close')
+                        document.querySelector('.loading-screen').classList.add('open')
+                        ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
+                        started = true
 
-                    document.addEventListener('mousemove', e => {
-                        const { clientX, clientY } = e
-                        mouse.x = (clientX / window.innerWidth) * 2 - 1
-                        mouse.y = -(clientY / window.innerHeight) * 2 + 1
-                        Raycaster.getInstance().Cast(camera, mouse)
-                        MouseMoveListener.getInstance().UpdateValue(e)
+                        // -- Raycast --
+
+                        document.addEventListener('mousemove', e => {
+                            const { clientX, clientY } = e
+                            mouse.x = (clientX / window.innerWidth) * 2 - 1
+                            mouse.y = -(clientY / window.innerHeight) * 2 + 1
+                            Raycaster.getInstance().Cast(camera, mouse)
+                            MouseMoveListener.getInstance().UpdateValue(e)
+                        })
+
+                        EventEmitter.getInstance().Subscribe(
+                            EVENT.INTERACTIVE_MOUSEENTER,
+                            () => (document.body.style.cursor = 'pointer'),
+                        )
+
+                        EventEmitter.getInstance().Subscribe(
+                            EVENT.INTERACTIVE_MOUSELEAVE,
+                            () => (document.body.style.cursor = 'default'),
+                        )
                     })
 
-                    EventEmitter.getInstance().Subscribe(
-                        EVENT.INTERACTIVE_MOUSEENTER,
-                        () => (document.body.style.cursor = 'pointer'),
-                    )
+                    // -- Prevent Click --
 
-                    EventEmitter.getInstance().Subscribe(
-                        EVENT.INTERACTIVE_MOUSELEAVE,
-                        () => (document.body.style.cursor = 'default'),
-                    )
-
-                    EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_BIND, scene => {
-                        if (scene === 'Demo') room3.loadRoom()
+                    document.querySelectorAll('.preventClick').forEach(elem => {
+                        elem.addEventListener('click', e => e.stopPropagation())
                     })
-
-                    room2.loadRoom()
-                })
-
-                // -- Prevent Click --
-
-                document.querySelectorAll('.preventClick').forEach(elem => {
-                    elem.addEventListener('click', e => e.stopPropagation())
-                })
-            },
-        }
-    })
+                },
+            }
+        })
 }
