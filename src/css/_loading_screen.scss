@@ -95,4 +95,44 @@
             }
         }
     }
+
+    &-key {
+        position: absolute;
+        z-index: 1;
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+        transition: filter linear 0.2s;
+
+        &.draggable {
+            cursor: grab;
+            &.grabbed {
+                cursor: grabbing;
+            }
+        }
+
+        &.onLock {
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1));
+        }
+
+        &-unloaded,
+        &-wrapper,
+        &-loaded {
+            height: 100%;
+        }
+
+        &-wrapper {
+            --progress: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            transform: scale3d(1, var(--progress), 1);
+            transform-origin: center bottom;
+            overflow: hidden;
+
+            .loading-screen-key-loaded {
+                transform: scale3d(1, calc(1 / var(--progress)), 1);
+                transform-origin: center bottom;
+            }
+        }
+    }
 }

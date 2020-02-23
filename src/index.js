@@ -6,7 +6,7 @@ import 'gsap'
 let threeRaf = () => {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const key = new Key(document.querySelector('.js-key-1'), document.querySelector('.js-button-1'))
+    const key = new Key()
     const css3dContainer = document.querySelector('.css3d-container')
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'

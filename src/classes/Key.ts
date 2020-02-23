@@ -6,8 +6,8 @@ import SmoothedPoint from './Utils/SmoothPoint'
 const activated = [CSSPlugin]
 
 export default class Key {
-    private domElement: HTMLElement
-    private boundingBox: ClientRect
+    private cardKey: HTMLElement
+    private loadingSreenKey: HTMLElement
     private loadingScreen: HTMLElement
     private wrapper: HTMLElement
     private card: HTMLElement
@@ -20,14 +20,14 @@ export default class Key {
     private grabPoint: SmoothedPoint = new SmoothedPoint(new THREE.Vector2(0.5, 0.5), new THREE.Vector2())
     private hoverLock: boolean = false
 
-    constructor(key: HTMLElement, button: HTMLElement) {
-        this.domElement = key
-        this.boundingBox = key.getBoundingClientRect()
-        this.loadingScreen = document.querySelector('.loading-screen')
-        this.wrapper = this.domElement.querySelector('.menu-card-key-wrapper')
+    constructor() {
         this.card = document.querySelector('.js-card-1')
+        this.cardKey = this.card.querySelector('.js-card-key-1')
+        this.loadingScreen = document.querySelector('.loading-screen')
+        this.loadingSreenKey = this.loadingScreen.querySelector('.loading-screen-key')
+        this.wrapper = this.loadingSreenKey.querySelector('.loading-screen-key-wrapper')
 
-        button.addEventListener('click', () => {
+        this.card.querySelector('.js-button-1').addEventListener('click', () => {
             if (!this.isLoaded && !this.isLoading) {
                 this.buttonCb.forEach(cb => cb())
                 this.transitionIn()
@@ -44,14 +44,10 @@ export default class Key {
         this.keyCb.push(cb)
     }
 
-    private recalcBoundingBox() {
-        this.boundingBox = this.domElement.getBoundingClientRect()
-    }
-
     private transitionOut() {
         setTimeout(() => {
             TweenLite.fromTo(
-                this.domElement,
+                this.loadingSreenKey,
                 0.25,
                 { scale: 1.2, x: this.grabPoint.getPoint().x, y: this.grabPoint.getPoint().y },
                 {
@@ -67,10 +63,12 @@ export default class Key {
         this.loadingScreen.classList.remove('open')
         this.loadingScreen.classList.add('close')
 
-        const start = new THREE.Vector2(this.boundingBox.left, this.boundingBox.top)
+        const boundingBox = this.cardKey.getBoundingClientRect()
+
+        const start = new THREE.Vector2(boundingBox.left, boundingBox.top)
         const end = new THREE.Vector2(
-            window.innerWidth * 0.4 - this.boundingBox.width * 0.5,
-            (window.innerHeight - this.boundingBox.height) / 2,
+            window.innerWidth * 0.4 - boundingBox.width * 0.5,
+            (window.innerHeight - boundingBox.height) / 2,
         )
         const mid = new THREE.Vector2((start.x + end.x) / 2, start.y * 0.8)
         this.grabPoint.setTarget(end.x, end.y)
@@ -78,7 +76,7 @@ export default class Key {
 
         // Position animation
         TweenLite.fromTo(
-            this.domElement,
+            this.loadingSreenKey,
             1,
             {
                 x: start.x,
@@ -93,7 +91,7 @@ export default class Key {
                 force3D: true,
                 ease: Power2.easeInOut,
                 onComplete: () => {
-                    TweenLite.to(this.domElement, 1, {
+                    TweenLite.to(this.loadingSreenKey, 1, {
                         x: end.x,
                         y: end.y,
                         scale: 1.2,
@@ -107,28 +105,21 @@ export default class Key {
     }
 
     private clone() {
-        const remainingKey = this.domElement
-        this.domElement = <HTMLElement>this.domElement.cloneNode(true)
-        this.wrapper = this.domElement.querySelector('.menu-card-key-wrapper')
-        setTimeout(() => (remainingKey.style.opacity = '0'), 0)
-
-        this.loadingScreen.appendChild(this.domElement)
-        this.domElement.style.width = this.boundingBox.width.toString() + 'px'
-        this.domElement.style.height = this.boundingBox.height.toString() + 'px'
-        this.domElement.classList.add('draggable')
-        this.domElement.setAttribute('draggable', 'false')
-
+        setTimeout(() => (this.cardKey.style.opacity = '0'), 0)
+        const boundingBox = this.cardKey.getBoundingClientRect()
+        this.loadingSreenKey.style.width = boundingBox.width.toString() + 'px'
+        this.loadingSreenKey.style.height = boundingBox.height.toString() + 'px'
+        this.loadingSreenKey.classList.add('draggable')
         this.card.classList.add('flip')
-        this.domElement.style.zIndex = '10'
     }
 
     private enableDragAndDrop() {
-        this.domElement.addEventListener('mousedown', e => {
+        this.loadingSreenKey.addEventListener('mousedown', e => {
             e.preventDefault()
             this.isGrabbed = true
             this.grabPoint.setSpeed(0.5, 0.5)
             this.mouseOffset.set(e.offsetX, e.offsetY)
-            this.domElement.style.cursor = 'grabbing'
+            this.loadingSreenKey.style.cursor = 'grabbing'
         })
 
         const lockPos = new THREE.Vector2(window.innerWidth * 0.62, window.innerHeight * 0.5)
@@ -144,19 +135,19 @@ export default class Key {
 
                 if (this.hoverLock && this.isLoaded) {
                     if (!lastHoverLock) {
-                        this.domElement.classList.add('onLock')
+                        this.loadingSreenKey.classList.add('onLock')
 
                         this.grabPoint.setSpeed(0.1, 0.1)
-                        this.recalcBoundingBox()
-                        const x = this.boundingBox.width / 2
-                        const y = this.boundingBox.height / 2
+                        const boundingBox = this.loadingSreenKey.getBoundingClientRect()
+                        const x = boundingBox.width / 2
+                        const y = boundingBox.height / 2
 
                         this.grabPoint.setTarget(lockPos.x - x, lockPos.y - y)
                     }
                 } else {
                     if (lastHoverLock) {
                         this.grabPoint.setSpeed(0.5, 0.5)
-                        this.domElement.classList.remove('onLock')
+                        this.loadingSreenKey.classList.remove('onLock')
                     }
                     this.grabPoint.setTarget(clientX - this.mouseOffset.x, clientY - this.mouseOffset.y)
                 }
@@ -165,16 +156,17 @@ export default class Key {
 
         document.addEventListener('mouseup', () => {
             this.isGrabbed = false
-            this.domElement.style.cursor = 'grab'
+            this.loadingSreenKey.style.cursor = 'grab'
             if (this.hoverLock && this.isLoaded) {
                 this.isLoaded = false
                 this.keyCb.forEach(cb => cb())
                 this.transitionOut()
             } else {
+                const boundingBox = this.loadingSreenKey.getBoundingClientRect()
                 this.grabPoint.setSpeed(0.1, 0.1)
                 this.grabPoint.setTarget(
-                    window.innerWidth * 0.4 - this.boundingBox.width * 0.5,
-                    (window.innerHeight - this.boundingBox.height) / 2,
+                    window.innerWidth * 0.4 - boundingBox.width * 0.5,
+                    (window.innerHeight - boundingBox.height) / 2,
                 )
             }
         })
@@ -186,7 +178,7 @@ export default class Key {
             const grabPoint = this.grabPoint.getPoint()
             const x = grabPoint.x
             const y = grabPoint.y
-            this.domElement.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
+            this.loadingSreenKey.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
         }
     }
 
