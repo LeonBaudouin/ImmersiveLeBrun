@@ -1,10 +1,10 @@
-import ThreeScene from './Core/ThreeScene'
 import TransitionScene from './TransitionScene'
 import EventEmitter, { EVENT } from './Events/EventEmitter'
 import Room from './Components/Room'
 import Room2 from './Components/Room2'
 import Room3 from './Components/Room3'
 import Transitionable from './Core/Transitionable'
+import { TweenLite } from 'gsap'
 
 const rooms = [Room, Room2, Room3]
 
@@ -28,7 +28,11 @@ export default class SceneButton {
         this.leftButton.addEventListener('click', () => this.previousScene())
         this.rightButton.addEventListener('click', () => this.nextScene())
         this.eventEmitter.Subscribe(EVENT.TRANSITION_START, () => (this.isTransitioning = true))
-        this.eventEmitter.Subscribe(EVENT.TRANSITION_END, () => (this.isTransitioning = false))
+        this.eventEmitter.Subscribe(EVENT.TRANSITION_END, () => {
+            this.isTransitioning = false
+            this.setLeftButton()
+            this.setRightButton()
+        })
         this.eventEmitter.Subscribe(EVENT.ROOM_LOADED, () => {
             this.setLeftButton()
             this.setRightButton()
@@ -53,28 +57,37 @@ export default class SceneButton {
         }
         this.eventEmitter.Emit(EVENT.INTERACTIVE_BIND, this.currentScene.name)
         this.eventEmitter.Emit(EVENT.CLOSE_TEXTS, this.currentScene.name)
-        this.setLeftButton()
-        this.setRightButton()
+        this.hide(this.leftButton)
+        this.hide(this.rightButton)
     }
 
     private setRightButton() {
         if (this.currentIndex < this.scenes.length - 1) {
             const i = this.currentIndex + 1
-            this.rightButton.classList.remove('hidden')
+            this.show(this.rightButton)
             this.rightButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
-            this.rightButton.classList.add('hidden')
+            this.hide(this.rightButton)
         }
     }
 
     private setLeftButton() {
         if (this.currentIndex > 0) {
             const i = this.currentIndex - 1
-            this.leftButton.classList.remove('hidden')
+            this.show(this.leftButton)
             this.leftButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
-            this.leftButton.classList.add('hidden')
+            this.hide(this.leftButton)
         }
+    }
+
+    private show(button: HTMLElement) {
+        button.style.visibility = 'visible'
+        TweenLite.to(button, 1, { opacity: 1 })
+    }
+
+    private hide(button: HTMLElement) {
+        TweenLite.to(button, 1, { opacity: 0, onComplete: () => (button.style.visibility = 'hidden') })
     }
 
     public get currentScene(): Scene {

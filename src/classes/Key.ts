@@ -1,4 +1,4 @@
-import { TweenLite, Circ, Power1, Power2 } from 'gsap'
+import { TweenLite, Power2 } from 'gsap'
 import * as CSSPlugin from 'gsap/CSSPlugin'
 import * as THREE from 'three'
 import SmoothedPoint from './Utils/SmoothPoint'

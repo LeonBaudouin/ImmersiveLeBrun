@@ -15,8 +15,6 @@
     visibility: visible;
     opacity: 1;
 
-    transition: opacity ease 600ms 3s, visibility ease 600ms 3s;
-
     &::after {
         content: '';
         position: absolute;
@@ -36,11 +34,6 @@
         &::after {
             opacity: 0.5;
         }
-    }
-
-    &.hidden {
-        visibility: hidden;
-        opacity: 0;
     }
 }
 
