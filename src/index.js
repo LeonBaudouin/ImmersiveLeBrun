@@ -3,16 +3,17 @@ import Setup from './setup.ts'
 import Key from './classes/Key'
 import 'gsap'
 
-let threeRaf = () => {}
+let rafCbs = []
 
 document.addEventListener('DOMContentLoaded', () => {
     const key = new Key()
     const css3dContainer = document.querySelector('.css3d-container')
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'
+        rafCbs.push(key.updateKeyPos.bind(key))
 
         Setup(key).then(({ cb, raf }) => {
-            threeRaf = raf
+            rafCbs.push(raf)
             setTimeout(cb, 0)
             css3dContainer.style.display = 'flex'
         })
@@ -29,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 raf()
 
 function raf() {
-    threeRaf()
+    for (let i = 0; i < rafCbs.length; i++) {
+        rafCbs[i]()
+    }
     requestAnimationFrame(raf)
 }

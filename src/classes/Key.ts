@@ -145,6 +145,7 @@ export default class Key {
                         this.grabPoint.setTarget(lockPos.x - x, lockPos.y - y)
                     }
                 } else {
+                    console.log('slt')
                     if (lastHoverLock) {
                         this.grabPoint.setSpeed(0.5, 0.5)
                         this.loadingSreenKey.classList.remove('onLock')
@@ -173,17 +174,15 @@ export default class Key {
     }
 
     public updateKeyPos() {
-        if (this.isLoaded) {
-            this.grabPoint.smooth()
-            const grabPoint = this.grabPoint.getPoint()
-            const x = grabPoint.x
-            const y = grabPoint.y
-            this.loadingSreenKey.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
-        }
+        this.grabPoint.smooth()
+        const grabPoint = this.grabPoint.getPoint()
+        const x = grabPoint.x
+        const y = grabPoint.y
+        this.loadingSreenKey.style.transform = `translate3d(${x}px, ${y}px, 0.3px) scale(1.2, 1.2)`
     }
 
     public updateProgress(_, load, tot) {
         this.wrapper.style.setProperty('--progress', (load / tot).toString())
-        if (load == tot) this.isLoaded = true
+        // if (load == tot) this.isLoaded = true
     }
 }

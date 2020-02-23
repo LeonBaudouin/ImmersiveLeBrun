@@ -45,7 +45,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
 
 function waitAnim(): Promise<void> {
     return new Promise(resolve => {
-        setTimeout(resolve, 2500)
+        setTimeout(resolve, 1500)
     })
 }
 
@@ -192,7 +192,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                         CSS3DScene.update()
                         transitionScene.update()
                     }
-                    key.updateKeyPos()
                 },
                 cb: () => {
                     const mouse = new THREE.Vector2()
