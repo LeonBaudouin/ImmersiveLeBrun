@@ -192,6 +192,6 @@ export default class Key {
 
     public updateProgress(_, load, tot) {
         this.wrapper.style.setProperty('--progress', (load / tot).toString())
-        // if (load == tot) this.isLoaded = true
+        if (load == tot) this.isLoaded = true
     }
 }
