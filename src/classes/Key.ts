@@ -132,7 +132,7 @@ export default class Key {
                     Math.sqrt(
                         (clientX - lockPos.x) * (clientX - lockPos.x) + (clientY - lockPos.y) * (clientY - lockPos.y),
                     ) <
-                    window.innerWidth / 6
+                        window.innerWidth / 6 && this.isLoaded
 
                 if (this.hoverLock && this.isLoaded) {
                     if (!lastHoverLock) {
