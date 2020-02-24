@@ -6,6 +6,7 @@ import Interactive from './Interactive'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 import LoadedComponent from './LoadedComponent'
 import TextureLoader from '../Core/TextureLoader'
+import SelectiveFadeObject from '../Components/SelectiveFadeObject'
 
 export default class Room2 extends LoadedComponent {
     public static isLoaded: boolean = false
@@ -66,6 +67,9 @@ export default class Room2 extends LoadedComponent {
                     character_right: 'room2/s2_personnages_derriere_cadres_droite.jpg',
                     character_right_sketch: 'room2/s2_personnages_derriere_cadres_droite_croquis.png',
                     character_right_alpha: 'room2/s2_personnages_derriere_cadres_droite_alpha.png',
+
+                    peace_mask: 'room2/paix.png',
+                    abondance_mask: 'room2/abondance.png',
 
                     // characters_painting: 'room2/scene_02_cadre_plus_personnages_v01.png',
                     frame: 'room2/scene_02_cadres_v01.jpg',
@@ -198,10 +202,11 @@ export default class Room2 extends LoadedComponent {
                             }),
                         ],
                     ),
-                    new SceneObject({
+                    new SelectiveFadeObject({
                         size: new THREE.Vector2(1.7, 1.2),
                         position: new THREE.Vector3(0, -0.9, -0.49),
                         texture: textures.peace_painting,
+                        selectiveMasks: { LaPaix: textures.peace_mask, Abondance: textures.abondance_mask },
                     }),
                     new SceneObject({
                         size: new THREE.Vector2(0.476 * 1.3, 0.708 * 1.3),

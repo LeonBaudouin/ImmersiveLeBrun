@@ -7,7 +7,8 @@
     transition: transform ease-out 1.5s, opacity ease-in 1.3s;
 
     --progress: 0;
-    &:hover {
+    &:hover,
+    &.flip {
         --progress: 1;
     }
 
