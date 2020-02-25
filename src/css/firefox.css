@@ -1,0 +1,11 @@
+@-moz-document url-prefix() {
+    .loading-screen.open .doors {
+        -webkit-filter: none;
+        filter: none;
+    }
+
+    .loading-screen .doors {
+        -webkit-filter: none;
+        filter: none;
+    }
+}
