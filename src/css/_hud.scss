@@ -13,7 +13,6 @@
     cursor: pointer;
 
     visibility: visible;
-    opacity: 1;
 
     &::after {
         content: '';
@@ -22,17 +21,37 @@
         height: 140%;
         background: url('../assets/ui/fond_vers_l_atelier.png') center no-repeat;
         background-size: contain;
-        opacity: 1;
+        opacity: 0.7;
         z-index: -1;
         left: 50%;
         top: 50%;
         transform: translate3d(-50%, -50%, 0);
-        transition: opacity 300ms ease-out;
+    }
+    &:hover &-stroke::after {
+        transform: translateX(0%);
     }
 
-    &:hover {
+    &-stroke {
+        position: absolute;
+        width: 120%;
+        height: 140%;
+        mask-image: url('../assets/ui/fond_vers_l_atelier.png');
+        mask-size: contain;
+        overflow: hidden;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+
         &::after {
-            opacity: 0.5;
+            content: '';
+            display: block;
+            background: url('../assets/ui/fond_vers_l_atelier.png') center no-repeat;
+            background-size: contain;
+            height: 100%;
+            transition: transform 500ms ease;
+            transform: translateX(-100%);
+            opacity: 1;
         }
     }
 }

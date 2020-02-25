@@ -65,7 +65,7 @@ export default class SceneButton {
         if (this.currentIndex < this.scenes.length - 1) {
             const i = this.currentIndex + 1
             this.show(this.rightButton)
-            this.rightButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
+            this.rightButton.children[0].textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
             this.hide(this.rightButton)
         }
@@ -75,7 +75,7 @@ export default class SceneButton {
         if (this.currentIndex > 0) {
             const i = this.currentIndex - 1
             this.show(this.leftButton)
-            this.leftButton.textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
+            this.leftButton.children[0].textContent = rooms[i].isLoaded ? this.scenes[i].buttonText : 'Chargement...'
         } else {
             this.hide(this.leftButton)
         }

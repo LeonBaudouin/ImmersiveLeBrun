@@ -147,9 +147,18 @@
             cursor: default;
         }
 
-        &:hover::after,
-        &.upcoming::after {
-            opacity: 0.5;
+        &.upcoming {
+            &::after {
+                opacity: 0.5;
+            }
+
+            &-stroke::after {
+                opacity: 0.5;
+            }
+        }
+
+        &:hover &-stroke::after {
+            transform: translateX(0%);
         }
 
         &::after {
@@ -158,12 +167,37 @@
             width: 130%;
             height: 180%;
             background: url('../assets/menu/Brush_CTA_v01.png') center no-repeat;
+            opacity: 0.7;
             background-size: contain;
             z-index: -1;
             left: 50%;
             top: 50%;
             transform: translate3d(-50%, -50%, 0);
             transition: opacity 300ms ease-out;
+        }
+
+        &-stroke {
+            position: absolute;
+            width: 130%;
+            height: 180%;
+            mask-image: url('../assets/menu/Brush_CTA_v01.png');
+            mask-size: contain;
+            overflow: hidden;
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+
+            &::after {
+                content: '';
+                display: block;
+                background: url('../assets/menu/Brush_CTA_v01.png') center no-repeat;
+                background-size: contain;
+                height: 100%;
+                transition: transform 500ms ease;
+                transform: translateX(-100%);
+                opacity: 0.7;
+            }
         }
     }
 
