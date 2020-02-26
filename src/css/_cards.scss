@@ -24,7 +24,6 @@
     }
 
     filter: drop-shadow(20px 30px 20px rgba(0, 0, 0, 0.2));
-    perspective: 1000px;
 
     &:nth-child(1) &-front {
         background-color: #735463;
@@ -50,10 +49,8 @@
     }
 
     &-front {
-        transform-style: preserve-3d;
         position: relative;
         color: #e9e6e9;
-        backface-visibility: hidden;
     }
 
     &-titles {
@@ -97,6 +94,7 @@
 
         overflow: hidden;
         transition: transform 0.5s ease-in-out;
+        pointer-events: none;
 
         &-wrapper {
             transition: transform 0.5s ease-in-out;
@@ -112,6 +110,7 @@
 
             background-color: #f8e4cc;
             transform: translateY((calc(-100% * (1 - var(--progress)))));
+            pointer-events: auto;
 
             &:before,
             &:after {
