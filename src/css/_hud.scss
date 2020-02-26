@@ -29,6 +29,7 @@
     }
     &:hover &-stroke::after {
         transform: translateX(0%);
+        animation: none;
     }
 
     &-stroke {
@@ -49,7 +50,16 @@
             background: url('../assets/ui/fond_vers_l_atelier.png') center no-repeat;
             background-size: contain;
             height: 100%;
-            transition: transform 500ms ease;
+            transition: transform 300ms ease-out;
+            animation: stroke-out 300ms ease-in;
+            @keyframes stroke-out {
+                0% {
+                    transform: translateX(0%);
+                }
+                100% {
+                    transform: translateX(100%);
+                }
+            }
             transform: translateX(-100%);
             opacity: 1;
         }
