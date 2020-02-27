@@ -81,14 +81,13 @@
         position: absolute;
         left: 50%;
         display: block;
-        width: 100%;
-        padding-bottom: 100%;
+        width: 120%;
+        padding-bottom: 120%;
         top: 50%;
         transform: translate3d(-50%, -50%, -5px);
         border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.5);
         z-index: -1;
-        filter: blur(50px);
+        background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 20%, rgba(255, 255, 255, 0) 70%);
     }
 
     &#Rubens {

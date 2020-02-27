@@ -23,7 +23,7 @@
         }
     }
 
-    filter: drop-shadow(20px 30px 20px rgba(0, 0, 0, 0.2));
+    box-shadow: 20px 30px 20px rgba(0, 0, 0, 0.2);
 
     &:nth-child(1) &-front {
         background-color: #735463;
