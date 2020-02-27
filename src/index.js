@@ -9,11 +9,8 @@ let rafCbs = []
 document.addEventListener('DOMContentLoaded', () => {
     const key = new Key()
     const css3dContainer = document.querySelector('.css3d-container')
-    const uiWrapper = document.querySelector('.ui-wrapper')
-    const menu = new Menu(
-        document.querySelectorAll('.ui-navigation-button'),
-        document.querySelectorAll('.menu-wrapper'),
-    )
+    const uiWrapper = document.querySelector('.menu')
+    const menu = new Menu(document.querySelectorAll('.menu-navigation-button'), document.querySelector('.menu-content'))
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'
         rafCbs.push(key.updateKeyPos.bind(key))

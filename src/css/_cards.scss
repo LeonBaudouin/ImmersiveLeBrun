@@ -38,6 +38,8 @@
     &s {
         display: flex;
 
+        flex-shrink: 0;
+        width: 80vw;
         margin: 0 10vw;
 
         align-self: stretch;

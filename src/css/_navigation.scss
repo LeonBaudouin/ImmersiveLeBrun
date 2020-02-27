@@ -1,0 +1,81 @@
+%menu-navigation-button-pos {
+    position: absolute;
+    width: calc(140% + 5rem);
+    height: 180%;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    pointer-events: none;
+}
+
+%menu-navigation-button-bg {
+    filter: hue-rotate(70deg);
+    background: url('../assets/menu/Brush_CTA_v01.png') center no-repeat;
+    background-size: contain;
+    transition: transform 300ms ease-out;
+    opacity: 0.7;
+}
+
+.menu-navigation {
+    position: fixed;
+    right: 3vw;
+    top: 3vw;
+
+    &-button {
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+        position: relative;
+        opacity: 0;
+        z-index: 1;
+        margin: 0 1.8rem;
+        transition: opacity 0.5s 4s linear;
+
+        .domLoaded & {
+            opacity: 1;
+        }
+
+        &:hover &-stroke::after,
+        &.current &-stroke::after {
+            transform: translateX(0%);
+            animation: none;
+        }
+
+        &::after {
+            content: '';
+            filter: hue-rotate(70deg);
+            background: url('../assets/menu/Brush_CTA_v01.png') center no-repeat;
+            background-size: contain;
+            transition: opacity 300ms ease-out;
+            @extend %menu-navigation-button-pos;
+            @extend %menu-navigation-button-bg;
+        }
+
+        &-stroke {
+            mask-image: url('../assets/menu/Brush_CTA_v01.png');
+            mask-size: contain;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            overflow: hidden;
+            @extend %menu-navigation-button-pos;
+
+            &::after {
+                content: '';
+                height: 100%;
+                display: block;
+                @extend %menu-navigation-button-bg;
+                transform: translateX(-100%);
+                animation: stroke-out 300ms ease-in;
+                @keyframes stroke-out {
+                    0% {
+                        transform: translateX(0%);
+                    }
+                    100% {
+                        transform: translateX(100%);
+                    }
+                }
+            }
+        }
+    }
+}
