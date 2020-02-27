@@ -182,6 +182,8 @@
             height: 180%;
             mask-image: url('../assets/menu/Brush_CTA_v01.png');
             mask-size: contain;
+            mask-position: center;
+            mask-repeat: no-repeat;
             overflow: hidden;
             z-index: -1;
             left: 50%;

@@ -199,7 +199,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     key.addKeyCb(() => {
                         document.querySelector('.loading-screen').classList.remove('close')
                         document.querySelector('.loading-screen').classList.add('open')
-                        ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
+                        ;(<HTMLElement>document.querySelector('.ui-wrapper')).style.display = 'none'
                         started = true
 
                         // -- Raycast --

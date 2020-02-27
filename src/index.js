@@ -2,12 +2,18 @@ import './css/index.scss'
 import Setup from './setup.ts'
 import Key from './classes/Key'
 import 'gsap'
+import Menu from './classes/Menu'
 
 let rafCbs = []
 
 document.addEventListener('DOMContentLoaded', () => {
     const key = new Key()
     const css3dContainer = document.querySelector('.css3d-container')
+    const uiWrapper = document.querySelector('.ui-wrapper')
+    const menu = new Menu(
+        document.querySelectorAll('.ui-navigation-button'),
+        document.querySelectorAll('.menu-wrapper'),
+    )
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'
         rafCbs.push(key.updateKeyPos.bind(key))
@@ -20,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
-    document.querySelector('.menu').classList.add('domLoaded')
+    uiWrapper.classList.add('domLoaded')
     document.querySelectorAll('.menu-card-button').forEach(b => {
         b.addEventListener('click', e => e.preventDefault())
     })

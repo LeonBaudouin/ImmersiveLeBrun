@@ -38,6 +38,8 @@
         height: 140%;
         mask-image: url('../assets/ui/fond_vers_l_atelier.png');
         mask-size: contain;
+        mask-position: center;
+        mask-repeat: no-repeat;
         overflow: hidden;
         z-index: -1;
         left: 50%;
