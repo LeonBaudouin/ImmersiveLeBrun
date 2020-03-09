@@ -20,8 +20,8 @@ export default class SceneObject extends Component {
             const material = new THREE.MeshLambertMaterial({
                 color: color,
                 map: texture,
-                transparent: transparent ? true : false,
-                depthWrite: depthWrite ? true : false,
+                transparent,
+                depthWrite,
                 alphaMap: alpha,
             })
 

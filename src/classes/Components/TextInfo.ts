@@ -9,11 +9,13 @@ export default class TextInfo extends Component {
         const children = []
 
         const quote = <HTMLElement>elem.querySelector('.css3d-quote')
+        const eventEmitter = EventEmitter.getInstance()
 
         if (quote) {
             elem.querySelector('.css3d-quoteicon').addEventListener('click', e => {
                 e.stopPropagation()
                 quote.classList.toggle('show')
+                eventEmitter.Emit(EVENT.OPEN_QUOTE, e.target)
             })
             children.push(
                 new Component(() => {
@@ -24,32 +26,18 @@ export default class TextInfo extends Component {
             )
         }
 
-        EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSEENTER, ({ component }) => {
-            if (component.userData.name !== elementId && false) {
-                this.fadeOut(quote, elem)
-            }
-        })
-
-        EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSELEAVE, ({ component }) => {
-            if (component.userData.name !== elementId && false) {
-                this.fadeIn(quote, elem)
-            }
-        })
-
-        EventEmitter.getInstance().Subscribe(EVENT.CLOSE_TEXTS, () => {
+        eventEmitter.Subscribe(EVENT.CLOSE_TEXTS, () => {
             elem.classList.remove('show')
-            // elem.classList.remove('secondary')
+            if (quote) quote.classList.remove('show')
         })
 
-        EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
+        eventEmitter.Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
             if (component.userData.name === elementId) {
                 elem.classList.add('show')
             } else {
                 elem.classList.remove('show')
-                // elem.classList.remove('secondary')
                 if (quote) {
                     quote.classList.remove('show')
-                    // quote.classList.remove('secondary')
                 }
             }
         })
@@ -65,19 +53,5 @@ export default class TextInfo extends Component {
             {},
             children,
         )
-    }
-
-    private fadeOut(quote: HTMLElement, elem: HTMLElement) {
-        elem.classList.add('secondary')
-        if (quote) {
-            quote.classList.add('secondary')
-        }
-    }
-
-    private fadeIn(quote: HTMLElement, elem: HTMLElement) {
-        elem.classList.remove('secondary')
-        if (quote) {
-            quote.classList.remove('secondary')
-        }
     }
 }
