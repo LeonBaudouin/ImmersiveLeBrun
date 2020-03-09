@@ -71,14 +71,16 @@ export default class InteractiveShader extends AbstractController {
     private onClick(component: THREE.Object3D) {
         this.currentFocus = InteractiveShader.hoveredObject === component
         if (InteractiveShader.hoveredObject === component) {
+            this.eventEmitter.Emit(EVENT.INTERACTIVE_CLICK, {
+                component,
+                controller: this,
+                firstClick: !this.isClicked,
+            })
+
             if (!this.isClicked) {
                 this.isClicked = true
                 this.Clicked()
             }
-            this.eventEmitter.Emit(EVENT.INTERACTIVE_CLICK, {
-                component,
-                controller: this,
-            })
         }
     }
 
