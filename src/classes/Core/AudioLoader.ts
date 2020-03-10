@@ -5,11 +5,9 @@ type onProgressCallback = (url: string, itemsLoaded: number, itemsTotal: number)
 
 export default class AudioLoader {
     private static loadingManager: THREE.LoadingManager = null
-    private static onProgressCallbacks: onProgressCallback[] = []
 
     static setLoadingManager(loadingManager: THREE.LoadingManager) {
         AudioLoader.loadingManager = loadingManager
-        AudioLoader.loadingManager.onProgress = AudioLoader.onUpdate
     }
 
     static load(
@@ -34,22 +32,15 @@ export default class AudioLoader {
     static loadOne(path: string): Promise<THREE.AudioBuffer> {
         const loader = AudioLoader.getNativeLoader()
         return new Promise((resolve, reject) => {
-            loader.load(path, resolve, null, reject)
+            loader.load(path, resolve, p => console.log(p.loaded / p.total), reject)
         })
     }
 
-    static onUpdate(url: string, itemsLoaded: number, itemsTotal: number) {
-        for (let index = 0; index < AudioLoader.onProgressCallbacks.length; index++) {
-            AudioLoader.onProgressCallbacks[index](url, itemsLoaded, itemsTotal)
-        }
-    }
-
-    static addOnProgressCallback(func: onProgressCallback) {
-        AudioLoader.onProgressCallbacks.push(func)
-    }
-
     static getNativeLoader(): NativeAudioLoader {
-        if (_nativeLoader == null) _nativeLoader = new NativeAudioLoader()
+        if (_nativeLoader == null)
+            _nativeLoader = AudioLoader.loadingManager
+                ? new NativeAudioLoader(AudioLoader.loadingManager)
+                : new NativeAudioLoader()
 
         return _nativeLoader
     }

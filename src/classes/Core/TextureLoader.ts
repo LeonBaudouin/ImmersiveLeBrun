@@ -4,11 +4,9 @@ import * as THREE from 'three'
 type onProgressCallback = (url: string, itemsLoaded: number, itemsTotal: number) => void
 export default class TextureLoader {
     private static loadingManager: THREE.LoadingManager = null
-    private static onProgressCallbacks: onProgressCallback[] = []
 
     static setLoadingManager(loadingManager: THREE.LoadingManager) {
         TextureLoader.loadingManager = loadingManager
-        TextureLoader.loadingManager.onProgress = TextureLoader.onUpdate
     }
 
     static load(
@@ -37,18 +35,11 @@ export default class TextureLoader {
         })
     }
 
-    static onUpdate(url: string, itemsLoaded: number, itemsTotal: number) {
-        for (let index = 0; index < TextureLoader.onProgressCallbacks.length; index++) {
-            TextureLoader.onProgressCallbacks[index](url, itemsLoaded, itemsTotal)
-        }
-    }
-
-    static addOnProgressCallback(func: onProgressCallback) {
-        TextureLoader.onProgressCallbacks.push(func)
-    }
-
     static getNativeLoader(): NativeTextureLoader {
-        if (_nativeLoader == null) _nativeLoader = new NativeTextureLoader(TextureLoader.loadingManager)
+        if (_nativeLoader == null)
+            _nativeLoader = TextureLoader.loadingManager
+                ? new NativeTextureLoader(TextureLoader.loadingManager)
+                : new NativeTextureLoader()
 
         return _nativeLoader
     }

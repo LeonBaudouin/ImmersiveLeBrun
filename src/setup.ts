@@ -193,29 +193,19 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
 
     let started = false
 
-    TextureLoader.setLoadingManager(new THREE.LoadingManager())
-    TextureLoader.addOnProgressCallback(key.updateProgress.bind(key))
+    const loadingManager = new THREE.LoadingManager()
+    loadingManager.onProgress = key.updateProgress.bind(key)
+
+    TextureLoader.setLoadingManager(loadingManager)
 
     const audioListener = new THREE.AudioListener()
     camera.add(audioListener)
 
+    EventEmitter.getInstance().Subscribe(EVENT.ROOM_LOADED, console.log)
+
     return waitAnim()
         .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
-        .then(() =>
-            AudioLoader.load(
-                {
-                    spring: 'spring.mp3',
-                    workshop_ambient: 'workshop_ambient.mp3',
-                    quote: 'quote.mp3',
-                    quote_alt: 'quote_alt.mp3',
-                    reveal: 'reveal.mp3',
-                    reveal_alt: 'reveal_alt.mp3',
-                },
-                './assets/audio/',
-            ),
-        )
-        .then((buffers: { [name: string]: THREE.AudioBuffer }) => {
-            EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
+        .then(() => {
             return {
                 raf: () => {
                     if (started) {
@@ -226,41 +216,55 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                 cb: () => {
                     const mouse = new THREE.Vector2()
 
-                    const springAudio = audio(audioListener, buffers.spring, 0.03, true)
-                    springAudio.play()
-                    const workshopAmbient = audio(audioListener, buffers.workshop_ambient, 0.1, true)
-                    workshopAmbient.play()
-
-                    const quoteSound = audio(audioListener, buffers.quote, 0.3, false)
-                    const quoteAltSound = audio(audioListener, buffers.quote_alt, 1.2, false)
-                    const revealAltSound = audio(audioListener, buffers.reveal_alt, 0.2, false)
-                    revealAltSound.setPlaybackRate(0.8)
-                    const revealSound = audio(audioListener, buffers.reveal, 0.2, false)
-                    revealSound.setPlaybackRate(1.3)
-
-                    EventEmitter.getInstance().Subscribe(EVENT.OPEN_QUOTE, () => {
-                        if (Math.random() > 0.5) {
-                            quoteSound.setPlaybackRate(Math.random() * 0.6 + 0.7)
-                            quoteSound.play()
-                        } else {
-                            quoteAltSound.play()
-                        }
-                    })
-
-                    EventEmitter.getInstance().Subscribe(
-                        EVENT.INTERACTIVE_CLICK,
-                        ({ firstClick, component: object3d }) => {
-                            if (firstClick && object3d.userData.name != null) {
-                                if (revealSound.isPlaying) revealSound.stop()
-                                if (revealAltSound.isPlaying) revealAltSound.stop()
-                                if (Math.random() > 0.5) {
-                                    revealSound.play()
-                                } else {
-                                    revealAltSound.play()
-                                }
-                            }
+                    AudioLoader.load(
+                        {
+                            spring: 'spring.mp3',
+                            workshop_ambient: 'workshop_ambient.mp3',
+                            quote: 'quote.mp3',
+                            quote_alt: 'quote_alt.mp3',
+                            reveal: 'reveal.mp3',
+                            reveal_alt: 'reveal_alt.mp3',
                         },
-                    )
+                        './assets/audio/',
+                    ).then((buffers: { [name: string]: THREE.AudioBuffer }) => {
+                        const springAudio = audio(audioListener, buffers.spring, 0.03, true)
+                        springAudio.play()
+                        const workshopAmbient = audio(audioListener, buffers.workshop_ambient, 0.1, true)
+                        workshopAmbient.play()
+
+                        const quoteSound = audio(audioListener, buffers.quote, 0.3, false)
+                        const quoteAltSound = audio(audioListener, buffers.quote_alt, 1.2, false)
+                        const revealAltSound = audio(audioListener, buffers.reveal_alt, 0.2, false)
+                        revealAltSound.setPlaybackRate(0.8)
+                        const revealSound = audio(audioListener, buffers.reveal, 0.2, false)
+                        revealSound.setPlaybackRate(1.3)
+
+                        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
+
+                        EventEmitter.getInstance().Subscribe(EVENT.OPEN_QUOTE, () => {
+                            if (Math.random() > 0.5) {
+                                quoteSound.setPlaybackRate(Math.random() * 0.6 + 0.7)
+                                quoteSound.play()
+                            } else {
+                                quoteAltSound.play()
+                            }
+                        })
+
+                        EventEmitter.getInstance().Subscribe(
+                            EVENT.INTERACTIVE_CLICK,
+                            ({ firstClick, component: object3d }) => {
+                                if (firstClick && object3d.userData.name != null) {
+                                    if (revealSound.isPlaying) revealSound.stop()
+                                    if (revealAltSound.isPlaying) revealAltSound.stop()
+                                    if (Math.random() > 0.5) {
+                                        revealSound.play()
+                                    } else {
+                                        revealAltSound.play()
+                                    }
+                                }
+                            },
+                        )
+                    })
 
                     key.addKeyCb(() => {
                         document.querySelector('.loading-screen').classList.remove('close')
