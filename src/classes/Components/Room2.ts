@@ -76,6 +76,11 @@ export default class Room2 extends LoadedComponent {
                     frame_alpha: 'room2/scene_02_cadres_v01.png',
                     frame_shadow: 'room2/scene_02_cadres_ombre_v01.png',
 
+                    attribut: 'room2/tableau_attribu_peinture.jpg',
+                    attribut_sketch: 'room2/tableau_attribu_peinture_croquis.jpg',
+                    attribut_frame: 'room2/cadre_attribu_peinture_v01.jpg',
+                    attribut_frame_alpha: 'room2/cadre_attribu_peinture_v01.png',
+
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
@@ -159,6 +164,13 @@ export default class Room2 extends LoadedComponent {
                         rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
                         texture: textures.frame_shadow,
                         depthWrite: false,
+                    }),
+                    new SceneObject({
+                        size: new THREE.Vector2(this.size.z * (377 / 1320), this.size.y * (320 / 928)),
+                        position: new THREE.Vector3(this.size.x / 2 - 0.01, 0, -(0.5 - 239 / 1320) * this.size.z),
+                        rotation: new THREE.Euler(0, -Math.PI / 2, 0),
+                        texture: textures.attribut_frame,
+                        alpha: textures.attribut_frame_alpha,
                     }),
                     new Component(
                         () => {
