@@ -33,8 +33,10 @@
         font-size: 0.8rem;
 
         &-photo {
+            position: relative;
             height: 23vh;
             margin-bottom: 0.5rem;
+            right: 1.5vh;
         }
     }
 }
