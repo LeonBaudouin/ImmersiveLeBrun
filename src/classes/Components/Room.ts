@@ -78,6 +78,8 @@ export default class Room extends LoadedComponent {
                     magnifying_glass: 'loupe.png',
                     jp_lebrun: 'room/o/interactive/peinture_droite_v01.jpg',
                     jp_lebrun_sketch: 'room/o/interactive/peinture_droite_croquis_v01.jpg',
+                    jb_frame: 'room/o/cadre_droite_sans_peinture_v01.jpg',
+                    jb_frame_alpha: 'room/o/cadre_droite_sans_peinture_v01.png',
                 },
                 './assets/',
             ),
@@ -194,6 +196,29 @@ export default class Room extends LoadedComponent {
                         ligth.position.z = 4
                         return ligth
                     }),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
+                            object.position.set(
+                                this.size.x / 2 - 0.02,
+                                (117 - 720 / 2 + 322 - 10) * (this.size.y / 720),
+                                (427 - 1320 / 2 - 351 / 2 - 45) * (this.size.z / 1320),
+                            )
+                            object.rotation.set(0, -Math.PI / 2, 0)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new SceneObject({
+                                size: new THREE.Vector2((this.size.z / 1320) * 322, (this.size.y / 720) * 351),
+                                position: new THREE.Vector3(0.2, 0, 0),
+                                texture: textures.jb_frame,
+                                alpha: textures.jb_frame_alpha,
+                                depthWrite: false,
+                            }),
+                        ],
+                    ),
                     new Component(() => {
                         const ligth = new THREE.PointLight(0x222222, 0.5)
                         ligth.position.x = 1.3
