@@ -156,6 +156,10 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
             position: new THREE.Vector3(1.2, 1.5, 1.1),
             elementId: 'JBPierre',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(1.5, 2, -0.5),
+            elementId: 'Attribut',
+        }),
     ]
 
     const CSS3DScene = new ThreeScene(
@@ -216,6 +220,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                 cb: () => {
                     const mouse = new THREE.Vector2()
 
+                    EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
                     AudioLoader.load(
                         {
                             spring: 'spring.mp3',
@@ -238,8 +243,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                         revealAltSound.setPlaybackRate(0.8)
                         const revealSound = audio(audioListener, buffers.reveal, 0.2, false)
                         revealSound.setPlaybackRate(1.3)
-
-                        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
 
                         EventEmitter.getInstance().Subscribe(EVENT.OPEN_QUOTE, () => {
                             if (Math.random() > 0.5) {

@@ -19,6 +19,7 @@ export default class Interactive extends Component {
         glassPosition = undefined,
         customChildCollider = undefined,
         uvColliderCompensation = undefined,
+        depthWrite = undefined,
     }: Partial<{
         sceneName: string
         name: string
@@ -30,6 +31,7 @@ export default class Interactive extends Component {
         glassPosition: THREE.Vector3 | undefined
         customChildCollider: Component | undefined
         uvColliderCompensation: (uv: THREE.Vector2) => THREE.Vector2
+        depthWrite: boolean | undefined
     }>) {
         let materialShader: THREE.Shader
 
@@ -39,7 +41,12 @@ export default class Interactive extends Component {
         }
 
         const gen = () => {
-            const material = new THREE.MeshLambertMaterial({ map: sketch, transparent: true, alphaMap: alpha })
+            const material = new THREE.MeshLambertMaterial({
+                map: sketch,
+                transparent: true,
+                alphaMap: alpha,
+                depthWrite,
+            })
 
             material.onBeforeCompile = function(shader: THREE.Shader) {
                 shader.uniforms.sketch = { value: sketch }

@@ -165,13 +165,35 @@ export default class Room2 extends LoadedComponent {
                         texture: textures.frame_shadow,
                         depthWrite: false,
                     }),
-                    new SceneObject({
-                        size: new THREE.Vector2(this.size.z * (377 / 1320), this.size.y * (320 / 928)),
-                        position: new THREE.Vector3(this.size.x / 2 - 0.01, 0, -(0.5 - 239 / 1320) * this.size.z),
-                        rotation: new THREE.Euler(0, -Math.PI / 2, 0),
-                        texture: textures.attribut_frame,
-                        alpha: textures.attribut_frame_alpha,
-                    }),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
+                            object.position.set(this.size.x / 2 - 0.02, 0, -(0.5 - 239 / 1320) * this.size.z)
+                            object.rotation.set(0, -Math.PI / 2, 0)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new Interactive({
+                                name: 'Attribut',
+                                sceneName: 'Demo',
+                                sketch: textures.attribut_sketch,
+                                painting: textures.attribut,
+                                ratio: new THREE.Vector2(1.3, (400 / 529) * 1.3),
+                                glassTexture: textures.magnifying_glass,
+                                // glassPosition: new THREE.Vector3(0.2, 0.4, 0.3),
+                                depthWrite: false,
+                            }),
+                            new SceneObject({
+                                size: new THREE.Vector2(this.size.z * (377 / 1320), this.size.y * (320 / 928)),
+                                position: new THREE.Vector3(0.01, 0, 0),
+                                texture: textures.attribut_frame,
+                                alpha: textures.attribut_frame_alpha,
+                                depthWrite: false,
+                            }),
+                        ],
+                    ),
                     new Component(
                         () => {
                             const object = new THREE.Object3D()
