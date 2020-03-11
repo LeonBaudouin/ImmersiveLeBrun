@@ -81,6 +81,11 @@ export default class Room2 extends LoadedComponent {
                     attribut_frame: 'room2/cadre_attribu_peinture_v01.jpg',
                     attribut_frame_alpha: 'room2/cadre_attribu_peinture_v01.png',
 
+                    adelaide: 'room2/Tableau_Adelaide_v01.jpg',
+                    adelaide_sketch: 'room2/Tableau_Adelaide_croquis_v01.jpg',
+                    adelaide_frame: 'room2/cadre_mur_gauche.jpg',
+                    adelaide_frame_alpha: 'room2/cadre_mur_gauche.png',
+
                     peace_painting: 'room/o/interactive/oeuvre.jpg',
                     magnifying_glass: 'loupe.png',
                 },
@@ -168,6 +173,34 @@ export default class Room2 extends LoadedComponent {
                     new Component(
                         () => {
                             const object = new THREE.Object3D()
+                            object.position.set(-this.size.x / 2 + 0.05, -0.3, 0.23)
+                            object.rotation.set(0, Math.PI / 2, 0)
+                            return object
+                        },
+                        [],
+                        {},
+                        [
+                            new SceneObject({
+                                size: new THREE.Vector2((this.size.z / 1320) * 300, (this.size.y / 928) * 306),
+                                position: new THREE.Vector3(0, 0, 0.02),
+                                texture: textures.adelaide_frame,
+                                alpha: textures.adelaide_frame_alpha,
+                                depthWrite: false,
+                            }),
+                            new Interactive({
+                                name: 'Adelaide',
+                                sceneName: 'Demo',
+                                sketch: textures.adelaide_sketch,
+                                painting: textures.adelaide,
+                                ratio: new THREE.Vector2((327 / 400) * 1.2, 1.2),
+                                glassTexture: textures.magnifying_glass,
+                                depthWrite: false,
+                            }),
+                        ],
+                    ),
+                    new Component(
+                        () => {
+                            const object = new THREE.Object3D()
                             object.position.set(this.size.x / 2 - 0.02, 0, -(0.5 - 239 / 1320) * this.size.z)
                             object.rotation.set(0, -Math.PI / 2, 0)
                             return object
@@ -182,7 +215,6 @@ export default class Room2 extends LoadedComponent {
                                 painting: textures.attribut,
                                 ratio: new THREE.Vector2(1.3, (400 / 529) * 1.3),
                                 glassTexture: textures.magnifying_glass,
-                                // glassPosition: new THREE.Vector3(0.2, 0.4, 0.3),
                                 depthWrite: false,
                             }),
                             new SceneObject({

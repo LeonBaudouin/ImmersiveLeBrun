@@ -160,6 +160,10 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
             position: new THREE.Vector3(1.5, 2, -0.5),
             elementId: 'Attribut',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(-1.7, 2, 0.3),
+            elementId: 'Adelaide',
+        }),
     ]
 
     const CSS3DScene = new ThreeScene(
