@@ -189,34 +189,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
         },
     ]
 
-    // const sceneButton = new SceneButton(
-    //     scenes,
-    //     transitionScene,
-    //     document.querySelector('.hud-previousscene'),
-    //     document.querySelector('.hud-nextscene'),
-    // )
-    const menuCbs = [
-        () => {},
-        () => {
-            if (transitionScene.currentScene !== scene1) {
-                transitionScene.transition(scene1, 4)
-            }
-        },
-        () => {
-            if (transitionScene.currentScene !== scene2) {
-                transitionScene.transition(scene2, 4)
-            }
-        },
-        () => {
-            if (transitionScene.currentScene !== scene3) {
-                transitionScene.transition(scene3, 4)
-            }
-        },
-        () => {},
-    ]
-
-    const sceneMenu = new SceneMenu(menuCbs, <HTMLButtonElement[]>[...document.querySelectorAll('.hud-menu-button')])
-
     let started = false
 
     const loadingManager = new THREE.LoadingManager()
@@ -240,7 +212,29 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                 cb: () => {
                     const mouse = new THREE.Vector2()
 
+                    const changeScene = (i: number) => {
+                        const scene = scenes[i].three
+                        const name = scenes[i].name
+                        if (transitionScene.currentScene !== scene) {
+                            transitionScene.transition(scene, 4)
+                        }
+                        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, name)
+                        EventEmitter.getInstance().Emit(EVENT.CLOSE_TEXTS, name)
+                    }
+
+                    const menuCbs = [
+                        () => {},
+                        () => changeScene(0),
+                        () => changeScene(1),
+                        () => changeScene(2),
+                        () => {},
+                    ]
                     EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
+
+                    const sceneMenu = new SceneMenu(menuCbs, <HTMLButtonElement[]>[
+                        ...document.querySelectorAll('.hud-menu-button'),
+                    ])
+
                     AudioLoader.load(
                         {
                             spring: 'spring.mp3',
