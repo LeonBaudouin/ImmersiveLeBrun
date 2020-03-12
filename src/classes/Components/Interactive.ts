@@ -19,7 +19,7 @@ export default class Interactive extends Component {
         glassPosition = undefined,
         customChildCollider = undefined,
         uvColliderCompensation = undefined,
-        depthWrite = undefined,
+        depthWrite = true,
     }: Partial<{
         sceneName: string
         name: string
@@ -31,7 +31,7 @@ export default class Interactive extends Component {
         glassPosition: THREE.Vector3 | undefined
         customChildCollider: Component | undefined
         uvColliderCompensation: (uv: THREE.Vector2) => THREE.Vector2
-        depthWrite: boolean | undefined
+        depthWrite: boolean
     }>) {
         let materialShader: THREE.Shader
 
