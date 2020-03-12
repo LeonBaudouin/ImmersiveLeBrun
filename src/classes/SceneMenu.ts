@@ -27,7 +27,7 @@ export default class SceneMenu {
         eventEmitter.Subscribe(EVENT.TRANSITION_END, () => (this.isTransitioning = false))
     }
 
-    private moveTo(i) {
+    public moveTo(i) {
         this.buttons[this.currentIndex].classList.remove('active')
         this.currentIndex = i
         this.buttons[this.currentIndex].classList.add('active')

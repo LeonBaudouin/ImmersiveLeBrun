@@ -234,6 +234,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     const sceneMenu = new SceneMenu(menuCbs, <HTMLButtonElement[]>[
                         ...document.querySelectorAll('.hud-menu-button'),
                     ])
+                    sceneMenu.moveTo(1)
 
                     AudioLoader.load(
                         {
