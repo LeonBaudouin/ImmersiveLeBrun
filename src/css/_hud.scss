@@ -19,7 +19,7 @@
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background-color: rgba(#ffffff, 0.5);
+            background-color: rgba(#ffffff, 0.3);
             transition: background 300ms ease;
 
             &:hover,
@@ -60,19 +60,21 @@
 
             &-name {
                 bottom: 25px;
+                font-size: 1.1rem;
                 --translateY: -8px;
             }
 
             &-date {
+                font-size: 0.8rem;
                 top: 25px;
                 --translateY: 8px;
             }
         }
 
         &-stroke {
-            width: 15vw;
+            width: 12vw;
             height: 2px;
-            background-color: rgba(#ffffff, 0.5);
+            background-color: rgba(#ffffff, 0.3);
             transform: scale3d(1.001, 1, 1);
         }
     }
