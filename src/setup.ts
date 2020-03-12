@@ -14,12 +14,12 @@ import InteractiveShader from './classes/Controller/InteractiveShader'
 import TextInfo from './classes/Components/TextInfo'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 import TransitionScene from './classes/TransitionScene'
-import SceneButton, { Scene } from './classes/SceneButton'
 import ComposerScene from './classes/Core/ComposerScene'
 import FadeController from './classes/Controller/FadeController'
 import Key from './classes/Key'
 import TextureLoader from './classes/Core/TextureLoader'
 import AudioLoader from './classes/Core/AudioLoader'
+import SceneMenu from './classes/SceneMenu'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -174,30 +174,48 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
 
     const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
 
-    const scenes: Scene[] = [
+    const scenes = [
         {
             three: scene1,
             name: 'Workshop',
-            buttonText: "Vers l'Atelier",
         },
         {
             three: scene2,
             name: 'Demo',
-            buttonText: "Vers l'Académie",
         },
         {
             three: scene3,
             name: 'Galerie',
-            buttonText: 'Vers la Galerie',
         },
     ]
 
-    const sceneButton = new SceneButton(
-        scenes,
-        transitionScene,
-        document.querySelector('.hud-previousscene'),
-        document.querySelector('.hud-nextscene'),
-    )
+    // const sceneButton = new SceneButton(
+    //     scenes,
+    //     transitionScene,
+    //     document.querySelector('.hud-previousscene'),
+    //     document.querySelector('.hud-nextscene'),
+    // )
+    const menuCbs = [
+        () => {},
+        () => {
+            if (transitionScene.currentScene !== scene1) {
+                transitionScene.transition(scene1, 4)
+            }
+        },
+        () => {
+            if (transitionScene.currentScene !== scene2) {
+                transitionScene.transition(scene2, 4)
+            }
+        },
+        () => {
+            if (transitionScene.currentScene !== scene3) {
+                transitionScene.transition(scene3, 4)
+            }
+        },
+        () => {},
+    ]
+
+    const sceneMenu = new SceneMenu(menuCbs, <HTMLButtonElement[]>[...document.querySelectorAll('.hud-menu-button')])
 
     let started = false
 
