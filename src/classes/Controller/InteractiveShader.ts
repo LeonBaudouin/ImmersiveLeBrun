@@ -12,6 +12,7 @@ export default class InteractiveShader extends AbstractController {
     private isClicked: boolean = false
     public currentFocus: boolean = false
     private smoother: SmoothedPoint
+    private isSub: boolean = false
 
     private scene: string
 
@@ -50,13 +51,14 @@ export default class InteractiveShader extends AbstractController {
         const clickCallback = () => this.onClick(component)
 
         this.eventEmitter.Subscribe(EVENT.INTERACTIVE_BIND, name => {
-            if (name === this.scene) {
+            if (name === this.scene && !this.isSub) {
                 Raycaster.getInstance().Subscribe(collider, raycastCallback)
                 css3dCanvas.addEventListener('click', clickCallback)
-            } else {
+            } else if (name !== this.scene && this.isSub) {
                 Raycaster.getInstance().Unsubscribe(collider, raycastCallback)
                 css3dCanvas.removeEventListener('click', clickCallback)
             }
+            this.isSub = name === this.scene
         })
     }
 
