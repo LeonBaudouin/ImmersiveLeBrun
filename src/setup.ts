@@ -209,8 +209,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
     const audioListener = new THREE.AudioListener()
     camera.add(audioListener)
 
-    EventEmitter.getInstance().Subscribe(EVENT.ROOM_LOADED, console.log)
-
     return waitAnim()
         .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
         .then(() => {

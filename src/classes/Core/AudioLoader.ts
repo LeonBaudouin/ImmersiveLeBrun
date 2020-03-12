@@ -32,7 +32,7 @@ export default class AudioLoader {
     static loadOne(path: string): Promise<THREE.AudioBuffer> {
         const loader = AudioLoader.getNativeLoader()
         return new Promise((resolve, reject) => {
-            loader.load(path, resolve, p => console.log(p.loaded / p.total), reject)
+            loader.load(path, resolve, null, reject)
         })
     }
 
