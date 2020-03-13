@@ -231,9 +231,11 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     ]
                     EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
 
-                    const sceneMenu = new SceneMenu(menuCbs, <HTMLButtonElement[]>[
-                        ...document.querySelectorAll('.hud-menu-button'),
-                    ])
+                    const sceneMenu = new SceneMenu(
+                        menuCbs,
+                        <HTMLButtonElement[]>[...document.querySelectorAll('.hud-menu-button')],
+                        document.querySelector('.hud-menu'),
+                    )
                     sceneMenu.moveTo(1)
 
                     AudioLoader.load(

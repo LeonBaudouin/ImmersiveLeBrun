@@ -13,19 +13,38 @@
         align-items: center;
         width: 100vw;
 
+        $button-size: 15px;
+        $stroke-size: 12vw;
+        $button-number: 5;
+
+        --progress: 0.5;
+
+        &.in-transition {
+            .hud-menu-button:hover:not(.active) {
+                .hud-menu-button-name,
+                .hud-menu-button-date {
+                    opacity: 0.5;
+                }
+            }
+        }
+
         &-button {
             display: inline-block;
             position: relative;
-            width: 15px;
-            height: 15px;
+            width: $button-size;
+            height: $button-size;
             border-radius: 50%;
             background-color: rgba(#ffffff, 0.3);
             transition: background 300ms ease;
 
             &:hover,
-            &.active {
+            &.active,
+            &.passed {
                 background-color: white;
+            }
 
+            &.active,
+            &:hover {
                 .hud-menu-button-name,
                 .hud-menu-button-date {
                     --translateY: 0;
@@ -36,8 +55,8 @@
             &::before {
                 content: '';
                 display: inline-block;
-                width: 10vw;
-                height: 10vw;
+                width: $stroke-size * 0.8;
+                height: $stroke-size * 0.8;
                 position: absolute;
                 transform: translate3d(-50%, -50%, 0);
                 left: 50%;
@@ -47,7 +66,7 @@
             &-name,
             &-date {
                 display: inline-block;
-                width: 10vw;
+                width: $stroke-size * 0.8;
                 position: absolute;
                 text-align: center;
                 transform: translate3d(-50%, var(--translateY), 0);
@@ -71,11 +90,29 @@
             }
         }
 
-        &-stroke {
-            width: 12vw;
+        &-stroke,
+        &-longstroke {
             height: 2px;
-            background-color: rgba(#ffffff, 0.3);
             transform: scale3d(1.001, 1, 1);
+        }
+
+        &-stroke {
+            background-color: rgba(#ffffff, 0.3);
+            width: $stroke-size;
+        }
+
+        &-longstroke {
+            background-color: white;
+
+            $button-overall-size: $stroke-size * ($button-number - 1);
+            $stroke-overall-size: $button-size * $button-number;
+            width: calc(#{$button-overall-size} + #{$stroke-overall-size});
+
+            transform: scaleX(var(--progress));
+            transform-origin: left;
+
+            transition: transform 0.5s ease;
+            position: absolute;
         }
     }
 }
