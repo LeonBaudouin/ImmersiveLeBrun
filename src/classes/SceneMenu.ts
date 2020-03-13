@@ -10,7 +10,7 @@ export default class SceneMenu {
     constructor(buttons: HTMLButtonElement[], menu: HTMLElement) {
         this.buttons = buttons
         this.menu = menu
-        this.buttonsCbs = new Array(this.buttons.length).fill([])
+        this.buttonsCbs = new Array(this.buttons.length).fill(null).map(() => [])
 
         this.currentIndex = 0
         this.buttons[0].classList.add('active')
@@ -38,7 +38,6 @@ export default class SceneMenu {
     public moveTo(i) {
         this.currentIndex = i
         this.setButtonClass()
-        console.log(this.buttonsCbs)
         this.buttonsCbs[this.currentIndex].forEach(cb => cb())
         this.menu.style.setProperty('--progress', (i / (this.buttons.length - 1)).toString())
     }
@@ -64,6 +63,9 @@ export default class SceneMenu {
     }
 
     public addCbsToButtons(cbs) {
-        this.buttonsCbs.map((buttonCbs, i) => buttonCbs.concat([cbs[i]]))
+        for (let i = 0; i < this.buttonsCbs.length; i++) {
+            const cb = cbs[i]
+            this.buttonsCbs[i].push(cb)
+        }
     }
 }

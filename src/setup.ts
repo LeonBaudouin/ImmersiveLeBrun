@@ -63,7 +63,7 @@ function waitAnim(): Promise<void> {
     })
 }
 
-export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }> {
+export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Function; cb: Function }> {
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0.2, 1.25, 2.8)
     camera.rotateX(-0.05)
@@ -206,8 +206,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     transitionScene.update()
                 },
                 cb: () => {
-                    const mouse = new THREE.Vector2()
-
                     const changeScene = (i: number) => {
                         const scene = scenes[i].three
                         const name = scenes[i].name
@@ -225,14 +223,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                         () => changeScene(2),
                         () => {},
                     ]
-                    EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
-
-                    const sceneMenu = new SceneMenu(
-                        <HTMLButtonElement[]>[...document.querySelectorAll('.hud-menu-button')],
-                        document.querySelector('.hud-menu'),
-                    )
                     sceneMenu.addCbsToButtons(menuCbs)
-                    sceneMenu.moveTo(1)
 
                     AudioLoader.load(
                         {
@@ -284,6 +275,7 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
 
                     key.addKeyCb(() => {
                         // -- Raycast --
+                        const mouse = new THREE.Vector2()
                         document.addEventListener('mousemove', e => {
                             const { clientX, clientY } = e
                             mouse.x = (clientX / window.innerWidth) * 2 - 1
