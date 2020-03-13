@@ -8,7 +8,6 @@ const activated = [CSSPlugin]
 export default class Key {
     private cardKey: HTMLElement
     private loadingSreenKey: HTMLElement
-    private loadingScreen: HTMLElement
     private wrapper: HTMLElement
     private card: HTMLElement
     private isLoaded: boolean = false
@@ -24,8 +23,7 @@ export default class Key {
     constructor() {
         this.card = document.querySelector('.js-card-1')
         this.cardKey = this.card.querySelector('.js-card-key-1')
-        this.loadingScreen = document.querySelector('.loading-screen')
-        this.loadingSreenKey = this.loadingScreen.querySelector('.loading-screen-key')
+        this.loadingSreenKey = document.querySelector('.loading-screen-key')
         this.wrapper = this.loadingSreenKey.querySelector('.loading-screen-key-wrapper')
 
         this.card.querySelector('.js-button-1').addEventListener('click', () => {
@@ -61,8 +59,6 @@ export default class Key {
 
     private transitionIn() {
         this.clone()
-        this.loadingScreen.classList.remove('open')
-        this.loadingScreen.classList.add('close')
 
         const boundingBox = this.cardKey.getBoundingClientRect()
 

@@ -3,14 +3,14 @@ import EventEmitter, { EVENT } from './Events/EventEmitter'
 export default class SceneMenu {
     private menu: HTMLElement
     private buttons: HTMLButtonElement[]
-    private buttonCbs: Function[]
+    private buttonsCbs: Function[][]
     private currentIndex: number
     private isTransitioning: boolean
 
-    constructor(buttonCbs: Function[], buttons: HTMLButtonElement[], menu: HTMLElement) {
+    constructor(buttons: HTMLButtonElement[], menu: HTMLElement) {
         this.buttons = buttons
-        this.buttonCbs = buttonCbs
         this.menu = menu
+        this.buttonsCbs = new Array(this.buttons.length).fill([])
 
         this.currentIndex = 0
         this.buttons[0].classList.add('active')
@@ -18,7 +18,7 @@ export default class SceneMenu {
 
         this.buttons.forEach((button, i) => {
             button.addEventListener('click', () => {
-                if (i >= 0 && i < buttonCbs.length && i !== this.currentIndex && !this.isTransitioning) {
+                if (i >= 0 && i < this.buttonsCbs.length && i !== this.currentIndex && !this.isTransitioning) {
                     this.moveTo(i)
                 }
             })
@@ -38,7 +38,8 @@ export default class SceneMenu {
     public moveTo(i) {
         this.currentIndex = i
         this.setButtonClass()
-        this.buttonCbs[this.currentIndex]()
+        console.log(this.buttonsCbs)
+        this.buttonsCbs[this.currentIndex].forEach(cb => cb())
         this.menu.style.setProperty('--progress', (i / (this.buttons.length - 1)).toString())
     }
 
@@ -56,5 +57,13 @@ export default class SceneMenu {
                 b.classList.remove('active')
             }
         })
+    }
+
+    public addCbToOneButton(cb, index) {
+        this.buttonsCbs[index].push(cb)
+    }
+
+    public addCbsToButtons(cbs) {
+        this.buttonsCbs.map((buttonCbs, i) => buttonCbs.concat([cbs[i]]))
     }
 }

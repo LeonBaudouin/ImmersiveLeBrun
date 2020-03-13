@@ -189,8 +189,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
         },
     ]
 
-    let started = false
-
     const loadingManager = new THREE.LoadingManager()
     loadingManager.onProgress = key.updateProgress.bind(key)
 
@@ -204,10 +202,8 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
         .then(() => {
             return {
                 raf: () => {
-                    if (started) {
-                        CSS3DScene.update()
-                        transitionScene.update()
-                    }
+                    CSS3DScene.update()
+                    transitionScene.update()
                 },
                 cb: () => {
                     const mouse = new THREE.Vector2()
@@ -232,10 +228,10 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, scenes[0].name)
 
                     const sceneMenu = new SceneMenu(
-                        menuCbs,
                         <HTMLButtonElement[]>[...document.querySelectorAll('.hud-menu-button')],
                         document.querySelector('.hud-menu'),
                     )
+                    sceneMenu.addCbsToButtons(menuCbs)
                     sceneMenu.moveTo(1)
 
                     AudioLoader.load(
@@ -287,11 +283,6 @@ export default function Setup(key: Key): Promise<{ raf: Function; cb: Function }
                     })
 
                     key.addKeyCb(() => {
-                        document.querySelector('.loading-screen').classList.remove('close')
-                        document.querySelector('.loading-screen').classList.add('open')
-                        ;(<HTMLElement>document.querySelector('.menu')).style.display = 'none'
-                        started = true
-
                         // -- Raycast --
                         document.addEventListener('mousemove', e => {
                             const { clientX, clientY } = e

@@ -10,16 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const key = new Key()
     const css3dContainer = document.querySelector('.css3d-container')
     const uiWrapper = document.querySelector('.menu')
+    const loadingScreen = document.querySelector('.loading-screen')
     const menu = new Menu(document.querySelectorAll('.menu-navigation-button'), document.querySelector('.menu-content'))
+
     key.addButtonCb(() => {
         css3dContainer.style.display = 'none'
+        loadingScreen.classList.remove('open')
+        loadingScreen.classList.add('close')
+    })
+
+    key.addKeyCb(() => {
+        uiWrapper.style.display = 'none'
+        css3dContainer.style.display = 'flex'
+        loadingScreen.classList.remove('close')
+        loadingScreen.classList.add('open')
+    })
+
+    key.addButtonCb(() => {
         rafCbs.push(key.updateKeyPos.bind(key))
         rafCbs.push(key.updateProgressSmoothing.bind(key))
 
         Setup(key).then(({ cb, raf }) => {
-            rafCbs.push(raf)
+            key.addKeyCb(() => rafCbs.push(raf))
             setTimeout(cb, 0)
-            css3dContainer.style.display = 'flex'
         })
     })
 
