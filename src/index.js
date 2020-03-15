@@ -2,7 +2,7 @@ import './css/index.scss'
 import Setup from './setup.ts'
 import Key from './classes/Key'
 import 'gsap'
-import Menu from './classes/Menu'
+import About from './classes/About'
 import SceneMenu from './classes/SceneMenu'
 import EventEmitter, { EVENT } from './classes/Events/EventEmitter'
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const css3dContainer = document.querySelector('.css3d-container')
     const uiWrapper = document.querySelector('.menu')
     const loadingScreen = document.querySelector('.loading-screen')
-    const menu = new Menu(document.querySelectorAll('.menu-navigation-button'), document.querySelector('.menu-content'))
+    const menu = new About(document.querySelector('.menu-navigation-button'), document.querySelector('.menu-content'))
     const sceneMenu = new SceneMenu(
         [...document.querySelectorAll('.hud-menu-button')],
         document.querySelector('.hud-menu'),

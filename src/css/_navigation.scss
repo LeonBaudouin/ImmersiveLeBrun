@@ -1,7 +1,7 @@
 %menu-navigation-button-pos {
     position: absolute;
     width: calc(140% + 5rem);
-    height: 180%;
+    height: 300%;
     z-index: -1;
     left: 50%;
     top: 50%;
@@ -18,9 +18,7 @@
 }
 
 .menu-navigation {
-    position: fixed;
-    right: 3vw;
-    top: 3vw;
+    margin-bottom: 10vh;
 
     &-button {
         color: white;
