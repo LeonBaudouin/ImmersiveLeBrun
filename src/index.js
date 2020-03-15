@@ -14,53 +14,89 @@ document.addEventListener('DOMContentLoaded', () => {
     const uiWrapper = document.querySelector('.menu')
     const loadingScreen = document.querySelector('.loading-screen')
     const menu = new Menu(document.querySelectorAll('.menu-navigation-button'), document.querySelector('.menu-content'))
+    const sceneMenu = new SceneMenu(
+        [...document.querySelectorAll('.hud-menu-button')],
+        document.querySelector('.hud-menu'),
+    )
+    let inScene = false
+    let threeRaf = () => {}
 
     const closeDoors = () => {
         loadingScreen.classList.remove('open')
         loadingScreen.classList.add('close')
+        rafCbs.push(key.updateKeyPos.bind(key))
+        rafCbs.push(key.updateProgressSmoothing.bind(key))
     }
 
     const openDoors = () => {
         loadingScreen.classList.remove('close')
         loadingScreen.classList.add('open')
+        rafCbs.splice(rafCbs.indexOf(key.updateKeyPos.bind(key)), 1)
+        rafCbs.splice(rafCbs.indexOf(key.updateProgressSmoothing.bind(key)), 1)
     }
 
     const toScene = () => {
         uiWrapper.style.display = 'none'
         css3dContainer.style.display = 'flex'
+
         openDoors()
+        rafCbs.push(threeRaf)
+
+        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, 'Workshop')
+        sceneMenu.moveTo(1)
+
+        inScene = true
     }
 
     const toMenu = () => {
         uiWrapper.style.display = 'inline-flex'
         css3dContainer.style.display = 'none'
-        closeDoors()
+        rafCbs.splice(rafCbs.indexOf(threeRaf), 1)
+
+        document.body.style.cursor = 'default'
+
+        inScene = false
     }
 
+    key.addButtonCb(closeDoors)
     uiWrapper.style.display = 'inline-flex'
     css3dContainer.style.display = 'none'
 
-    key.addButtonCb(closeDoors)
+    sceneMenu.addCbToOneButton(() => {
+        loadingScreen.classList.remove('open')
+        loadingScreen.classList.add('close')
 
+        setTimeout(() => {
+            toMenu()
+            loadingScreen.classList.remove('close')
+            loadingScreen.classList.add('open')
+        }, 1500)
+    }, 0)
     key.addKeyCb(toScene)
 
+    let firstButtonClick = true
     key.addButtonCb(() => {
-        rafCbs.push(key.updateKeyPos.bind(key))
-        rafCbs.push(key.updateProgressSmoothing.bind(key))
-
-        const sceneMenu = new SceneMenu(
-            [...document.querySelectorAll('.hud-menu-button')],
-            document.querySelector('.hud-menu'),
-        )
-
-        Setup(sceneMenu, key).then(({ cb, raf }) => {
-            key.addKeyCb(() => {
-                rafCbs.push(raf)
-                EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, 'Workshop')
-                sceneMenu.moveTo(1)
+        if (firstButtonClick) {
+            Setup(sceneMenu, key).then(({ cb, raf }) => {
+                threeRaf = raf
+                setTimeout(cb, 0)
             })
-            setTimeout(cb, 0)
-        })
+            firstButtonClick = false
+        }
+    })
+
+    let firstKeyDrop = true
+    key.addKeyCb(() => {
+        if (firstKeyDrop) {
+            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSEENTER, () => {
+                if (inScene) document.body.style.cursor = 'pointer'
+            })
+
+            EventEmitter.getInstance().Subscribe(EVENT.INTERACTIVE_MOUSELEAVE, () => {
+                if (inScene) document.body.style.cursor = 'default'
+            })
+            firstKeyDrop = false
+        }
     })
 
     uiWrapper.classList.add('domLoaded')

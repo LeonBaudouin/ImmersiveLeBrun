@@ -100,13 +100,6 @@
         filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
         transition: filter linear 0.2s;
 
-        &.draggable {
-            cursor: grab;
-            &.grabbed {
-                cursor: grabbing;
-            }
-        }
-
         &.onLock {
             filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1));
         }

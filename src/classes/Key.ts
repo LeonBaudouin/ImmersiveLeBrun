@@ -11,7 +11,7 @@ export default class Key {
     private wrapper: HTMLElement
     private card: HTMLElement
     private isLoaded: boolean = false
-    private isLoading: boolean = false
+    private isButtonClicked: boolean = false
     private buttonCb: Array<Function> = []
     private keyCb: Array<Function> = []
     private isGrabbed: boolean = false
@@ -27,10 +27,10 @@ export default class Key {
         this.wrapper = this.loadingSreenKey.querySelector('.loading-screen-key-wrapper')
 
         this.card.querySelector('.js-button-1').addEventListener('click', () => {
-            if (!this.isLoaded && !this.isLoading) {
+            if (!this.isLoaded && !this.isButtonClicked) {
                 this.buttonCb.forEach(cb => cb())
                 this.transitionIn()
-                this.isLoading = true
+                this.isButtonClicked = true
             }
         })
     }
@@ -52,6 +52,7 @@ export default class Key {
                 {
                     scale: 0.5,
                     opacity: 0,
+                    onComplete: () => this.loadingSreenKey.classList.remove('onLock'),
                 },
             )
         }, 0)
@@ -79,6 +80,7 @@ export default class Key {
                 x: start.x,
                 y: start.y,
                 scale: 1,
+                opacity: 1,
                 force3D: true,
             },
             {
@@ -106,11 +108,19 @@ export default class Key {
         const boundingBox = this.cardKey.getBoundingClientRect()
         this.loadingSreenKey.style.width = boundingBox.width.toString() + 'px'
         this.loadingSreenKey.style.height = boundingBox.height.toString() + 'px'
-        this.loadingSreenKey.classList.add('draggable')
         this.card.classList.add('flip')
     }
 
+    private resetMenuCard() {
+        this.cardKey.style.opacity = '1'
+        this.card.classList.remove('flip')
+        this.isButtonClicked = false
+    }
+
     private enableDragAndDrop() {
+        this.resetMenuCard()
+        this.loadingSreenKey.style.cursor = 'grab'
+
         this.loadingSreenKey.addEventListener('mousedown', e => {
             e.preventDefault()
             this.isGrabbed = true
@@ -184,6 +194,7 @@ export default class Key {
             this.wrapper.style.setProperty('--progress', value.toString())
             if (value > 0.99) {
                 this.isLoaded = true
+                ;(<HTMLImageElement>this.cardKey).src = '../assets/loading/Clef_v01.png'
                 this.wrapper.classList.add('finished')
             }
         }

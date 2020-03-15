@@ -273,31 +273,19 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
                         )
                     })
 
+                    let firstBind = true
                     key.addKeyCb(() => {
-                        // -- Raycast --
-                        const mouse = new THREE.Vector2()
-                        document.addEventListener('mousemove', e => {
-                            const { clientX, clientY } = e
-                            mouse.x = (clientX / window.innerWidth) * 2 - 1
-                            mouse.y = -(clientY / window.innerHeight) * 2 + 1
-                            Raycaster.getInstance().Cast(camera, mouse)
-                            MouseMoveListener.getInstance().UpdateValue(e)
-                        })
-
-                        EventEmitter.getInstance().Subscribe(
-                            EVENT.INTERACTIVE_MOUSEENTER,
-                            () => (document.body.style.cursor = 'pointer'),
-                        )
-
-                        EventEmitter.getInstance().Subscribe(
-                            EVENT.INTERACTIVE_MOUSEENTER,
-                            () => (document.body.style.cursor = 'pointer'),
-                        )
-
-                        EventEmitter.getInstance().Subscribe(
-                            EVENT.INTERACTIVE_MOUSELEAVE,
-                            () => (document.body.style.cursor = 'default'),
-                        )
+                        if (firstBind) {
+                            // -- Raycast --
+                            const mouse = new THREE.Vector2()
+                            document.addEventListener('mousemove', e => {
+                                const { clientX, clientY } = e
+                                mouse.x = (clientX / window.innerWidth) * 2 - 1
+                                mouse.y = -(clientY / window.innerHeight) * 2 + 1
+                                Raycaster.getInstance().Cast(camera, mouse)
+                                MouseMoveListener.getInstance().UpdateValue(e)
+                            })
+                        }
                     })
 
                     // -- Prevent Click --
