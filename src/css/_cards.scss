@@ -19,7 +19,7 @@
 
     @for $i from 1 to 4 {
         &:nth-of-type(#{$i}) {
-            transition-delay: 2s + $i * 0.4s;
+            transition-delay: 2.4s + $i * 0.4s;
         }
     }
 

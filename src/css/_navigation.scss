@@ -18,7 +18,8 @@
 }
 
 .menu-navigation {
-    margin-bottom: 10vh;
+    margin: 0 10vh 5vh 0;
+    align-self: flex-end;
 
     &-button {
         color: white;
