@@ -18,8 +18,8 @@ import ComposerScene from './classes/Core/ComposerScene'
 import FadeController from './classes/Controller/FadeController'
 import Key from './classes/Key'
 import TextureLoader from './classes/Core/TextureLoader'
-import AudioLoader from './classes/Core/AudioLoader'
 import SceneMenu from './classes/SceneMenu'
+import AudioManager from './classes/AudioManager'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -36,25 +36,7 @@ function initCSS3DRenderer(camera: THREE.Camera): RendererInterface {
     const renderer = new CSS3DRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.domElement.classList.add('css3d-canvas')
-
-    // const controls = new OrbitControls(camera, renderer.domElement)
-    // controls.enabled = true
-    // controls.maxDistance = 1500
-    // controls.minDistance = 0
     return renderer
-}
-
-function audio(
-    audioListener: THREE.AudioListener,
-    buffer: THREE.AudioBuffer,
-    volume: number = 1,
-    loop: boolean = true,
-) {
-    const audio = new THREE.Audio(audioListener)
-    audio.setBuffer(buffer)
-    audio.setLoop(loop)
-    audio.setVolume(volume)
-    return audio
 }
 
 function waitAnim(): Promise<void> {
@@ -113,7 +95,135 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
 
     const scene3 = new ComposerScene(new Component(() => camera), webGLrenderer, components3)
 
-    const cssComponents = [
+    const CSS3DScene = new ThreeScene(
+        new Component(() => camera, [new CameraMouseFollow()]),
+        CSS3DRenderer,
+        SetupCss3d(),
+    )
+
+    const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
+
+    const scenes = [
+        {
+            three: scene1,
+            name: 'Workshop',
+        },
+        {
+            three: scene2,
+            name: 'Demo',
+        },
+        {
+            three: scene3,
+            name: 'Galerie',
+        },
+    ]
+
+    const loadingManager = new THREE.LoadingManager()
+    loadingManager.onProgress = key.updateProgress.bind(key)
+
+    TextureLoader.setLoadingManager(loadingManager)
+
+    const audioListener = new THREE.AudioListener()
+    const audioManager = new AudioManager(audioListener)
+    SetupAudio(audioManager)
+
+    camera.add(audioListener)
+
+    return waitAnim()
+        .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
+        .then(() => {
+            return {
+                raf: () => {
+                    CSS3DScene.update()
+                    transitionScene.update()
+                },
+                cb: () => {
+                    const changeScene = (i: number) => {
+                        const scene = scenes[i].three
+                        const name = scenes[i].name
+                        if (transitionScene.currentScene !== scene) {
+                            transitionScene.transition(scene, 4)
+                        }
+                        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, name)
+                        EventEmitter.getInstance().Emit(EVENT.CLOSE_TEXTS, name)
+                    }
+
+                    const menuCbs = [
+                        () => {},
+                        () => changeScene(0),
+                        () => changeScene(1),
+                        () => changeScene(2),
+                        () => {},
+                    ]
+                    sceneMenu.addCbsToButtons(menuCbs)
+
+                    let firstBind = true
+                    key.addKeyCb(() => {
+                        if (firstBind) {
+                            // -- Raycast --
+                            const mouse = new THREE.Vector2()
+                            document.addEventListener('mousemove', e => {
+                                const { clientX, clientY } = e
+                                mouse.x = (clientX / window.innerWidth) * 2 - 1
+                                mouse.y = -(clientY / window.innerHeight) * 2 + 1
+                                Raycaster.getInstance().Cast(camera, mouse)
+                                MouseMoveListener.getInstance().UpdateValue(e)
+                            })
+                        }
+                    })
+
+                    // -- Prevent Click --
+
+                    document.querySelectorAll('.preventClick').forEach(elem => {
+                        elem.addEventListener('click', e => e.stopPropagation())
+                    })
+                },
+            }
+        })
+}
+
+function SetupAudio(audioManager: AudioManager) {
+    audioManager.addAudio({
+        audiosParams: [{ url: './assets/audio/spring.mp3', loop: true, volume: 0.03, playbackRate: 1 }],
+        onScene: 'Workshop',
+        eventPlay: null,
+        eventStop: null,
+    })
+
+    audioManager.addAudio({
+        audiosParams: [{ url: './assets/audio/workshop_ambient.mp3', loop: true, volume: 0.1, playbackRate: 1 }],
+        onScene: 'Workshop',
+        eventPlay: null,
+        eventStop: null,
+    })
+
+    audioManager.addAudio({
+        audiosParams: [
+            { url: './assets/audio/quote.mp3', loop: false, volume: 0.3, playbackRate: 1 },
+            { url: './assets/audio/quote_alt.mp3', loop: false, volume: 1.2, playbackRate: 1 },
+        ],
+        onScene: null,
+        eventPlay: { event: EVENT.OPEN_QUOTE, info: null, exclude: null },
+        eventStop: null,
+    })
+
+    audioManager.addAudio({
+        audiosParams: [
+            { url: './assets/audio/reveal.mp3', loop: false, volume: 0.2, playbackRate: 1.3 },
+            { url: './assets/audio/reveal_alt.mp3', loop: false, volume: 0.2, playbackRate: 0.8 },
+        ],
+        onScene: null,
+        eventPlay: {
+            event: EVENT.INTERACTIVE_CLICK,
+            info: { property: 'firstClick', value: true },
+            exclude: false,
+        },
+        eventStop: null,
+    })
+}
+
+function SetupCss3d() {
+    return [
         new TextInfo({
             position: new THREE.Vector3(1.6, 2, -0.7),
             childPos: new THREE.Vector3(0, -1.2, 1),
@@ -165,135 +275,4 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
             elementId: 'Adelaide',
         }),
     ]
-
-    const CSS3DScene = new ThreeScene(
-        new Component(() => camera, [new CameraMouseFollow()]),
-        CSS3DRenderer,
-        cssComponents,
-    )
-
-    const transitionScene = new TransitionScene(<THREE.WebGLRenderer>webGLrenderer, scene1)
-
-    const scenes = [
-        {
-            three: scene1,
-            name: 'Workshop',
-        },
-        {
-            three: scene2,
-            name: 'Demo',
-        },
-        {
-            three: scene3,
-            name: 'Galerie',
-        },
-    ]
-
-    const loadingManager = new THREE.LoadingManager()
-    loadingManager.onProgress = key.updateProgress.bind(key)
-
-    TextureLoader.setLoadingManager(loadingManager)
-
-    const audioListener = new THREE.AudioListener()
-    camera.add(audioListener)
-
-    return waitAnim()
-        .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
-        .then(() => {
-            return {
-                raf: () => {
-                    CSS3DScene.update()
-                    transitionScene.update()
-                },
-                cb: () => {
-                    const changeScene = (i: number) => {
-                        const scene = scenes[i].three
-                        const name = scenes[i].name
-                        if (transitionScene.currentScene !== scene) {
-                            transitionScene.transition(scene, 4)
-                        }
-                        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, name)
-                        EventEmitter.getInstance().Emit(EVENT.CLOSE_TEXTS, name)
-                    }
-
-                    const menuCbs = [
-                        () => {},
-                        () => changeScene(0),
-                        () => changeScene(1),
-                        () => changeScene(2),
-                        () => {},
-                    ]
-                    sceneMenu.addCbsToButtons(menuCbs)
-
-                    AudioLoader.load(
-                        {
-                            spring: 'spring.mp3',
-                            workshop_ambient: 'workshop_ambient.mp3',
-                            quote: 'quote.mp3',
-                            quote_alt: 'quote_alt.mp3',
-                            reveal: 'reveal.mp3',
-                            reveal_alt: 'reveal_alt.mp3',
-                        },
-                        './assets/audio/',
-                    ).then((buffers: { [name: string]: THREE.AudioBuffer }) => {
-                        const springAudio = audio(audioListener, buffers.spring, 0.03, true)
-                        springAudio.play()
-                        const workshopAmbient = audio(audioListener, buffers.workshop_ambient, 0.1, true)
-                        workshopAmbient.play()
-
-                        const quoteSound = audio(audioListener, buffers.quote, 0.3, false)
-                        const quoteAltSound = audio(audioListener, buffers.quote_alt, 1.2, false)
-                        const revealAltSound = audio(audioListener, buffers.reveal_alt, 0.2, false)
-                        revealAltSound.setPlaybackRate(0.8)
-                        const revealSound = audio(audioListener, buffers.reveal, 0.2, false)
-                        revealSound.setPlaybackRate(1.3)
-
-                        EventEmitter.getInstance().Subscribe(EVENT.OPEN_QUOTE, () => {
-                            if (Math.random() > 0.5) {
-                                quoteSound.setPlaybackRate(Math.random() * 0.6 + 0.7)
-                                quoteSound.play()
-                            } else {
-                                quoteAltSound.play()
-                            }
-                        })
-
-                        EventEmitter.getInstance().Subscribe(
-                            EVENT.INTERACTIVE_CLICK,
-                            ({ firstClick, component: object3d }) => {
-                                if (firstClick && object3d.userData.name != null) {
-                                    if (revealSound.isPlaying) revealSound.stop()
-                                    if (revealAltSound.isPlaying) revealAltSound.stop()
-                                    if (Math.random() > 0.5) {
-                                        revealSound.play()
-                                    } else {
-                                        revealAltSound.play()
-                                    }
-                                }
-                            },
-                        )
-                    })
-
-                    let firstBind = true
-                    key.addKeyCb(() => {
-                        if (firstBind) {
-                            // -- Raycast --
-                            const mouse = new THREE.Vector2()
-                            document.addEventListener('mousemove', e => {
-                                const { clientX, clientY } = e
-                                mouse.x = (clientX / window.innerWidth) * 2 - 1
-                                mouse.y = -(clientY / window.innerHeight) * 2 + 1
-                                Raycaster.getInstance().Cast(camera, mouse)
-                                MouseMoveListener.getInstance().UpdateValue(e)
-                            })
-                        }
-                    })
-
-                    // -- Prevent Click --
-
-                    document.querySelectorAll('.preventClick').forEach(elem => {
-                        elem.addEventListener('click', e => e.stopPropagation())
-                    })
-                },
-            }
-        })
 }

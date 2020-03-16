@@ -41,6 +41,7 @@ export default class InteractiveShader extends AbstractController {
 
     public onMount(component: THREE.Object3D) {
         this.bind(component)
+        this.isClicked = component.userData.name === undefined
     }
 
     private bind(component: THREE.Object3D) {
