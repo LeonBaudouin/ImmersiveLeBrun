@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import EventEmitter, { EVENT } from './Events/EventEmitter'
 import AudioLoader from './Core/AudioLoader'
+import TweenLite from 'gsap'
 
 export default class AudioManager {
     private currentScene: string
@@ -69,14 +70,20 @@ export default class AudioManager {
         exclude: boolean
         onlyStop: boolean
     }) {
-        this.eventEmitter.Subscribe(event, info => {
-            const trigger = () => {
-                audios.forEach(audio => {
-                    if (audio.isPlaying) audio.stop()
-                })
-                if (!onlyStop) this.playRandom(audios)
-            }
+        const trigger = () => {
+            audios.forEach(audio => {
+                if (audio.isPlaying) {
+                    if (onlyStop) {
+                        this.fadeAudio(audio)
+                    } else {
+                        audio.stop()
+                    }
+                }
+            })
+            if (!onlyStop) this.playRandom(audios)
+        }
 
+        this.eventEmitter.Subscribe(event, info => {
             if (on === null) {
                 trigger()
             } else if (typeof on === 'string' && ((on === info && !exclude) || (on !== info && exclude))) {
@@ -107,6 +114,22 @@ export default class AudioManager {
             if (rand > i / audios.length && rand < (i + 1) / audios.length) {
                 audio.play()
             }
+        })
+    }
+
+    private fadeAudio(audio: THREE.Audio) {
+        const baseVolume = audio.getVolume()
+        const objSound = { volume: baseVolume }
+        TweenLite.to(objSound, 3, {
+            volume: 0,
+            onUpdate: () => {
+                console.log(objSound.volume)
+                audio.setVolume(objSound.volume)
+            },
+            onComplete: () => {
+                audio.stop()
+                audio.setVolume(baseVolume)
+            },
         })
     }
 }
