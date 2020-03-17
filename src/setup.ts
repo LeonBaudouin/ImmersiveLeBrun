@@ -198,6 +198,20 @@ function SetupAudio(audioManager: AudioManager) {
     })
 
     audioManager.addAudio({
+        audiosParams: [{ url: './assets/audio/op5no1.mp3', loop: true, volume: 0.03, playbackRate: 1 }],
+        onScene: 'Demo',
+        eventPlay: null,
+        eventStop: null,
+    })
+
+    audioManager.addAudio({
+        audiosParams: [{ url: './assets/audio/demo_ambient.mp3', loop: true, volume: 0.03, playbackRate: 1 }],
+        onScene: 'Demo',
+        eventPlay: null,
+        eventStop: null,
+    })
+
+    audioManager.addAudio({
         audiosParams: [
             { url: './assets/audio/quote.mp3', loop: false, volume: 0.3, playbackRate: 1 },
             { url: './assets/audio/quote_alt.mp3', loop: false, volume: 1.2, playbackRate: 1 },
