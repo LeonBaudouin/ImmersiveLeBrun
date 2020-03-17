@@ -20,6 +20,7 @@ import Key from './classes/Key'
 import TextureLoader from './classes/Core/TextureLoader'
 import SceneMenu from './classes/SceneMenu'
 import AudioManager from './classes/AudioManager'
+import Room4 from './classes/Components/Room4'
 
 function initWebglRenderer(camera: THREE.Camera): THREE.WebGLRenderer {
     const renderer = new THREE.WebGLRenderer({
@@ -95,6 +96,22 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
 
     const scene3 = new ComposerScene(new Component(() => camera), webGLrenderer, components3)
 
+    const room4 = new Room4()
+    const components4 = [
+        new Component(() => {
+            const mesh = new THREE.Mesh(
+                new THREE.PlaneGeometry(1000, 1000),
+                new THREE.MeshBasicMaterial({ color: 0xff0000 }),
+            )
+            mesh.position.set(0, 0, -50)
+            return mesh
+        }, [new InteractiveShader('Louvre'), new FadeController(true)]),
+        room4,
+        new Component(() => new THREE.AmbientLight(0x999999, 0.7)),
+    ]
+
+    const scene4 = new ComposerScene(new Component(() => camera), webGLrenderer, components4)
+
     const CSS3DScene = new ThreeScene(
         new Component(() => camera, [new CameraMouseFollow()]),
         CSS3DRenderer,
@@ -116,6 +133,10 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
             three: scene3,
             name: 'Galerie',
         },
+        {
+            three: scene4,
+            name: 'Louvre',
+        },
     ]
 
     const loadingManager = new THREE.LoadingManager()
@@ -130,7 +151,7 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
     camera.add(audioListener)
 
     return waitAnim()
-        .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom()]))
+        .then(() => Promise.all([room.loadRoom(), room2.loadRoom(), room3.loadRoom(), room4.loadRoom()]))
         .then(() => {
             return {
                 raf: () => {
@@ -153,7 +174,7 @@ export default function Setup(sceneMenu: SceneMenu, key: Key): Promise<{ raf: Fu
                         () => changeScene(0),
                         () => changeScene(1),
                         () => changeScene(2),
-                        () => {},
+                        () => changeScene(3),
                     ]
                     sceneMenu.addCbsToButtons(menuCbs)
 
