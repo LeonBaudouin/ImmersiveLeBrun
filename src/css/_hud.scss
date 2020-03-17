@@ -14,7 +14,7 @@
         width: 100vw;
 
         $button-size: 15px;
-        $stroke-size: 12vw;
+        $stroke-size: 17vw;
         $button-number: 5;
         $button-overall-size: $stroke-size * ($button-number - 1);
         $stroke-overall-size: $button-size * $button-number;
@@ -117,7 +117,8 @@
 
         & &-sound-icon {
             position: absolute;
-            left: calc((#{$button-overall-size} + #{$stroke-overall-size}) / 2 + 50vw + 30px);
+            $left-offset: 6vw;
+            left: calc((#{$button-overall-size} + #{$stroke-overall-size}) / 2 + 50vw + #{$left-offset});
         }
     }
 }
