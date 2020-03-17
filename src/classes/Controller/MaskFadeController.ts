@@ -17,10 +17,10 @@ export default class MaskFadeController extends AbstractController {
                     userData: { name },
                 },
             }) => {
-                if (selectiveMasks.hasOwnProperty(name) && this.shaderCb() !== null) {
+                if (this.shaderCb() !== null) {
                     const uniforms = this.shaderCb().uniforms
                     uniforms.secondaryTextureMask.value = uniforms.textureMask.value
-                    uniforms.textureMask.value = selectiveMasks[name]
+                    uniforms.textureMask.value = selectiveMasks.hasOwnProperty(name) ? selectiveMasks[name] : null
                     uniforms.maskTransition.value = 0
                     TweenLite.to(uniforms.maskTransition, 1, { value: 1, ease: Power0.easeNone })
                 }
