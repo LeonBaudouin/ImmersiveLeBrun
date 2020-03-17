@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
         [...document.querySelectorAll('.hud-menu-button')],
         document.querySelector('.hud-menu'),
     )
+    const soundButtons = document.querySelectorAll('.sound-icon')
+
+    let soundIsOn = true
+    soundButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            if (soundIsOn) EventEmitter.getInstance().Emit(EVENT.SOUND_MUTE)
+            if (!soundIsOn) EventEmitter.getInstance().Emit(EVENT.SOUND_UNMUTE)
+            soundButtons.forEach(f => f.classList.toggle('disabled'))
+            soundIsOn = !soundIsOn
+        })
+    })
     let inScene = false
     let threeRaf = () => {}
 

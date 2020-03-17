@@ -137,6 +137,7 @@ export default class Room extends LoadedComponent {
                             const object = new THREE.Object3D()
                             object.position.set(-this.size.x / 2 + 0.01, 0.32, -1.65)
                             object.rotation.set(0, Math.PI / 2, 0)
+                            object.scale.set(1.01, 1.01, 1.01)
                             return object
                         },
                         [],
@@ -165,6 +166,7 @@ export default class Room extends LoadedComponent {
                             const object = new THREE.Object3D()
                             object.position.set(this.size.x / 2 - 0.01, 0.32, -1.425)
                             object.rotation.set(0, -Math.PI / 2, 0)
+                            object.scale.set(1.01, 1.01, 1.01)
                             return object
                         },
                         [],

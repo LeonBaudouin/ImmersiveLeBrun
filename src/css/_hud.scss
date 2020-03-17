@@ -16,6 +16,8 @@
         $button-size: 15px;
         $stroke-size: 12vw;
         $button-number: 5;
+        $button-overall-size: $stroke-size * ($button-number - 1);
+        $stroke-overall-size: $button-size * $button-number;
 
         --progress: 0.5;
 
@@ -104,8 +106,6 @@
         &-longstroke {
             background-color: white;
 
-            $button-overall-size: $stroke-size * ($button-number - 1);
-            $stroke-overall-size: $button-size * $button-number;
             width: calc(#{$button-overall-size} + #{$stroke-overall-size});
 
             transform: scaleX(var(--progress));
@@ -113,6 +113,11 @@
 
             transition: transform 0.5s ease;
             position: absolute;
+        }
+
+        & &-sound-icon {
+            position: absolute;
+            left: calc((#{$button-overall-size} + #{$stroke-overall-size}) / 2 + 50vw + 30px);
         }
     }
 }

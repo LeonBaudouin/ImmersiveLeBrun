@@ -7,6 +7,7 @@ export default class AudioManager {
     private currentScene: string
     private eventEmitter: EventEmitter
     private listener: THREE.AudioListener
+    private audios: THREE.Audio[] = []
 
     constructor(listener: THREE.AudioListener) {
         this.listener = listener
@@ -54,6 +55,15 @@ export default class AudioManager {
                     onlyStop: true,
                 })
             }
+            audios.forEach((audio, i) => {
+                const baseVolume = audiosParams[i].volume
+                this.eventEmitter.Subscribe(EVENT.SOUND_MUTE, () => {
+                    this.lerpAudio(audio, 0, 1.5)
+                })
+                this.eventEmitter.Subscribe(EVENT.SOUND_UNMUTE, () => {
+                    this.lerpAudio(audio, baseVolume, 1.5)
+                })
+            })
         })
     }
 
@@ -118,17 +128,27 @@ export default class AudioManager {
     }
 
     private fadeAudio(audio: THREE.Audio) {
+        this.lerpAudio(audio, 0, 3, (a, b) => {
+            a.stop()
+            a.setVolume(b)
+        })
+    }
+
+    private lerpAudio(
+        audio: THREE.Audio,
+        to: number,
+        duration: number = 3,
+        onComplete: (audio: THREE.Audio, baseVolume: number) => void = () => {},
+    ) {
         const baseVolume = audio.getVolume()
         const objSound = { volume: baseVolume }
-        TweenLite.to(objSound, 3, {
-            volume: 0,
+        return TweenLite.to(objSound, duration, {
+            volume: to,
             onUpdate: () => {
-                console.log(objSound.volume)
                 audio.setVolume(objSound.volume)
             },
             onComplete: () => {
-                audio.stop()
-                audio.setVolume(baseVolume)
+                onComplete(audio, baseVolume)
             },
         })
     }

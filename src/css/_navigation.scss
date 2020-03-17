@@ -18,8 +18,19 @@
 }
 
 .menu-navigation {
-    margin: 0 10vh 5vh 0;
+    margin: 0 7vh 5vh 0;
     align-self: flex-end;
+    display: flex;
+    align-items: center;
+
+    &-sound-icon.sound-icon {
+        opacity: 0;
+        transition: opacity 0.5s 4.3s linear, transform 800ms cubic-bezier(0.17, 0.67, 0.12, 1.2);
+
+        .domLoaded & {
+            opacity: 1;
+        }
+    }
 
     &-button {
         color: white;
@@ -28,7 +39,7 @@
         position: relative;
         opacity: 0;
         z-index: 1;
-        margin: 0 1.8rem;
+        margin: 0 4rem 0 0;
         transition: opacity 0.5s 4s linear;
 
         .domLoaded & {

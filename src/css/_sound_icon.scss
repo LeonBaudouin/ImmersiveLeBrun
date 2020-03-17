@@ -1,0 +1,44 @@
+.sound-icon {
+    border: none;
+    background: none;
+    display: inline-block;
+    height: 2.5rem;
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+    filter: drop-shadow(0 0 10px rgba(46, 45, 44, 0.7));
+    transform: scale3d(1, 1, 1);
+    transition: transform 800ms cubic-bezier(0.17, 0.67, 0.12, 1.2);
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    &-img {
+        &-disabled,
+        &-enabled {
+            display: inline-block;
+            height: 100%;
+            transition: opacity 150ms ease;
+        }
+
+        &-enabled {
+            position: absolute;
+            opacity: 1;
+            .disabled & {
+                opacity: 0;
+            }
+        }
+
+        &-disabled {
+            opacity: 0;
+            .disabled & {
+                opacity: 1;
+            }
+        }
+    }
+}
