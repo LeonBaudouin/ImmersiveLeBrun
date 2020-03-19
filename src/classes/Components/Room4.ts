@@ -26,8 +26,10 @@ export default class Room4 extends LoadedComponent {
 
     loadRoom(): Promise<void> {
         if (Room4.isLoaded) return this.load(TextureLoader.load([]), () => [])
-        const target = new THREE.Object3D()
-        target.position.set(0, -0.4, -0.49)
+        const firstTarget = new THREE.Object3D()
+        firstTarget.position.set(0, -0.4, -0.49)
+        const secondTarget = new THREE.Object3D()
+        secondTarget.position.set(1.5, 0.8, -0.49)
         return this.load(
             TextureLoader.load(
                 {
@@ -99,13 +101,22 @@ export default class Room4 extends LoadedComponent {
                     //     return ligth
                     // }),
                     new Component(() => {
-                        const ligth = new THREE.SpotLight(0xedecd9, 1, 50, Math.PI / 6, 0.5, 0.5)
-                        ligth.target = target
+                        const ligth = new THREE.SpotLight(0xedecd9, 1, 50, Math.PI / 9, 0.5, 0.5)
+                        ligth.target = firstTarget
                         ligth.position.z = 2
-                        ligth.position.y = 0
+                        ligth.position.y = 2
                         return ligth
                     }),
-                    new Component(() => target),
+                    new Component(() => firstTarget),
+                    new Component(() => {
+                        const ligth = new THREE.SpotLight(0xedecd9, 0.6, 50, Math.PI / 18, 0.5, 0.5)
+                        ligth.target = secondTarget
+                        ligth.position.z = 3
+                        ligth.position.y = 0
+                        ligth.position.x = -3
+                        return ligth
+                    }),
+                    new Component(() => secondTarget),
                     new Component(() => {
                         const ligth = new THREE.PointLight(0x222222, 0.01)
                         ligth.position.x = 1.3

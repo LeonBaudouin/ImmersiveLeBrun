@@ -4,7 +4,7 @@ import { CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer'
 import EventEmitter, { EVENT } from '../Events/EventEmitter'
 
 export default class TextInfo extends Component {
-    constructor({ elementId, position = new THREE.Vector3(), childPos = new THREE.Vector3() }) {
+    constructor({ elementId, position = new THREE.Vector3(), childPos = new THREE.Vector3(), toggleOnScene = null }) {
         const elem = <HTMLElement>document.querySelector('#' + elementId)
         const children = []
 
@@ -26,21 +26,30 @@ export default class TextInfo extends Component {
             )
         }
 
-        eventEmitter.Subscribe(EVENT.CLOSE_TEXTS, () => {
-            elem.classList.remove('show')
-            if (quote) quote.classList.remove('show')
-        })
-
-        eventEmitter.Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
-            if (component.userData.name === elementId) {
-                elem.classList.add('show')
-            } else {
+        eventEmitter.Subscribe(EVENT.CLOSE_TEXTS, name => {
+            if (toggleOnScene !== name) {
                 elem.classList.remove('show')
-                if (quote) {
-                    quote.classList.remove('show')
+                if (quote) quote.classList.remove('show')
+            } else {
+                if (toggleOnScene !== null) {
+                    elem.classList.add('show')
+                    if (quote) quote.classList.add('show')
                 }
             }
         })
+
+        if (toggleOnScene !== null) {
+            eventEmitter.Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
+                if (component.userData.name === elementId) {
+                    elem.classList.add('show')
+                } else {
+                    elem.classList.remove('show')
+                    if (quote) {
+                        quote.classList.remove('show')
+                    }
+                }
+            })
+        }
 
         super(
             () => {
