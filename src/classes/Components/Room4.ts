@@ -118,7 +118,7 @@ export default class Room4 extends LoadedComponent {
                     }),
                     new Component(() => secondTarget),
                     new Component(() => {
-                        const ligth = new THREE.PointLight(0x222222, 0.01)
+                        const ligth = new THREE.PointLight(0x222222, 0.05)
                         ligth.position.x = 1.3
                         ligth.position.y = -0.4
                         ligth.position.z = 3.5

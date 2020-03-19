@@ -309,5 +309,10 @@ function SetupCss3d() {
             position: new THREE.Vector3(-1.7, 2, 0.3),
             elementId: 'Adelaide',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(0, 1.7, 0.2),
+            elementId: 'Louvre',
+            toggleOnScene: 'Louvre',
+        }),
     ]
 }
