@@ -16,6 +16,35 @@
         width: 50%;
     }
 
+    &-image {
+        display: inline-block;
+        height: 10vh;
+        transform: scale3d(1, 1, 1);
+        &:hover {
+            transition: transform 400ms ease;
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+
+        &#gobelins {
+            filter: invert(0.5) sepia(0.9) brightness(0.5);
+        }
+
+        &#petite-galerie {
+            filter: hue-rotate(64deg) saturate(0.4) brightness(0.7);
+        }
+
+        &s {
+            margin-top: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            &:before,
+            &:after {
+                content: '';
+            }
+        }
+    }
+
     &-profiles {
         width: 40%;
         display: grid;
@@ -30,12 +59,79 @@
         flex-direction: column;
         align-items: center;
         font-size: 0.8rem;
+        width: 23vh;
+        color: #4a443e;
+
+        &-frame {
+            position: absolute;
+            top: 0;
+            left: -2vh;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1;
+            &-wrapper {
+                position: relative;
+                width: 100%;
+                padding-top: 102%;
+                margin-bottom: 20px;
+            }
+        }
 
         &-photo {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            &-wrapper {
+                position: absolute;
+                top: 10%;
+                left: 10%;
+                bottom: 0;
+                right: 0;
+                width: 70%;
+                height: 82.6%;
+            }
+        }
+
+        &-link {
             position: relative;
-            height: 23vh;
-            margin-bottom: 0.5rem;
-            right: 1.5vh;
+            display: inline-block;
+            color: inherit;
+            text-decoration: none;
+
+            &:after,
+            &:before {
+                content: '';
+                height: 1px;
+                position: absolute;
+                background: #4a443e;
+                bottom: -1px;
+            }
+
+            &:after {
+                right: 0;
+                width: 100%;
+                transition: width ease 300ms;
+            }
+
+            &:before {
+                left: 0;
+                width: 0;
+                transition: width ease 300ms 200ms;
+            }
+
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+                &:after {
+                    width: 0;
+                }
+            }
         }
     }
 }
