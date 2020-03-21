@@ -324,5 +324,10 @@ function SetupCss3d() {
             childPos: new THREE.Vector3(-0.5, -1.2, 0.1),
             elementId: 'Critique',
         }),
+        new TextInfo({
+            position: new THREE.Vector3(0, 1.3, 0.2),
+            elementId: 'Louvre',
+            toggleOnScene: 'Louvre',
+        }),
     ]
 }
