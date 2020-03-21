@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         css3dContainer.style.display = 'none'
         rafCbs.splice(rafCbs.indexOf(threeRaf), 1)
 
+        EventEmitter.getInstance().Emit(EVENT.INTERACTIVE_BIND, 'none')
         document.body.style.cursor = 'default'
 
         inScene = false
