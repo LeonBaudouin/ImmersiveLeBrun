@@ -148,7 +148,7 @@ export default class Room3 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'room3_perso3',
+                                name: 'JBPierre2',
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_03_sketch,
                                 painting: textures.perso_03,
@@ -174,7 +174,7 @@ export default class Room3 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'room3_perso2',
+                                name: 'Barth',
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_02_sketch,
                                 painting: textures.perso_02,
@@ -200,7 +200,7 @@ export default class Room3 extends LoadedComponent {
                         {},
                         [
                             new Interactive({
-                                name: 'room3_perso4',
+                                name: 'Critique',
                                 sceneName: 'Galerie',
                                 sketch: textures.perso_04_sketch,
                                 painting: textures.perso_04,
