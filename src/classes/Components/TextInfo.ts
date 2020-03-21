@@ -38,7 +38,7 @@ export default class TextInfo extends Component {
             }
         })
 
-        if (toggleOnScene !== null) {
+        if (toggleOnScene === null) {
             eventEmitter.Subscribe(EVENT.INTERACTIVE_CLICK, ({ component }) => {
                 if (component.userData.name === elementId) {
                     elem.classList.add('show')
